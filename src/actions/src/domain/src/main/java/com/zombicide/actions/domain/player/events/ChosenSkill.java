@@ -2,20 +2,18 @@ package com.zombicide.actions.domain.player.events;
 
 import com.zombicide.shared.domain.generic.DomainEvent;
 
-public class UnlockedSkill extends DomainEvent {
+public class ChosenSkill extends DomainEvent {
 	private final String id;
 	private final String nameSkill;
 	private final String description;
 	private final Integer unlockPoints;
-	private final Integer experience;
 
-	public UnlockedSkill(String id, String position, String nameSkill, String description, Integer unlockPoints, Integer experience) {
-		super(EventsEnum.UNLOCKED_SKILL.name());
+	public ChosenSkill(String id, String nameSkill, String description, Integer unlockPoints) {
+		super(EventsEnum.CHOSEN_SKILL.name());
 		this.id = id;
 		this.nameSkill = nameSkill;
 		this.description = description;
 		this.unlockPoints = unlockPoints;
-		this.experience = experience;
 	}
 
 	public String getId() {
@@ -32,9 +30,5 @@ public class UnlockedSkill extends DomainEvent {
 
 	public Integer getUnlockPoints() {
 		return unlockPoints;
-	}
-
-	public Integer getExperience() {
-		return experience;
 	}
 }

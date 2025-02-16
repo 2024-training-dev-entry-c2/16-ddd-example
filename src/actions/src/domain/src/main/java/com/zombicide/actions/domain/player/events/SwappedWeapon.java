@@ -4,17 +4,15 @@ import com.zombicide.shared.domain.generic.DomainEvent;
 
 public class SwappedWeapon extends DomainEvent {
 	private final String id;
-	private final String newWeaponId;
 	private final String nameWeapon;
 	private final Integer scope;
 	private final Integer precision;
 	private final Boolean isNoisy;
 	private final Boolean openDoor;
 
-	public SwappedWeapon(String id, String newWeaponId, String nameWeapon, Integer scope, Integer precision, Boolean isNoisy, Boolean openDoor) {
+	public SwappedWeapon(String id, String nameWeapon, Integer scope, Integer precision, Boolean isNoisy, Boolean openDoor) {
 		super(EventsEnum.SWAPPED_WEAPON.name());
 		this.id = id;
-		this.newWeaponId = newWeaponId;
 		this.nameWeapon = nameWeapon;
 		this.scope = scope;
 		this.precision = precision;
@@ -24,10 +22,6 @@ public class SwappedWeapon extends DomainEvent {
 
 	public String getId() {
 		return id;
-	}
-
-	public String getNewWeaponId() {
-		return newWeaponId;
 	}
 
 	public String getNameWeapon() {

@@ -9,7 +9,7 @@ public class UnlockedSkill extends DomainEvent {
 	private final Integer unlockPoints;
 	private final Integer experience;
 
-	public UnlockedSkill(String id, String position, String nameSkill, String description, Integer unlockPoints, Integer experience) {
+	public UnlockedSkill(String id, String nameSkill, String description, Integer unlockPoints, Integer experience) {
 		super(EventsEnum.UNLOCKED_SKILL.name());
 		this.id = id;
 		this.nameSkill = nameSkill;

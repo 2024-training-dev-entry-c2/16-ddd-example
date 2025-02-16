@@ -54,7 +54,7 @@ public class Skill extends Entity<SkillId> {
 	}
 	//endregion
 
-	//region Domain Actions
+	//region Public Methods
 	public boolean validateUnlockPoints(Experience experience) {
 		return minExperience(experience) && maxExperience(experience);
 	}

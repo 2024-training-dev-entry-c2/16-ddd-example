@@ -101,7 +101,7 @@ public class Weapon extends Entity<WeaponId> {
 	}
 	//endregion
 
-	//region Domain Actions
+	//region Public Methods
 	public int rollDice() {
 		return (int) (Math.random() * 6) + 1;
 	}

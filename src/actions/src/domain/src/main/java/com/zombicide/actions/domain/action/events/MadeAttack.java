@@ -10,11 +10,11 @@ public class MadeAttack extends DomainEvent {
 	private final String typeAffectedId;
 	private final String nameAffected;
 	private final String positionAffected;
-	private final String damage;
+	private final Integer damage;
 	private final String currentState;
-	private final String isNoisy;
+	private final Boolean isNoisy;
 
-	public MadeAttack(String id, String nameAction, String description, String effect, String typeAffectedId, String nameAffected, String positionAffected, String damage, String currentState, String isNoisy) {
+	public MadeAttack(String id, String nameAction, String description, String effect, String typeAffectedId, String nameAffected, String positionAffected, Integer damage, String currentState, Boolean isNoisy) {
 		super(EventsEnum.MADE_ATTACK.name());
 		this.id = id;
 		this.nameAction = nameAction;
@@ -56,7 +56,7 @@ public class MadeAttack extends DomainEvent {
 		return positionAffected;
 	}
 
-	public String getDamage() {
+	public Integer getDamage() {
 		return damage;
 	}
 
@@ -64,7 +64,7 @@ public class MadeAttack extends DomainEvent {
 		return currentState;
 	}
 
-	public String getIsNoisy() {
+	public Boolean getNoisy() {
 		return isNoisy;
 	}
 }

@@ -8,9 +8,9 @@ public class MadeMovement extends DomainEvent {
 	private final String description;
 	private final String effect;
 	private final String position;
-	private final String isNoisy;
+	private final Boolean isNoisy;
 
-	public MadeMovement(String id, String nameAction, String description, String effect, String position, String isNoisy) {
+	public MadeMovement(String id, String nameAction, String description, String effect, String position, Boolean isNoisy) {
 		super(EventsEnum.MADE_MOVEMENT.name());
 		this.id = id;
 		this.nameAction = nameAction;
@@ -40,7 +40,7 @@ public class MadeMovement extends DomainEvent {
 		return position;
 	}
 
-	public String getIsNoisy() {
+	public Boolean getNoisy() {
 		return isNoisy;
 	}
 }

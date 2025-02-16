@@ -8,9 +8,9 @@ public class OpenedDoor extends DomainEvent {
 	private final String description;
 	private final String effect;
 	private final String position;
-	private final String isNoisy;
+	private final Boolean isNoisy;
 
-	public OpenedDoor(String id, String nameAction, String description, String effect, String position, String isNoisy) {
+	public OpenedDoor(String id, String nameAction, String description, String effect, String position, Boolean isNoisy) {
 		super(EventsEnum.OPENED_DOOR.name());
 		this.id = id;
 		this.nameAction = nameAction;
@@ -40,7 +40,7 @@ public class OpenedDoor extends DomainEvent {
 		return position;
 	}
 
-	public String getIsNoisy() {
+	public Boolean getNoisy() {
 		return isNoisy;
 	}
 }

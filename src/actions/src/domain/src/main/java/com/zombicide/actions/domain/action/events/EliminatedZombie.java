@@ -6,10 +6,10 @@ public class EliminatedZombie extends DomainEvent {
 	private final String id;
 	private final String nameZombie;
 	private final String position;
-	private final String damage;
+	private final Integer damage;
 	private final String currentState;
 
-	public EliminatedZombie(String id, String nameZombie, String position, String damage, String currentState) {
+	public EliminatedZombie(String id, String nameZombie, String position, Integer damage, String currentState) {
 		super(EventsEnum.ELIMINATED_ZOMBIE.name());
 		this.id = id;
 		this.nameZombie = nameZombie;
@@ -30,7 +30,7 @@ public class EliminatedZombie extends DomainEvent {
 		return position;
 	}
 
-	public String getDamage() {
+	public Integer getDamage() {
 		return damage;
 	}
 

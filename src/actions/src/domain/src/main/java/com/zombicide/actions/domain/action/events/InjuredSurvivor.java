@@ -6,10 +6,10 @@ public class InjuredSurvivor extends DomainEvent {
 	private final String id;
 	private final String nameSurvivor;
 	private final String position;
-	private final String damage;
+	private final Integer damage;
 	private final String currentState;
 
-	public InjuredSurvivor(String id, String nameSurvivor, String position, String damage, String currentState) {
+	public InjuredSurvivor(String id, String nameSurvivor, String position, Integer damage, String currentState) {
 		super(EventsEnum.INJURED_SURVIVOR.name());
 		this.id = id;
 		this.nameSurvivor = nameSurvivor;
@@ -30,7 +30,7 @@ public class InjuredSurvivor extends DomainEvent {
 		return position;
 	}
 
-	public String getDamage() {
+	public Integer getDamage() {
 		return damage;
 	}
 

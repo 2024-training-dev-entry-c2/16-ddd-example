@@ -6,24 +6,30 @@ import static com.zombicide.shared.domain.values.Validate.validateNotBlank;
 import static com.zombicide.shared.domain.values.Validate.validateNotNull;
 
 public class Position implements IValueObject {
-	private final String value;
+	private final Integer x;
+	private final Integer y;
 
-	private Position(String value) {
-		this.value = value;
+	private Position(Integer x, Integer y) {
+		this.x = x;
+		this.y = y;
 		validate();
 	}
 
-	public static Position of(String value) {
-		return new Position(value);
+	public static Position of(Integer x, Integer y) {
+		return new Position(x, y);
 	}
 
 	@Override
 	public void validate() {
-		validateNotNull(this.value, "The position cant be null");
-		validateNotBlank(this.value, "The position cant be blank");
+		validateNotNull(this.x, "The position cant be null");
+		validateNotNull(this.y, "The position cant be null");
 	}
 
-	public String getValue() {
-		return value;
+	public Integer getX() {
+		return x;
+	}
+
+	public Integer getY() {
+		return y;
 	}
 }

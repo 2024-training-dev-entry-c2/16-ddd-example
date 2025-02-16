@@ -1,5 +1,6 @@
 package com.zombicide.actions.domain.action.entities;
 
+import com.zombicide.actions.domain.action.values.AmountNoise;
 import com.zombicide.actions.domain.action.values.Effect;
 import com.zombicide.actions.domain.action.values.TypeId;
 import com.zombicide.actions.domain.player.values.IsNoisy;
@@ -13,25 +14,25 @@ public class Type extends Entity<TypeId> {
 	private Description description;
 	private Effect effect;
 	private Position position;
-	private IsNoisy isNoisy;
+	private AmountNoise amountNoise;
 
 	//region Constructors
-	public Type(TypeId identity, Name name, Description description, Effect effect, Position position, IsNoisy isNoisy) {
+	public Type(TypeId identity, Name name, Description description, Effect effect, Position position, AmountNoise amountNoise) {
 		super(identity);
 		this.name = name;
 		this.description = description;
 		this.effect = effect;
 		this.position = position;
-		this.isNoisy = isNoisy;
+		this.amountNoise = amountNoise;
 	}
 
-	public Type(Name name, Description description, Effect effect, Position position, IsNoisy isNoisy) {
+	public Type(Name name, Description description, Effect effect, Position position, AmountNoise amountNoise) {
 		super(new TypeId());
 		this.name = name;
 		this.description = description;
 		this.effect = effect;
 		this.position = position;
-		this.isNoisy = isNoisy;
+		this.amountNoise = amountNoise;
 	}
 	//endregion
 
@@ -68,20 +69,22 @@ public class Type extends Entity<TypeId> {
 		this.position = position;
 	}
 
-	public IsNoisy getIsNoisy() {
-		return isNoisy;
+	public AmountNoise getAmountNoise() {
+		return amountNoise;
 	}
 
-	public void setIsNoisy(IsNoisy isNoisy) {
-		this.isNoisy = isNoisy;
+	public void setAmountNoise(AmountNoise amountNoise) {
+		this.amountNoise = amountNoise;
 	}
 	//endregion
 
 	//region Public Methods
-	public void genereteNoise(String onomatopoeia) {
-		if (isNoisy.getValue()) {
-			System.out.println(onomatopoeia);
-		}
+	public void increaseNoise() {
+		this.amountNoise = AmountNoise.of(this.amountNoise.getValue() + 1);
+	}
+
+	public void resetNoise() {
+		this.amountNoise = AmountNoise.of(0);
 	}
 	//endregion
 }

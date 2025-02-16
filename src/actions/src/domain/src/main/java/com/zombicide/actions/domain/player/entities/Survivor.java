@@ -2,6 +2,7 @@ package com.zombicide.actions.domain.player.entities;
 
 import com.zombicide.actions.domain.player.values.Experience;
 import com.zombicide.actions.domain.player.values.SurvivorId;
+import com.zombicide.actions.domain.player.values.WeaponId;
 import com.zombicide.actions.domain.shared.values.CurrentState;
 import com.zombicide.actions.domain.shared.values.Name;
 import com.zombicide.actions.domain.shared.values.Position;
@@ -111,8 +112,8 @@ public class Survivor extends Entity<SurvivorId> {
 		this.weapons.add(weapon);
 	}
 
-	public void removeWeapon(Weapon weapon) {
-		this.weapons.remove(weapon);
+	public void removeWeapon(WeaponId weaponId) {
+		this.weapons.removeIf(weapon -> weapon.getIdentity().getValue().equals(weaponId.getValue()));
 	}
 	//endregion
 }

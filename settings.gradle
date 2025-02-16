@@ -1,5 +1,7 @@
 rootProject.name = 'zombicide-ddd'
 
 include ':shared:domain'
+include ':actions:domain'
 
 project(':shared:domain').projectDir = file('./src/shared/src/domain')
+project(':actions:domain').projectDir = file('./src/actions/src/domain')

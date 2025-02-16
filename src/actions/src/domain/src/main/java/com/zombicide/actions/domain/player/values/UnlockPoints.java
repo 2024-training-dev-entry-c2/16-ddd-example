@@ -1,6 +1,5 @@
 package com.zombicide.actions.domain.player.values;
 
-import com.zombicide.actions.domain.action.values.Damage;
 import com.zombicide.shared.domain.generic.IValueObject;
 
 import static com.zombicide.shared.domain.values.Validate.validateNotNegative;
@@ -20,8 +19,8 @@ public class UnlockPoints implements IValueObject {
 
 	@Override
 	public void validate() {
-		validateNotNegative(this.value, "The damage cant be negative");
-		validateNotNull(this.value, "The damage cant be null");
+		validateNotNegative(this.value, "The points cant be negative");
+		validateNotNull(this.value, "The points cant be null");
 		validateNumber(this.value);
 	}
 

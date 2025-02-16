@@ -1,4 +1,4 @@
-package com.zombicide.actions.domain.action.values;
+package com.zombicide.actions.domain.shared.values;
 
 import com.zombicide.shared.domain.generic.IValueObject;
 

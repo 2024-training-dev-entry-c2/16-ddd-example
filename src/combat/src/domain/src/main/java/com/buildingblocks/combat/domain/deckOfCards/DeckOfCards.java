@@ -125,13 +125,13 @@ public class DeckOfCards extends AggregateRoot<DeckOfCardsId> {
         }
     }
 
-    public void improveCard(String cardId, String mejora) {
+    public void improveCard(String cardId, String upgrade) {
         SkillCard card = skillCards.stream()
                 .filter(c -> c.getIdentity().getValue().equals(cardId))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Carta no encontrada"));
-        card.applyEffect(mejora);
-        apply(new ImprovedCard(this.getIdentity().getValue(), cardId, mejora));
+        card.applyEffect(upgrade);
+        apply(new ImprovedCard(this.getIdentity().getValue(), cardId, upgrade));
     }
 
     public void discardCard(String cardId) {

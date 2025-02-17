@@ -1,0 +1,8 @@
+rootProject.name = 'building-blocks'
+include ':shared:domain'
+
+project(':shared:domain').projectDir = file('./src/shared/src/domain')
+include 'combat:domain'
+project(':combat:domain').projectDir = file('./src/combat/src/domain')
+
+

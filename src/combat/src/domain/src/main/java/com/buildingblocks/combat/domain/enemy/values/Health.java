@@ -23,8 +23,8 @@ public class Health implements IValueObject {
         }
     }
 
-    public static com.buildingblocks.combat.domain.character.values.Health of(int value) {
-        return new com.buildingblocks.combat.domain.character.values.Health(value);
+    public static Health of(int value) {
+        return new Health(value);
     }
 }
 

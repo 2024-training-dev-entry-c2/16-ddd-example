@@ -11,6 +11,9 @@ public class Name implements IValueObject {
         }
         this.value = value;
     }
+    public static Name of(String value) {
+        return new Name(value);
+    }
 
     public String getValue() {
         return value;

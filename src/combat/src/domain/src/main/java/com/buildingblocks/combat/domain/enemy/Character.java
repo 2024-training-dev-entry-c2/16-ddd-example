@@ -1,8 +1,13 @@
 package com.buildingblocks.combat.domain.enemy;
 
-import com.buildingblocks.combat.domain.character.entities.ActionTaken;
-import com.buildingblocks.combat.domain.character.entities.StatusActivated;
+
+import com.buildingblocks.combat.domain.enemy.entities.ActionTaken;
 import com.buildingblocks.combat.domain.enemy.entities.Skill;
+import com.buildingblocks.combat.domain.enemy.entities.StatusActivated;
+import com.buildingblocks.combat.domain.enemy.events.AppliedStatus;
+import com.buildingblocks.combat.domain.enemy.events.RemovedStatus;
+import com.buildingblocks.combat.domain.enemy.events.SufferedDamage;
+import com.buildingblocks.combat.domain.enemy.events.TerminatedTurn;
 import com.buildingblocks.combat.domain.enemy.values.Damage;
 import com.buildingblocks.combat.domain.enemy.values.EnemyId;
 import com.buildingblocks.combat.domain.enemy.values.Health;
@@ -11,6 +16,7 @@ import com.buildingblocks.combat.domain.enemy.values.Name;
 import com.buildingblocks.combat.domain.enemy.values.TypeEnemy;
 import com.buildingblocks.shared.domain.generic.AggregateRoot;
 
+import java.time.Instant;
 import java.util.List;
 
 public class Character extends AggregateRoot<EnemyId> {
@@ -36,7 +42,8 @@ public class Character extends AggregateRoot<EnemyId> {
         this.actionTakens = actionTakens;
         this.skills = skills;
     }
-    public Character( Name name, TypeEnemy type, Health health, Damage damage, Level level, List<StatusActivated> statusActivateds, List<ActionTaken> actionTakens, List<Skill> skills) {
+
+    public Character(Name name, TypeEnemy type, Health health, Damage damage, Level level, List<StatusActivated> statusActivateds, List<ActionTaken> actionTakens, List<Skill> skills) {
         super(new EnemyId());
         this.name = name;
         this.type = type;
@@ -119,6 +126,39 @@ public class Character extends AggregateRoot<EnemyId> {
     //endregion
 
     //region DomainEvents
+    public void sufferDamage(int amount) {
+        int newHealt = health.getValue() - amount;
+        if (newHealt < 0) newHealt = 0;
+        this.health = Health.of(amount);
+
+        if (newHealt == 0) {
+            apply(new SufferedDamage(this.getIdentity().getValue(), amount));
+        }
+    }
+
+    public void beCured(int amount) {
+        int newHealt = health.getValue() + amount;
+        this.health = Health.of(newHealt);
+    }
+
+    public void applyState(StatusActivated state) {
+        statusActivateds.add(state);
+        apply(new AppliedStatus(this.getIdentity().getValue(), state.getIdentity().getValue(), state.getName().getValue(), state.getRemainingTurns()));
+    }
+
+    public void removeState(String stateId) {
+        statusActivateds.removeIf(state -> state.getIdentity().getValue().equals(stateId));
+        apply(new RemovedStatus(this.getIdentity().getValue(), stateId));
+    }
+
+    public void actionRegister(ActionTaken accion) {
+        actionTakens.add(accion);
+    }
+
+    public void endturn() {
+        statusActivateds.forEach(StatusActivated::apply);
+        apply(new TerminatedTurn(this.getIdentity().getValue()));
+    }
 
     //endregion
 

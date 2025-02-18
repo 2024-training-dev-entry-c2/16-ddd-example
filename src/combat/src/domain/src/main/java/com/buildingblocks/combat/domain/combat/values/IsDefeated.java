@@ -3,13 +3,13 @@ package com.buildingblocks.combat.domain.combat.values;
 import com.buildingblocks.shared.domain.generic.IValueObject;
 
 public class IsDefeated implements IValueObject {
-    private final boolean value;
+    private final Boolean value;
 
-    private IsDefeated(boolean value) {
+    private IsDefeated(Boolean value) {
         this.value = value;
     }
 
-    public static IsDefeated of(boolean value) {
+    public static IsDefeated of(Boolean value) {
         IsDefeated initiative = new IsDefeated(value);
         initiative.validate();
         return initiative;
@@ -22,12 +22,10 @@ public class IsDefeated implements IValueObject {
 
     @Override
     public void validate() {
-        if (value==true) {
-            throw new IllegalArgumentException("Initiative value cannot be negative.");
-        }
+
     }
 
-    public boolean getValue() {
+    public Boolean getValue() {
         return value;
     }
 }

@@ -1,6 +1,7 @@
 package com.buildingblocks.combat.domain.combat.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class CombatStatus implements IValueObject {
     private final String state;
@@ -20,12 +21,9 @@ public class CombatStatus implements IValueObject {
 
     @Override
     public void validate() {
-        if (this.state == null) {
-            throw new IllegalArgumentException("the stateCombat cant be null");
-        }
-        if (this.state.isBlank()) {
-            throw new IllegalArgumentException("the stateCombat cant be black");
-        }
+        Validator.validateNotNull(state);
+        Validator.validateNotBlank(state);
+
     }
     @Override
     public String toString() {

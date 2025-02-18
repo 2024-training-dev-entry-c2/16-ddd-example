@@ -1,6 +1,7 @@
 package com.buildingblocks.combat.domain.deckOfCards.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class EffectType implements IValueObject {
     private final String nameEffect;//atacar, curar,habiliadad
@@ -22,9 +23,9 @@ public class EffectType implements IValueObject {
 
     @Override
     public void validate() {
-        if (nameEffect == null || nameEffect.isEmpty()) {
-            throw new IllegalArgumentException("TipoEfecto cannot be null or empty.");
-        }
+        Validator.validateTextNotNull(nameEffect);
+        Validator.validateTextNotNull(duration);
+        Validator.validateTextNotNull(intensity);
     }
 
     public String getNameEffect() {

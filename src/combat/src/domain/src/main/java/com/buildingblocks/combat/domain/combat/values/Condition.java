@@ -1,6 +1,7 @@
 package com.buildingblocks.combat.domain.combat.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class Condition implements IValueObject {
     private final String value;
@@ -17,9 +18,7 @@ public class Condition implements IValueObject {
 
     @Override
     public void validate() {
-        if (value== null || value.isBlank()) {
-            throw new IllegalArgumentException("Name value cannot be negative.");
-        }
+        Validator.validateTextNotNull(value);
     }
 
     public String getValue() {

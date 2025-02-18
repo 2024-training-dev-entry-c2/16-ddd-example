@@ -1,6 +1,7 @@
 package com.buildingblocks.combat.domain.combat.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +25,7 @@ public class ActionTaken implements IValueObject {
 
     @Override
     public void validate() {
-        if (actions == null) {
-            throw new IllegalArgumentException("Actions list cannot be null.");
-        }
+        Validator.validateNotNull(actions);
     }
 
     public List<String> getActions() {

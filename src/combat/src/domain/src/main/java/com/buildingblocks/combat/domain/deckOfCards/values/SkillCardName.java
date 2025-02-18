@@ -1,6 +1,7 @@
 package com.buildingblocks.combat.domain.deckOfCards.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class SkillCardName implements IValueObject {
     private final String value;
@@ -15,9 +16,7 @@ public class SkillCardName implements IValueObject {
 
     @Override
     public void validate() {
-        if (value == null || value.isEmpty()) {
-            throw new IllegalArgumentException("SkillCardName cannot be null or empty.");
-        }
+        Validator.validateTextNotNull(value);
     }
 
     public String getValue() {

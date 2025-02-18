@@ -1,15 +1,16 @@
 package com.buildingblocks.combat.domain.combat.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class Health implements IValueObject {
-    private final int value;
+    private final Integer value;
 
-    private Health(int value) {
+    private Health(Integer value) {
         this.value = value;
     }
 
-    public static Health of(int value) {
+    public static Health of(Integer value) {
         Health health = new Health(value);
         health.validate();
         return health;
@@ -17,12 +18,10 @@ public class Health implements IValueObject {
 
     @Override
     public void validate() {
-        if (value < 0) {
-            throw new IllegalArgumentException("Health value cannot be negative.");
-        }
+        Validator.validatePositive(value);
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return value;
     }
 }

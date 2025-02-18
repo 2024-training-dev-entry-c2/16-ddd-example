@@ -4,9 +4,9 @@ import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 public class RestedCard extends DomainEvent {
     private final String deckId;
-    private  final boolean isLongRest;
+    private  final Boolean isLongRest;
 
-    public RestedCard( String deckId, boolean isLongRest) {
+    public RestedCard( String deckId, Boolean isLongRest) {
         super(EventsEnum.CARDS_RESTED.name());
         this.deckId = deckId;
         this.isLongRest = isLongRest;
@@ -16,7 +16,7 @@ public class RestedCard extends DomainEvent {
         return deckId;
     }
 
-    public boolean isLongRest() {
+    public Boolean isLongRest() {
         return isLongRest;
     }
 }

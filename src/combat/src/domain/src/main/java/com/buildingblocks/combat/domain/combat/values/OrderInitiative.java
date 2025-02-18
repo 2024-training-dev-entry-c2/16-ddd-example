@@ -1,6 +1,7 @@
 package com.buildingblocks.combat.domain.combat.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 import java.util.List;
 
@@ -16,9 +17,7 @@ public class OrderInitiative implements IValueObject {
 
     @Override
     public void validate() {
-        if (participants == null || participants.isEmpty()) {
-            throw new IllegalArgumentException("the participant cant be null or empty.");
-        }
+        Validator.validateNotNull(participants);
     }
 
     public List<Object> getParticipants() {

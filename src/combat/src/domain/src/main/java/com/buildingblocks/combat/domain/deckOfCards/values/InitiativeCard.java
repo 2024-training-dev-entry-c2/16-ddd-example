@@ -1,26 +1,25 @@
 package com.buildingblocks.combat.domain.deckOfCards.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class InitiativeCard implements IValueObject {
-    private final int value;
+    private final Integer value;
 
-    private InitiativeCard(int value) {
+    private InitiativeCard(Integer value) {
         this.value = value;
     }
 
-    public static InitiativeCard of(int value) {
+    public static InitiativeCard of(Integer value) {
         return new InitiativeCard(value);
     }
 
     @Override
     public void validate() {
-        if (value < 0) {
-            throw new IllegalArgumentException("InitiativeCard cannot be negative.");
-        }
+        Validator.validatePositive(value);
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return value;
     }
 }

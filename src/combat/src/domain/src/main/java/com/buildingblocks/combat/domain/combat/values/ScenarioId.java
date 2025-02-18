@@ -1,6 +1,7 @@
 package com.buildingblocks.combat.domain.combat.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class ScenarioId implements IValueObject {
     private final String id;
@@ -17,9 +18,7 @@ public class ScenarioId implements IValueObject {
 
     @Override
     public void validate() {
-        if (id == null || id.trim().isEmpty()) {
-            throw new IllegalArgumentException("Scenario ID cannot be null or empty.");
-        }
+        Validator.validateTextNotNull(id);
     }
 
     public String getId() {

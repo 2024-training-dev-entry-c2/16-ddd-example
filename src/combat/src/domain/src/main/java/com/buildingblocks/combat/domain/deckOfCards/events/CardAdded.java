@@ -5,15 +5,15 @@ import com.buildingblocks.shared.domain.generic.DomainEvent;
 public class CardAdded extends DomainEvent {
     private  final String cardId;
     private final String cardName;
-    private final int initiative;
+    private final Integer initiative;
     private final String effectType;
-    private final int objectives;
-    private final int scope;
+    private final Integer objectives;
+    private final Integer scope;
     private  final String deckId;
     private final String intensity;
     private  final String duration;
 
-    public CardAdded(String type, String cardId, String cardName, int initiative, String effectType, int objectives, int scope, String deckId, String intensity, String duration) {
+    public CardAdded(String type, String cardId, String cardName, Integer initiative, String effectType, Integer objectives, Integer scope, String deckId, String intensity, String duration) {
         super(type);
         this.cardId = cardId;
         this.cardName = cardName;
@@ -38,7 +38,7 @@ public class CardAdded extends DomainEvent {
         return cardName;
     }
 
-    public int getInitiative() {
+    public Integer getInitiative() {
         return initiative;
     }
 
@@ -46,11 +46,11 @@ public class CardAdded extends DomainEvent {
         return effectType;
     }
 
-    public int getObjectives() {
+    public Integer getObjectives() {
         return objectives;
     }
 
-    public int getScope() {
+    public Integer getScope() {
         return scope;
     }
 

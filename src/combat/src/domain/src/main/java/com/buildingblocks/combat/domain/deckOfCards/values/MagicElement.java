@@ -1,6 +1,7 @@
 package com.buildingblocks.combat.domain.deckOfCards.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class MagicElement implements IValueObject {
     private final String element;
@@ -25,9 +26,8 @@ public class MagicElement implements IValueObject {
 
     @Override
     public void validate() {
-        if (element == null || element.isEmpty()) {
-            throw new IllegalArgumentException("Efecto cannot be null or empty.");
-        }
+        Validator.validateTextNotNull(element);
+        Validator.validateTextNotNull(state);
     }
 
     public String getElement() {

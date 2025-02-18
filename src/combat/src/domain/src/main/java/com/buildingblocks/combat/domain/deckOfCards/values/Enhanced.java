@@ -3,13 +3,13 @@ package com.buildingblocks.combat.domain.deckOfCards.values;
 import com.buildingblocks.shared.domain.generic.IValueObject;
 
 public class Enhanced  implements IValueObject {
-    private final boolean value;
+    private final Boolean value;
 
-    private Enhanced(boolean value) {
+    private Enhanced(Boolean value) {
         this.value = value;
     }
 
-    public static Enhanced of(boolean value) {
+    public static Enhanced of(Boolean value) {
         return new Enhanced(value);
     }
 
@@ -18,7 +18,7 @@ public class Enhanced  implements IValueObject {
 
     }
 
-    public boolean isValue() {
+    public Boolean isValue() {
         return value;
     }
 }

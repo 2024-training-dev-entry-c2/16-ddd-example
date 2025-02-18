@@ -1,15 +1,16 @@
 package com.buildingblocks.combat.domain.combat.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class Initiative implements IValueObject {
-    private final int value;
+    private final Integer value;
 
-    private Initiative(int value) {
+    private Initiative(Integer value) {
         this.value = value;
     }
 
-    public static Initiative of(int value) {
+    public static Initiative of(Integer value) {
         Initiative initiative = new Initiative(value);
         initiative.validate();
         return initiative;
@@ -17,12 +18,11 @@ public class Initiative implements IValueObject {
 
     @Override
     public void validate() {
-        if (value < 0) {
-            throw new IllegalArgumentException("Initiative value cannot be negative.");
-        }
+        Validator.validatePositive(value);
+
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return value;
     }
 }

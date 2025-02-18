@@ -1,5 +1,8 @@
 package com.buildingblocks.industries.domain.resourceMarket;
 
+import com.buildingblocks.industries.domain.industry.IndustryHandler;
+import com.buildingblocks.industries.domain.player.Player;
+import com.buildingblocks.industries.domain.player.values.PlayerId;
 import com.buildingblocks.industries.domain.resourceMarket.entities.TradeExchange;
 import com.buildingblocks.industries.domain.resourceMarket.events.DepletedMarketSupply;
 import com.buildingblocks.industries.domain.resourceMarket.events.ExecutedTrade;
@@ -9,6 +12,7 @@ import com.buildingblocks.industries.domain.resourceMarket.values.AvailableResou
 import com.buildingblocks.industries.domain.resourceMarket.values.ResourceMarketId;
 import com.buildingblocks.industries.domain.resourceMarket.values.ResourcePrice;
 import com.buildingblocks.shared.domain.generic.AggregateRoot;
+import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 import java.util.List;
 
@@ -20,6 +24,7 @@ public class ResourceMarket extends AggregateRoot<ResourceMarketId> {
     // region Constructors
     public ResourceMarket() {
         super(new ResourceMarketId());
+        subscribe(new ResourceMarketHandler(this));
     }
 
     private ResourceMarket(ResourceMarketId identity) {
@@ -68,6 +73,20 @@ public class ResourceMarket extends AggregateRoot<ResourceMarketId> {
 
     public void updateResourcePrice(String id, String resourceType, Integer oldResourcePrice, Integer newResourcePrice) {
         apply(new UpdatedResourcePrice(id, resourceType, oldResourcePrice, newResourcePrice));
+    }
+    // endregion
+
+    // region Public Methods
+    public void addResources(int quantityToAdd, String resourceType) {
+        AvailableResources updatedResources = availableResources.increaseQuantity(quantityToAdd, resourceType);
+        setAvailableResources(updatedResources);
+    }
+
+    public static ResourceMarket from(final String identity, final List<DomainEvent> events) {
+        ResourceMarket resourceMarket = new ResourceMarket(ResourceMarketId.of(identity));
+
+        events.forEach(resourceMarket::apply);
+        return resourceMarket;
     }
     // endregion
 }

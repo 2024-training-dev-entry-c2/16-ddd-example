@@ -1,6 +1,6 @@
 package com.buildingblocks.industries.domain.player;
 
-import com.buildingblocks.industries.domain.industry.events.ActivatedIndustryMarketLink;
+import com.buildingblocks.industries.domain.industry.Industry;
 import com.buildingblocks.industries.domain.industry.values.IndustryId;
 import com.buildingblocks.industries.domain.player.entities.Loan;
 import com.buildingblocks.industries.domain.player.entities.Transaction;
@@ -10,6 +10,9 @@ import com.buildingblocks.industries.domain.player.values.Budget;
 import com.buildingblocks.industries.domain.player.values.Income;
 import com.buildingblocks.industries.domain.player.values.PlayerId;
 import com.buildingblocks.shared.domain.generic.AggregateRoot;
+import com.buildingblocks.shared.domain.generic.DomainEvent;
+
+import java.util.List;
 
 public class Player extends AggregateRoot<PlayerId> {
     private Loan loan;
@@ -20,6 +23,7 @@ public class Player extends AggregateRoot<PlayerId> {
     // region Constructors
     public Player() {
         super(new PlayerId());
+        subscribe(new PlayerHandler(this));
     }
 
     private Player(PlayerId identity) {
@@ -84,6 +88,13 @@ public class Player extends AggregateRoot<PlayerId> {
     // endregion
 
     // region Public Methods
+    public static Player from(final String identity, final List<DomainEvent> events) {
+        Player player = new Player(PlayerId.of(identity));
+
+        events.forEach(player::apply);
+        return player;
+    }
+
     public void spentBudget(Amount amount) {
         int newBudgetValue = this.budget.getValue() - amount.getValue();
 

@@ -5,6 +5,9 @@ import com.buildingblocks.industries.domain.industry.entities.UpgradeStage;
 import com.buildingblocks.industries.domain.industry.events.*;
 import com.buildingblocks.industries.domain.industry.values.*;
 import com.buildingblocks.shared.domain.generic.AggregateRoot;
+import com.buildingblocks.shared.domain.generic.DomainEvent;
+
+import java.util.List;
 
 public class Industry extends AggregateRoot<IndustryId> {
     private MarketLink marketLink;
@@ -21,14 +24,18 @@ public class Industry extends AggregateRoot<IndustryId> {
     private RequiredResource requiredResource;
     private StoredResources storedResources;
     private Type type;
+    private TechLevelRequired techLevelRequired;
 
     // region Constructors
-    public Industry() {
+    public Industry(String type, Integer level, String location, Integer cost, String requiredResource, Integer techLevelRequired, Boolean isConnectedToNetwork, String era, Boolean isFlipped) {
         super(new IndustryId());
+        subscribe(new IndustryHandler(this));
+        apply(new BuiltIndustry(type, level, location, cost, requiredResource, techLevelRequired, isConnectedToNetwork, era, isFlipped));
     }
 
     private Industry(IndustryId identity) {
         super(identity);
+        subscribe(new IndustryHandler(this));
     }
     // endregion
 
@@ -144,6 +151,15 @@ public class Industry extends AggregateRoot<IndustryId> {
     public void setType(Type type) {
         this.type = type;
     }
+
+    public TechLevelRequired getTechLevelRequired() {
+        return techLevelRequired;
+    }
+
+    public void setTechLevelRequired(TechLevelRequired techLevelRequired) {
+        this.techLevelRequired = techLevelRequired;
+    }
+
     // endregion
 
     // region Domain Actions
@@ -173,6 +189,15 @@ public class Industry extends AggregateRoot<IndustryId> {
 
     public void upgrade(String id, String type, Integer level, String location, Boolean isFlipped, String requiredResource, Integer quantityRequiredResource, Integer cost, Integer techLevelRequired, Boolean isRequiredResearch, String era) {
         apply(new UpgradedIndustry(id, type, level, location, isFlipped, requiredResource, quantityRequiredResource, cost, techLevelRequired, isRequiredResearch, era));
+    }
+    // endregion
+
+    // region Public Methods
+    public static Industry from(final String identity, final List<DomainEvent> events) {
+        Industry industry = new Industry(IndustryId.of(identity));
+
+        events.forEach(industry::apply);
+        return industry;
     }
     // endregion
 }

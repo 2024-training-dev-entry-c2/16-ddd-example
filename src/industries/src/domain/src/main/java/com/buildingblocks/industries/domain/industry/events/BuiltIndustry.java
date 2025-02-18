@@ -1,5 +1,6 @@
 package com.buildingblocks.industries.domain.industry.events;
 
+import com.buildingblocks.industries.domain.industry.values.*;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 public class BuiltIndustry extends DomainEvent {
@@ -50,7 +51,7 @@ public class BuiltIndustry extends DomainEvent {
         return techLevelRequired;
     }
 
-    public Boolean getConnectedToNetwork() {
+    public Boolean getIsConnectedToNetwork() {
         return isConnectedToNetwork;
     }
 

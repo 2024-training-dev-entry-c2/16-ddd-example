@@ -1,11 +1,8 @@
 package com.buildingblocks.industries.domain.player;
 
-import com.buildingblocks.industries.domain.industry.Industry;
-import com.buildingblocks.industries.domain.industry.values.IndustryId;
 import com.buildingblocks.industries.domain.player.entities.Loan;
 import com.buildingblocks.industries.domain.player.entities.Transaction;
 import com.buildingblocks.industries.domain.player.events.*;
-import com.buildingblocks.industries.domain.player.values.Amount;
 import com.buildingblocks.industries.domain.player.values.Budget;
 import com.buildingblocks.industries.domain.player.values.Income;
 import com.buildingblocks.industries.domain.player.values.PlayerId;

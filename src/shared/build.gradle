@@ -1,2 +1,5 @@
-group = 'com.buildingblocks.shared'
+group = 'org.arknova.shared'
 version = '1'
+
+
+

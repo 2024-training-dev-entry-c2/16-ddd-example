@@ -46,17 +46,12 @@ public class IndustryHandler extends DomainActionsContainer {
             int requiredQuantity = event.getQuantityRequiredResource();
 
             List<String> storedResources = industry.getStoredResources().getValue();
-
             long availableQuantity = storedResources.stream().filter(r -> r.equals(requiredResource)).count();
 
             if (availableQuantity >= requiredQuantity) {
-                for (int i = 0; i < requiredQuantity; i++) {
-                    storedResources.remove(requiredResource);
-                }
+                for (int i = 0; i < requiredQuantity; i++) storedResources.remove(requiredResource);
                 industry.setStoredResources(StoredResources.of(storedResources));
-            } else {
-                throw new IllegalStateException("Not enough resources to consume");
-            }
+            } else throw new IllegalStateException("Not enough resources to consume");
         };
     }
 

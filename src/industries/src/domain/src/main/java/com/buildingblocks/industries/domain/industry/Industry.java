@@ -5,6 +5,9 @@ import com.buildingblocks.industries.domain.industry.entities.UpgradeStage;
 import com.buildingblocks.industries.domain.industry.events.*;
 import com.buildingblocks.industries.domain.industry.values.*;
 import com.buildingblocks.shared.domain.generic.AggregateRoot;
+import com.buildingblocks.shared.domain.generic.DomainEvent;
+
+import java.util.List;
 
 public class Industry extends AggregateRoot<IndustryId> {
     private MarketLink marketLink;
@@ -186,6 +189,15 @@ public class Industry extends AggregateRoot<IndustryId> {
 
     public void upgrade(String id, String type, Integer level, String location, Boolean isFlipped, String requiredResource, Integer quantityRequiredResource, Integer cost, Integer techLevelRequired, Boolean isRequiredResearch, String era) {
         apply(new UpgradedIndustry(id, type, level, location, isFlipped, requiredResource, quantityRequiredResource, cost, techLevelRequired, isRequiredResearch, era));
+    }
+    // endregion
+
+    // region Public Methods
+    public static Industry from(final String identity, final List<DomainEvent> events) {
+        Industry industry = new Industry(IndustryId.of(identity));
+
+        events.forEach(industry::apply);
+        return industry;
     }
     // endregion
 }

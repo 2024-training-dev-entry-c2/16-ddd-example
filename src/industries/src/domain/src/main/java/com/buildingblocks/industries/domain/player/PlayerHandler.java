@@ -25,8 +25,6 @@ public class PlayerHandler extends DomainActionsContainer {
         return (AdjustedIncome event) -> {
             Income updatedIncome = Income.of(event.getUpdatedIncome());
             player.setIncome(updatedIncome);
-
-            System.out.println("Income adjusted. New Income: " + updatedIncome.getValue());
         };
     }
 
@@ -35,38 +33,28 @@ public class PlayerHandler extends DomainActionsContainer {
         return (EarnedMoney event) -> {
             Budget updatedBudget = Budget.of(player.getBudget().getValue() + event.getAmount());
             player.setBudget(updatedBudget);
-
-            System.out.println("Money earned: " + event.getAmount() + ". New Budget: " + updatedBudget.getValue());
         };
     }
 
 
     public Consumer<? extends DomainEvent> executeTransaction(Player player) {
         return (ExecutedTransaction event) -> {
-            if (player.getBudget().getValue() < event.getAmount()) {
+            if (player.getBudget().getValue() < event.getAmount())
                 throw new IllegalStateException("Not enough budget to execute the transaction.");
-            }
 
             Budget updatedBudget = Budget.of(player.getBudget().getValue() - event.getAmount());
             player.setBudget(updatedBudget);
-
-            System.out.println("Transaction executed. Resource: " + event.getResourceType() +
-                    ". Amount: " + event.getAmount() + ". New Budget: " + updatedBudget.getValue());
         };
     }
 
 
     public Consumer<? extends DomainEvent> spendBudget(Player player) {
         return (SpentBudget event) -> {
-            if (player.getBudget().getValue() < event.getAmount()) {
+            if (player.getBudget().getValue() < event.getAmount())
                 throw new IllegalStateException("Not enough budget to spend.");
-            }
 
             Budget updatedBudget = Budget.of(player.getBudget().getValue() - event.getAmount());
             player.setBudget(updatedBudget);
-
-            System.out.println("Budget spent: " + event.getAmount() + ". Reason: " + event.getReason() +
-                    ". New Budget: " + updatedBudget.getValue());
         };
     }
 
@@ -75,18 +63,14 @@ public class PlayerHandler extends DomainActionsContainer {
         return (TakenLoan event) -> {
             Budget updatedBudget = Budget.of(player.getBudget().getValue() - event.getReductionbudget() + event.getAmount());
             player.setBudget(updatedBudget);
-
             Amount loanAmount = Amount.of(event.getAmount());
 
-            if (loanAmount.getValue() <= 0 || loanAmount.getValue() % 10 != 0 || loanAmount.getValue() > 30) {
+            if (loanAmount.getValue() <= 0 || loanAmount.getValue() % 10 != 0 || loanAmount.getValue() > 30)
                 throw new IllegalArgumentException("The loan must be in increments of 10, greater than 0 and cannot exceed 30");
-            }
 
             Quantity loanQuantity = Quantity.of(loanAmount.getValue() / 10);
             Loan loan = new Loan(loanAmount, loanQuantity);
             player.setLoan(loan);
-
-            System.out.println("Loan taken: " + loanAmount.getValue() + ". Budget after loan: " + updatedBudget.getValue());
         };
     }
 

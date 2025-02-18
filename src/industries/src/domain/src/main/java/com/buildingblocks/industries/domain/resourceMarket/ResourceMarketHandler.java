@@ -28,9 +28,6 @@ public class ResourceMarketHandler extends DomainActionsContainer {
 
             AvailableResources updatedResources = AvailableResources.of(updatedResourcesList);
             resourceMarket.setAvailableResources(updatedResources);
-
-            System.out.println("Market supply depleted for resource: " + event.getResourceType() +
-                    ". Updated available resources: " + updatedResourcesList);
         };
     }
 
@@ -39,29 +36,18 @@ public class ResourceMarketHandler extends DomainActionsContainer {
             String tradeType = event.getTradeType();
             String resourceType = event.getResourceType();
             String tradeId = event.getId();
-
             Integer totalResourcesPrice = event.getTotalResourcesPrice();
             Integer resourceQuantity = event.getResourceQuantity();
 
             resourceMarket.executeTrade(tradeId, tradeType, resourceType, totalResourcesPrice, resourceQuantity);
-
-            System.out.println("Executed trade: " + tradeType + " for " + resourceQuantity + " of resource " +
-                    resourceType + ". Total resources price: " + totalResourcesPrice);
         };
     }
-
 
     public Consumer<? extends DomainEvent> refillMarketSupply(ResourceMarket resourceMarket) {
         return (RefilledMarketSupply event) -> {
             resourceMarket.addResources(event.getAddedResourceQuantity(), event.getResourceType());
-
             ResourcePrice updatedPrice = ResourcePrice.of(event.getUpdatedResourcePrice());
-
             resourceMarket.setResourcePrice(updatedPrice);
-
-            System.out.println("Market supply refilled for resource: " + event.getResourceType() +
-                    ". New resource quantity: " + event.getAddedResourceQuantity() +
-                    ". Updated price: " + updatedPrice.getValue());
         };
     }
 
@@ -69,12 +55,8 @@ public class ResourceMarketHandler extends DomainActionsContainer {
         return (UpdatedResourcePrice event) -> {
             ResourcePrice oldResourcePrice = ResourcePrice.of(event.getOldResourcePrice());
             ResourcePrice newResourcePrice = ResourcePrice.of(event.getNewResourcePrice());
-
             resourceMarket.updateResourcePrice(event.getId(), event.getResourceType(),
                     oldResourcePrice.getValue(), newResourcePrice.getValue());
-
-            System.out.println("Resource price updated for resource: " + event.getResourceType() +
-                    ". Old price: " + oldResourcePrice.getValue() + ". New price: " + newResourcePrice.getValue());
         };
     }
 

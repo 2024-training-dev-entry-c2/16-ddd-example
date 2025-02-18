@@ -21,10 +21,12 @@ public class Industry extends AggregateRoot<IndustryId> {
     private RequiredResource requiredResource;
     private StoredResources storedResources;
     private Type type;
+    private TechLevelRequired techLevelRequired;
 
     // region Constructors
     public Industry() {
         super(new IndustryId());
+        subscribe(new IndustryHandler(this));
     }
 
     private Industry(IndustryId identity) {
@@ -144,6 +146,15 @@ public class Industry extends AggregateRoot<IndustryId> {
     public void setType(Type type) {
         this.type = type;
     }
+
+    public TechLevelRequired getTechLevelRequired() {
+        return techLevelRequired;
+    }
+
+    public void setTechLevelRequired(TechLevelRequired techLevelRequired) {
+        this.techLevelRequired = techLevelRequired;
+    }
+
     // endregion
 
     // region Domain Actions

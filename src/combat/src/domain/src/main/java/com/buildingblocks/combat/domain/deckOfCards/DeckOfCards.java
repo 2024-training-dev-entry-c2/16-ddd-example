@@ -28,25 +28,11 @@ public class DeckOfCards extends AggregateRoot<DeckOfCardsId> {
         super(new DeckOfCardsId());
         subscribe(new DeckOfCardsHandler(this));
     }
-    public DeckOfCards(DeckOfCardsId id) {
+    private DeckOfCards(DeckOfCardsId id) {
         super(id);
         subscribe(new DeckOfCardsHandler(this));
     }
 
-    public DeckOfCards(DeckOfCardsId identity, ParticipantId participantId, StatusDeck statusDeck, List<SkillCard> skillCards) {
-        super(identity);
-        subscribe(new DeckOfCardsHandler(this));
-        this.participantId = participantId;
-        this.statusDeck = statusDeck;
-        this.skillCards = skillCards;
-    }
-
-    public DeckOfCards(ParticipantId participantId, StatusDeck statusDeck, List<SkillCard> skillCards) {
-        super(new DeckOfCardsId());
-        this.participantId = participantId;
-        this.statusDeck = statusDeck;
-        this.skillCards = skillCards;
-    }
     //endregion
     //region Getter & Setter
 
@@ -120,14 +106,7 @@ public class DeckOfCards extends AggregateRoot<DeckOfCardsId> {
     }
 
     public void recoverCard(String cardId) {
-        SkillCard card = findCardById(cardId);
-        if (discardedCards.contains(card)) {
-            discardedCards.remove(card);
-            skillCards.add(card);
             apply(new RecoveredCard(this.getIdentity().getValue(), cardId));
-        } else {
-            throw new IllegalArgumentException("La carta no está descartada.");
-        }
     }
 
     public void improveCard(String cardId, String upgrade) {

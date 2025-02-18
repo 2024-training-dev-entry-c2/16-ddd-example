@@ -7,6 +7,7 @@ public enum EventsEnum {
     DAMAGE_SUFFERED,
     BE_CURED,
     TERMINATED_TURN,
-    SKILL_USED
+    SKILL_USED,
+    SKILL_ADDED
 
 }

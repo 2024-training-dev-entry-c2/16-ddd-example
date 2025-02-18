@@ -103,9 +103,7 @@ public class DeckOfCardsHandler extends DomainActionsContainer {
     public Consumer<? extends DomainEvent> discardCard(DeckOfCards deck) {
         return (CardRemoved event) -> {
             SkillCard card = deck.findCardById(event.getCardId());
-
             deck.getDiscardedCards().add(card);
-
         };
     }
 

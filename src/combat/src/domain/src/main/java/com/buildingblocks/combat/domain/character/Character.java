@@ -20,7 +20,7 @@ import com.buildingblocks.combat.domain.character.values.ObjectId;
 import com.buildingblocks.combat.domain.character.values.StatusActivateId;
 
 
-
+import com.buildingblocks.combat.domain.combat.CombatHandler;
 import com.buildingblocks.shared.domain.generic.AggregateRoot;
 
 import java.util.List;
@@ -36,25 +36,15 @@ public class Character extends AggregateRoot<CharacterId> {
     private List<Object> objects;
 
     //region Constructors
-    public Character(CharacterId identity, DeckOfCardsId deck, Name name, Health health, Level level, List<StatusActivated> efectosActivos, List<ActionTaken> historialAcciones, List<Object> objetos) {
+
+    private Character(CharacterId identity) {
         super(identity);
-        this.deck = deck;
-        this.name = name;
-        this.health = health;
-        this.level = level;
-        this.effectActives = efectosActivos;
-        this.historyActions = historialAcciones;
-        this.objects = objetos;
+        subscribe(new CharacterHandler(this));
     }
-    public Character(DeckOfCardsId deck, Name name, Health health, Level level, List<StatusActivated> efectosActivos, List<ActionTaken> historialAcciones, List<Object> objetos) {
+
+    public Character() {
         super(new CharacterId());
-        this.deck = deck;
-        this.name = name;
-        this.health = health;
-        this.level = level;
-        this.effectActives = efectosActivos;
-        this.historyActions = historialAcciones;
-        this.objects = objetos;
+        subscribe(new CharacterHandler(this));
     }
     //endregion
     //region Getters & Setter
@@ -132,7 +122,8 @@ public class Character extends AggregateRoot<CharacterId> {
     public void removeEffect(String effectId) {
         apply(new RemovedStatus(this.getIdentity().getValue(), effectId));
     }
-//
+
+    //
     public void registerAction(ActionTaken action) {
         apply(new RegisteredAction(
                 this.getIdentity().getValue(),
@@ -147,10 +138,11 @@ public class Character extends AggregateRoot<CharacterId> {
         ));
     }
 
-    public void useObject(ObjectId objectId,Name ObjectName) {
+    public void useObject(ObjectId objectId, Name ObjectName) {
         apply(new UsedObject(this.getIdentity().getValue(), objectId.getValue(), ObjectName.getValue()));
     }
-//
+
+    //
     public void equipObject(ObjectId objectId, Name ObjectName) {
 
         apply(new EquippedObject(this.getIdentity().getValue(), objectId.getValue(), ObjectName.getValue()));
@@ -162,10 +154,9 @@ public class Character extends AggregateRoot<CharacterId> {
     }
 
     public void receiveDamage(int amount) {
-      // La salud no puede ser negativa
+        // La salud no puede ser negativa
         apply(new SufferedDamage(this.getIdentity().getValue(), amount));
     }
-
 
 
     public void beCured(int amount) {

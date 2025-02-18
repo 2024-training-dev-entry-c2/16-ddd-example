@@ -2,26 +2,25 @@ package com.buildingblocks.combat.domain.enemy.values;
 
 import com.buildingblocks.combat.domain.deckOfCards.values.Objetives;
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class Objetive implements IValueObject {
-    private final int value;
+    private final Integer value;
 
-    private Objetive(int value) {
+    private Objetive(Integer value) {
         this.value = value;
     }
 
-    public static Objetive of(int value) {
+    public static Objetive of(Integer value) {
         return new Objetive(value);
     }
 
     @Override
     public void validate() {
-        if (value == 0 ) {
-            throw new IllegalArgumentException("Objetivos cannot be null or empty.");
-        }
+        Validator.validatePositive(value);
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return value;
     }
 

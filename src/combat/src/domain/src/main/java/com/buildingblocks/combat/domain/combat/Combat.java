@@ -20,6 +20,7 @@ import com.buildingblocks.combat.domain.combat.values.Health;
 import com.buildingblocks.combat.domain.combat.values.Initiative;
 import com.buildingblocks.combat.domain.combat.values.Name;
 import com.buildingblocks.combat.domain.combat.values.ScenarioId;
+import com.buildingblocks.combat.domain.deckOfCards.DeckOfCardsHandler;
 import com.buildingblocks.shared.domain.generic.AggregateRoot;
 
 import java.util.ArrayList;
@@ -35,13 +36,25 @@ public class Combat extends AggregateRoot<CombatId> {
     private CurrentTurn currentTurnIndex;
     //region Constructor
 
-    public Combat(CombatId identity, CombatStatus state, ScenarioId scenarioId, List<GameTurn> turns, List<EnemyCombat> enemies, List<CharacterCombat> team) {
+
+    private Combat(CombatId identity) {
+        super(identity);
+        subscribe(new CombatHandler(this));
+    }
+
+    public Combat() {
+        super(new CombatId());
+        subscribe(new CombatHandler(this));
+    }
+
+    private Combat(CombatId identity, CombatStatus state, ScenarioId scenarioId, List<GameTurn> turns, List<EnemyCombat> enemies, List<CharacterCombat> team) {
         super(identity);
         this.state = state;
         this.scenarioId = scenarioId;
         this.turns = turns;
         this.enemies = enemies;
         this.characterTeam = team;
+        subscribe(new CombatHandler(this));
     }
 
     public Combat(CombatStatus state, ScenarioId scenarioId, List<GameTurn> turns, List<EnemyCombat> enemies, List<CharacterCombat> team) {
@@ -51,6 +64,7 @@ public class Combat extends AggregateRoot<CombatId> {
         this.turns = turns;
         this.enemies = enemies;
         this.characterTeam = team;
+        subscribe(new CombatHandler(this));
     }
 
     //endregion

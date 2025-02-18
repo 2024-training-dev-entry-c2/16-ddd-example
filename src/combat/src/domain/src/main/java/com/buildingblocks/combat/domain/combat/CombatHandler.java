@@ -42,6 +42,10 @@ public class CombatHandler extends DomainActionsContainer {
 
     public Consumer<? extends DomainEvent> addCharacter(Combat combat) {
         return (CharacterAdded event) -> {
+            if (combat.getCharacterTeam() == null) {
+                combat.setCharacterTeam(new ArrayList<>());
+            }
+
             CharacterCombat character = new CharacterCombat(new CharacterCombatID(
                     event.getCharacterId()),
                     Name.of(event.getName()), Health.of(event.getHeal()), Initiative.of(event.getInitiative()), new ArrayList<>());
@@ -62,6 +66,9 @@ public class CombatHandler extends DomainActionsContainer {
 
     public Consumer<? extends DomainEvent> addEnemy(Combat combat) {
         return (EnemyAdded event) -> {
+            if (combat.getEnemies() == null) {
+                combat.setEnemies(new ArrayList<>());
+            }
             EnemyCombat character = new EnemyCombat(new EnemiesId(
                     event.getEnemyId()),
                     Name.of(event.getName()), Health.of(event.getHeal()), Initiative.of(event.getInitiative()), new ArrayList<>());
@@ -82,6 +89,9 @@ public class CombatHandler extends DomainActionsContainer {
 
     public Consumer<? extends DomainEvent> startCombat(Combat combat) {
         return (CombatInitiated event) -> {
+            if (combat.getTurns() == null) {
+                combat.setTurns(new ArrayList<>());
+            }
             if (combat.getState().equals(CombatStatus.of("InProgress"))) {
                 throw new IllegalStateException("Combat is already in progress.");
             }

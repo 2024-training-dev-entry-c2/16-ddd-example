@@ -9,6 +9,7 @@ import com.buildingblocks.combat.domain.enemy.entities.Skill;
 import com.buildingblocks.combat.domain.enemy.entities.StatusActivated;
 import com.buildingblocks.combat.domain.enemy.events.AppliedStatus;
 import com.buildingblocks.combat.domain.enemy.events.RemovedStatus;
+import com.buildingblocks.combat.domain.enemy.events.SkillAdded;
 import com.buildingblocks.combat.domain.enemy.events.SufferedDamage;
 import com.buildingblocks.combat.domain.enemy.events.TerminatedTurn;
 import com.buildingblocks.combat.domain.enemy.events.UsedCard;
@@ -34,29 +35,16 @@ public class Enemy extends AggregateRoot<EnemyId> {
 
     //region constructor
 
-    public Enemy(EnemyId identity, Name name, TypeEnemy type, Health health, Damage damage, Level level, List<StatusActivated> statusActivateds, List<ActionTaken> actionTakens, List<Skill> skills) {
+    private Enemy(EnemyId identity) {
         super(identity);
-        this.name = name;
-        this.type = type;
-        this.health = health;
-        this.damage = damage;
-        this.level = level;
-        this.statusActivateds = statusActivateds;
-        this.actionTakens = actionTakens;
-        this.skills = skills;
+        subscribe(new EnemyHandler(this));
     }
 
-    public Enemy(Name name, TypeEnemy type, Health health, Damage damage, Level level, List<StatusActivated> statusActivateds, List<ActionTaken> actionTakens, List<Skill> skills) {
+    public Enemy() {
         super(new EnemyId());
-        this.name = name;
-        this.type = type;
-        this.health = health;
-        this.damage = damage;
-        this.level = level;
-        this.statusActivateds = statusActivateds;
-        this.actionTakens = actionTakens;
-        this.skills = skills;
+        subscribe(new EnemyHandler(this));
     }
+
 
     //endregion
 
@@ -130,7 +118,7 @@ public class Enemy extends AggregateRoot<EnemyId> {
 
     //region DomainEvents
     public void sufferDamage(int amount) {
-            apply(new SufferedDamage(this.getIdentity().getValue(), amount));
+        apply(new SufferedDamage(this.getIdentity().getValue(), amount));
 
     }
 
@@ -140,7 +128,7 @@ public class Enemy extends AggregateRoot<EnemyId> {
 
     public void applyState(StatusActivated state) {
 
-        apply(new AppliedStatus( this.getIdentity().getValue(),
+        apply(new AppliedStatus(this.getIdentity().getValue(),
                 new StatusActivateId().getValue(),
                 state.getName().getValue(),
                 state.getImpact().getImpact(),
@@ -161,15 +149,26 @@ public class Enemy extends AggregateRoot<EnemyId> {
                 accion.getResult().getValue(),
                 accion.getTypeEffect().getImpact(),
                 accion.getTypeEffect().getDuration()
-                ));
+        ));
     }
 
     public void endturn() {
 
         apply(new TerminatedTurn(this.getIdentity().getValue()));
     }
-    public  void  useCard(String skillId, String enemyId){
-        apply(new UsedCard(this.getIdentity().getValue(),skillId,enemyId));
+
+    public void useCard(Integer skillId, String enemyId) {
+        apply(new UsedCard(this.getIdentity().getValue(), skillId, enemyId));
+    }
+
+    public void addSkill(Skill skill) {
+        apply(new SkillAdded(skill.getDamage().getValor(),
+                skill.getTypeEffect().getNameEffect(),
+                skill.getScope().getValue(),
+                skill.getStatusCondition().getValue(),
+                skill.getTypeEffect().getDuration(),
+                skill.getTypeEffect().getImpact()
+        ));
     }
 
     //endregion

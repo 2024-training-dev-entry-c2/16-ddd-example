@@ -24,10 +24,11 @@ import com.buildingblocks.combat.domain.character.values.TypeAction;
 import com.buildingblocks.shared.domain.generic.DomainActionsContainer;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 
+import java.util.ArrayList;
 import java.util.function.Consumer;
 
 public class CharacterHandler extends DomainActionsContainer {
-    public CharacterHandler(Character character){
+    public CharacterHandler(Character character) {
         add(applyEffect(character));
         add(removeEffect(character));
         add(registerAction(character));
@@ -37,8 +38,12 @@ public class CharacterHandler extends DomainActionsContainer {
         add(receiveDamage(character));
         add(beCured(character));
     }
+
     public Consumer<? extends DomainEvent> applyEffect(Character character) {
-        return (AppliedStatus event)->{
+        return (AppliedStatus event) -> {
+            if (character.getEffectActives() == null) {
+                character.setEffectActives(new ArrayList<>());
+            }
             StatusActivated effectActive = new StatusActivated(
                     new StatusActivateId(),
                     Name.of(event.getNameEffect()),
@@ -50,24 +55,37 @@ public class CharacterHandler extends DomainActionsContainer {
             effectActive.apply();
         };
     }
+
     public Consumer<? extends DomainEvent> removeEffect(Character character) {
-        return (RemovedStatus event)->{
-            character.getEffectActives().removeIf(effect -> effect.getIdentity().equals(event.getEffectId()));
+        return (RemovedStatus event) -> {
+            if (character.getEffectActives() == null) {
+                System.out.println("los efectos estan vacios");
+            } else {
+                character.getEffectActives().removeIf(effect -> effect.getIdentity().equals(event.getEffectId()));
+            }
         };
     }
+
     public Consumer<? extends DomainEvent> registerAction(Character character) {
-        return (RegisteredAction event)->{
+        return (RegisteredAction event) -> {
+            if (character.getHistoryActions() == null) {
+                character.setHistoryActions(new ArrayList<>());
+            }
             character.getHistoryActions().add(new ActionTaken(
                     TypeAction.of(event.getActionType()),
                     Objetive.of(event.getObjetive()),
                     Damage.of(event.getDamage()),
-                    EffectType.of(event.getEffectType(), event.getDuration(),event.getIntensity()),
+                    EffectType.of(event.getEffectType(), event.getDuration(), event.getIntensity()),
                     Result.of(event.getResult())
             ));
         };
     }
+
     public Consumer<? extends DomainEvent> useObject(Character character) {
-        return (UsedObject event)->{
+        return (UsedObject event) -> {
+            if (character.getObjects() == null) {
+                character.setObjects(new ArrayList<>());
+            }
             Object object = character.getObjects().stream()
                     .filter(o -> o.getIdentity().equals(event.getObjectId()))
                     .findFirst()
@@ -75,8 +93,12 @@ public class CharacterHandler extends DomainActionsContainer {
             object.use();
         };
     }
+
     public Consumer<? extends DomainEvent> equipObject(Character character) {
-        return (UsedObject event)->{
+        return (UsedObject event) -> {
+            if (character.getObjects() == null) {
+                character.setObjects(new ArrayList<>());
+            }
             Object object = character.getObjects().stream()
                     .filter(o -> o.getIdentity().equals(event.getObjectId()))
                     .findFirst()
@@ -84,20 +106,23 @@ public class CharacterHandler extends DomainActionsContainer {
             object.equip();
         };
     }
+
     public Consumer<? extends DomainEvent> endTurn(Character character) {
-        return (TerminatedTurn event)->{
+        return (TerminatedTurn event) -> {
             character.getEffectActives().forEach(StatusActivated::reduceTurn);
             character.getEffectActives().removeIf(effect -> effect.getRemainingTurns().getValue() <= 0);
         };
     }
+
     public Consumer<? extends DomainEvent> receiveDamage(Character character) {
-        return (SufferedDamage event)->{
-               character.setHealth( Health.of(Math.max(character.getHealth().getValue() - event.getAmountDamage(), 0)));
+        return (SufferedDamage event) -> {
+            character.setHealth(Health.of(Math.max(character.getHealth().getValue() - event.getAmountDamage(), 0)));
         };
     }
+
     public Consumer<? extends DomainEvent> beCured(Character character) {
-        return (beCured event)->{
-            character.setHealth( Health.of(character.getHealth().getValue() + event.getAmountCured()));
+        return (beCured event) -> {
+            character.setHealth(Health.of(character.getHealth().getValue() + event.getAmountCured()));
         };
     }
 }

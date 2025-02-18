@@ -1,26 +1,25 @@
 package com.buildingblocks.combat.domain.enemy.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class RemainingTurn implements IValueObject {
-    private final int value;
+    private final Integer value;
 
-    private RemainingTurn(int value) {
+    private RemainingTurn(Integer value) {
         this.value = value;
     }
 
-    public static RemainingTurn of(int value) {
+    public static RemainingTurn of(Integer value) {
         return new RemainingTurn(value);
     }
 
     @Override
     public void validate() {
-        if (value < 0) {
-            throw new IllegalArgumentException("Scope cannot be negative.");
-        }
+        Validator.validatePositive(value);
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return value;
     }
 }

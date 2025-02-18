@@ -1,29 +1,29 @@
 package com.buildingblocks.combat.domain.enemy.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class Health implements IValueObject {
-    private final int value;
+    private final Integer value;
 
-    public Health(int value) {
+    public Health(Integer value) {
         if (value < 0) {
             throw new IllegalArgumentException("La salud no puede ser negativa.");
         }
         this.value = value;
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return value;
     }
 
     @Override
     public void validate() {
-        if (value < 0) {
-            throw new IllegalArgumentException("La salud no puede ser negativa.");
-        }
+        Validator.validatePositive(value);
+
     }
 
-    public static Health of(int value) {
+    public static Health of(Integer value) {
         return new Health(value);
     }
 }

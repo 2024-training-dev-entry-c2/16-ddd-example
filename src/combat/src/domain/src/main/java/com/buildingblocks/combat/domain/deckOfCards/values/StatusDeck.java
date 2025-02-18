@@ -17,8 +17,6 @@ public class StatusDeck implements IValueObject {
     @Override
     public void validate() {
         Validator.validateTextNotNull(value);
-
-
     }
 
     public String getValue() {

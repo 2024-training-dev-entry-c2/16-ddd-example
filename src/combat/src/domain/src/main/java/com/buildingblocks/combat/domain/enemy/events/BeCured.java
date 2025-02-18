@@ -5,9 +5,9 @@ import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 public class BeCured extends DomainEvent {
     private final String enemyId;
-    private final int amountCured;
+    private final Integer amountCured;
 
-    public BeCured(String characterId, int amountCured) {
+    public BeCured(String characterId, Integer amountCured) {
         super(EventsEnum.BE_CURED.name());
         this.enemyId = characterId;
         this.amountCured = amountCured;
@@ -17,7 +17,7 @@ public class BeCured extends DomainEvent {
         return enemyId;
     }
 
-    public int getAmountCured() {
+    public Integer getAmountCured() {
         return amountCured;
     }
 }

@@ -1,29 +1,29 @@
 package com.buildingblocks.combat.domain.enemy.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class Level implements IValueObject {
-    private final int value;
+    private final Integer value;
 
-    public Level(int value) {
+    public Level(Integer value) {
         if (value < 1) {
             throw new IllegalArgumentException("El nivel no puede ser menor que 1.");
         }
         this.value = value;
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return value;
     }
 
     @Override
     public void validate() {
-        if (value < 1) {
-            throw new IllegalArgumentException("El nivel no puede ser menor que 1.");
-        }
+        Validator.validatePositive(value);
+
     }
 
-    public static Level of(int value) {
+    public static Level of(Integer value) {
         return new Level(value);
     }
 }

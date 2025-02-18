@@ -1,36 +1,37 @@
 package com.buildingblocks.shared.domain.generic;
 
+
 import java.util.List;
 
 public abstract class AggregateRoot<I extends Identity> extends Entity<I> {
-  private final DomainActionsHandler actionsHandler = new DomainActionsHandler();
+    private final DomainActionsHandler actionsHandler = new DomainActionsHandler();
 
-  protected AggregateRoot(final I identity) {
-    super(identity);
-  }
+    protected AggregateRoot(final I identity) {
+        super(identity);
+    }
 
-  public List<DomainEvent> getUncommittedEvents() {
-    return List.copyOf(actionsHandler.getEvents());
-  }
+    public List<DomainEvent> getUncommttedEvents() {
+        return List.copyOf(actionsHandler.getEvents());
+    }
 
-  public void markEventsAsCommitted() {
-    actionsHandler.getEvents().clear();
-  }
+    public void markEventsAsCommitted() {
+        actionsHandler.getEvents().clear();
+    }
 
-  protected void subscribe(final DomainActionsContainer container) {
-    actionsHandler.subscribe(container);
-  }
+    protected void subscribe(final DomainActionsContainer container) {
+        actionsHandler.subscribe(container);
+    }
 
-  protected void apply(final DomainEvent event) {
-    final String aggregateName = getIdentity()
-      .getClass()
-      .getSimpleName()
-      .replace("Id", "")
-      .toLowerCase();
+    protected void apply(final DomainEvent event) {
+        final String aggregateName = getIdentity()
+                .getClass()
+                .getSimpleName()
+                .replace("Id", "")
+                .toLowerCase();
 
-    event.setAggregateName(aggregateName);
-    event.setAggregateRootId(getIdentity().getValue());
+        event.setAggregateName(aggregateName);
+        event.setAggregateRoodId(getIdentity().getValue());
 
-    actionsHandler.apply(event);
-  }
+        actionsHandler.apply(event);
+    }
 }

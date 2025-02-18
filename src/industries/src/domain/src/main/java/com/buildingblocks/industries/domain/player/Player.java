@@ -94,14 +94,5 @@ public class Player extends AggregateRoot<PlayerId> {
         events.forEach(player::apply);
         return player;
     }
-
-    public void spentBudget(Amount amount) {
-        int newBudgetValue = this.budget.getValue() - amount.getValue();
-
-        if (newBudgetValue < 0) throw new IllegalStateException("not enough to complete transaction.");
-
-        this.budget = Budget.of(newBudgetValue);
-        System.out.println("Budget Updated: " + this.budget.getValue());
-    }
     // endregion
 }

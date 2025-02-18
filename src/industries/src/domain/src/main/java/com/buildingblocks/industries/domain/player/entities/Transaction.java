@@ -30,12 +30,13 @@ public class Transaction extends Entity<TransactionId> {
 
     // region Public Methods
     public void execute(Player player) {
-        if (amount.getValue() <= 0) {
-            throw new IllegalArgumentException("The transaction amount must be greater than 0");
-        }
-        player.spentBudget(amount);
-    }
+        if (amount.getValue() <= 0) throw new IllegalArgumentException("The transaction amount must be greater than 0");
 
+        int newBudgetValue = player.getBudget().getValue() - amount.getValue();
+
+        if (newBudgetValue < 0) throw new IllegalStateException("Not enough budget to complete transaction");
+        player.setBudget(Budget.of(newBudgetValue));
+    }
     // endregion
 
     // region Getters and Setters

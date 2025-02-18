@@ -1,8 +1,5 @@
 package com.buildingblocks.industries.domain.resourceMarket;
 
-import com.buildingblocks.industries.domain.industry.IndustryHandler;
-import com.buildingblocks.industries.domain.player.Player;
-import com.buildingblocks.industries.domain.player.values.PlayerId;
 import com.buildingblocks.industries.domain.resourceMarket.entities.TradeExchange;
 import com.buildingblocks.industries.domain.resourceMarket.events.DepletedMarketSupply;
 import com.buildingblocks.industries.domain.resourceMarket.events.ExecutedTrade;

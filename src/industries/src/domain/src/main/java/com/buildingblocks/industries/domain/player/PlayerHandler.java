@@ -89,5 +89,5 @@ public class PlayerHandler extends DomainActionsContainer {
             System.out.println("Loan taken: " + loanAmount.getValue() + ". Budget after loan: " + updatedBudget.getValue());
         };
     }
-    
+
 }

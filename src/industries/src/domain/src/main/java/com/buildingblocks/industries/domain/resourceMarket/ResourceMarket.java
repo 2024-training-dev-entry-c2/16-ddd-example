@@ -1,5 +1,6 @@
 package com.buildingblocks.industries.domain.resourceMarket;
 
+import com.buildingblocks.industries.domain.industry.IndustryHandler;
 import com.buildingblocks.industries.domain.resourceMarket.entities.TradeExchange;
 import com.buildingblocks.industries.domain.resourceMarket.events.DepletedMarketSupply;
 import com.buildingblocks.industries.domain.resourceMarket.events.ExecutedTrade;
@@ -20,6 +21,7 @@ public class ResourceMarket extends AggregateRoot<ResourceMarketId> {
     // region Constructors
     public ResourceMarket() {
         super(new ResourceMarketId());
+        subscribe(new ResourceMarketHandler(this));
     }
 
     private ResourceMarket(ResourceMarketId identity) {
@@ -68,6 +70,13 @@ public class ResourceMarket extends AggregateRoot<ResourceMarketId> {
 
     public void updateResourcePrice(String id, String resourceType, Integer oldResourcePrice, Integer newResourcePrice) {
         apply(new UpdatedResourcePrice(id, resourceType, oldResourcePrice, newResourcePrice));
+    }
+    // endregion
+
+    // region Public Methods
+    public void addResources(int quantityToAdd, String resourceType) {
+        AvailableResources updatedResources = availableResources.increaseQuantity(quantityToAdd, resourceType);
+        setAvailableResources(updatedResources);
     }
     // endregion
 }

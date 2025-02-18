@@ -1,24 +1,25 @@
 package com.buildingblocks.combat.domain.character.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class StatusName implements IValueObject {
     private final String value;
-    public StatusName(String value) {
-        if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("El nombre del efecto no puede estar vacío.");
-        }
+    private StatusName(String value) {
         this.value = value;
     }
 
+    public static StatusName of(String value) {
+        StatusName statusName = new StatusName(value);
+        statusName.validate();
+        return statusName;
+    }
     public String getValue() {
         return value;
     }
 
     @Override
     public void validate() {
-        if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("El nombre del efecto no puede estar vacío.");
-        }
+        Validator.validateTextNotNull(value);
     }
 }

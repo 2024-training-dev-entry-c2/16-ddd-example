@@ -6,12 +6,14 @@ public class RegisteredAction extends DomainEvent {
     private final String characterId;
     private final String actionId;
     private final String actionType;
-    private final String objetive;
-    private final int damage;
+    private final Integer objetive;
+    private final Integer damage;
     private final String effectType;
     private final String result;
+    private final Integer intensity;
+    private final Integer duration;
 
-    public RegisteredAction(String type, String characterId, String actionId, String actionType, String objetive, int damage, String effectType, String result) {
+    public RegisteredAction(String characterId, String actionId, String actionType, Integer objetive, Integer damage, String effectType, String result, Integer intensity, Integer duration) {
         super(EventsEnum.REGISTERED_ACTION.name());
         this.characterId = characterId;
         this.actionId = actionId;
@@ -20,6 +22,8 @@ public class RegisteredAction extends DomainEvent {
         this.damage = damage;
         this.effectType = effectType;
         this.result = result;
+        this.intensity = intensity;
+        this.duration = duration;
     }
 
     public String getCharacterId() {
@@ -34,11 +38,11 @@ public class RegisteredAction extends DomainEvent {
         return actionType;
     }
 
-    public String getObjetive() {
+    public Integer getObjetive() {
         return objetive;
     }
 
-    public int getDamage() {
+    public Integer getDamage() {
         return damage;
     }
 
@@ -48,5 +52,13 @@ public class RegisteredAction extends DomainEvent {
 
     public String getResult() {
         return result;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public Integer getIntensity() {
+        return intensity;
     }
 }

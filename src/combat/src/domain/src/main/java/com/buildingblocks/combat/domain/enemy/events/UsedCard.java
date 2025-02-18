@@ -4,14 +4,14 @@ import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 public class UsedCard  extends DomainEvent {
     private final String enemyId;
-    private final String abilityId;
+    private final Integer abilityId;
     private final String objetiveId;
 
 
-    public UsedCard(String enemigoId, String habilidadId, String objetivoId) {
+    public UsedCard(String enemigoId, Integer abilityId, String objetivoId) {
         super(EventsEnum.SKILL_USED.name());
         this.enemyId = enemigoId;
-        this.abilityId = habilidadId;
+        this.abilityId = abilityId;
         this.objetiveId = objetivoId;
 
     }
@@ -20,7 +20,7 @@ public class UsedCard  extends DomainEvent {
         return enemyId;
     }
 
-    public String getAbilityId() {
+    public Integer getAbilityId() {
         return abilityId;
     }
 

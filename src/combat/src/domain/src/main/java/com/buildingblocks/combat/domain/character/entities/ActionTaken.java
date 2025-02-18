@@ -1,19 +1,22 @@
 package com.buildingblocks.combat.domain.character.entities;
 
-import com.buildingblocks.combat.domain.character.values.HistoricalActionsId;
+import com.buildingblocks.combat.domain.character.values.Damage;
+import com.buildingblocks.combat.domain.character.values.EffectType;
+import com.buildingblocks.combat.domain.character.values.Objetive;
 import com.buildingblocks.combat.domain.character.values.Result;
 import com.buildingblocks.combat.domain.character.values.TypeAction;
+
 import com.buildingblocks.combat.domain.enemy.values.ActionTakenId;
 import com.buildingblocks.shared.domain.generic.Entity;
 
 public class ActionTaken extends Entity<ActionTakenId> {
     private TypeAction action;
-    private String objetive;
-    private int damage;
-    private String typeEffect;
+    private Objetive objetive;
+    private Damage damage;
+    private EffectType typeEffect;
     private Result result;
 
-    public ActionTaken(ActionTakenId identity, TypeAction action, String objetive, int damage, String typeEffect, Result result) {
+    public ActionTaken(ActionTakenId identity, TypeAction action, Objetive objetive, Damage damage, EffectType typeEffect, Result result) {
         super(identity);
         this.action = action;
         this.objetive = objetive;
@@ -22,7 +25,7 @@ public class ActionTaken extends Entity<ActionTakenId> {
         this.result = result;
     }
 
-    public ActionTaken(TypeAction action, String objetive, int damage, String typeEffect, Result result) {
+    public ActionTaken(TypeAction action, Objetive objetive, Damage damage, EffectType typeEffect, Result result) {
         super(new ActionTakenId());
         this.action = action;
         this.objetive = objetive;
@@ -39,27 +42,27 @@ public class ActionTaken extends Entity<ActionTakenId> {
         this.action = action;
     }
 
-    public String getObjetive() {
+    public Objetive getObjetive() {
         return objetive;
     }
 
-    public void setObjetive(String objetive) {
+    public void setObjetive(Objetive objetive) {
         this.objetive = objetive;
     }
 
-    public int getDamage() {
+    public Damage getDamage() {
         return damage;
     }
 
-    public void setDamage(int damage) {
+    public void setDamage(Damage damage) {
         this.damage = damage;
     }
 
-    public String getTypeEffect() {
+    public EffectType getTypeEffect() {
         return typeEffect;
     }
 
-    public void setTypeEffect(String typeEffect) {
+    public void setTypeEffect(EffectType typeEffect) {
         this.typeEffect = typeEffect;
     }
 

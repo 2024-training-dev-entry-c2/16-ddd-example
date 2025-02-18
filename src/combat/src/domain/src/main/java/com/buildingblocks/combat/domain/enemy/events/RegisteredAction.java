@@ -1,18 +1,19 @@
 package com.buildingblocks.combat.domain.enemy.events;
 
-import com.buildingblocks.combat.domain.character.events.EventsEnum;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 public class RegisteredAction extends DomainEvent {
     private final String enemyId;
     private final String actionId;
     private final String actionType;
-    private final String objetive;
-    private final int damage;
+    private final Integer objetive;
+    private final Integer damage;
     private final String effectType;
     private final String result;
+    private final Integer intensity;
+    private final Integer duration;
 
-    public RegisteredAction(String characterId, String actionId, String actionType, String objetive, int damage, String effectType, String result) {
+    public RegisteredAction(String characterId, String actionId, String actionType, int objetive, int damage, String effectType, String result, int intensity, Integer duration) {
         super(EventsEnum.REGISTERED_ACTION.name());
         this.enemyId = characterId;
         this.actionId = actionId;
@@ -21,6 +22,8 @@ public class RegisteredAction extends DomainEvent {
         this.damage = damage;
         this.effectType = effectType;
         this.result = result;
+        this.intensity = intensity;
+        this.duration = duration;
     }
 
     public String getEnemyId() {
@@ -35,7 +38,7 @@ public class RegisteredAction extends DomainEvent {
         return actionType;
     }
 
-    public String getObjetive() {
+    public int getObjetive() {
         return objetive;
     }
 
@@ -49,5 +52,13 @@ public class RegisteredAction extends DomainEvent {
 
     public String getResult() {
         return result;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public int getIntensity() {
+        return intensity;
     }
 }

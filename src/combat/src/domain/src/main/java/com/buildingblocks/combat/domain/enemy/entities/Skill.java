@@ -6,7 +6,6 @@ import com.buildingblocks.combat.domain.enemy.values.Scope;
 import com.buildingblocks.combat.domain.enemy.values.SkillId;
 import com.buildingblocks.combat.domain.enemy.values.StatusCondition;
 import com.buildingblocks.shared.domain.generic.Entity;
-import com.buildingblocks.shared.domain.generic.Identity;
 
 public class Skill extends Entity<SkillId> {
     private Damage damage;
@@ -60,5 +59,8 @@ public class Skill extends Entity<SkillId> {
 
     public void setStatusCondition(StatusCondition statusCondition) {
         this.statusCondition = statusCondition;
+    }
+    public void apply(){
+        System.out.println("tipo de efecto:"+typeEffect);
     }
 }

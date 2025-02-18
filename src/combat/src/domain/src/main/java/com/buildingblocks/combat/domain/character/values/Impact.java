@@ -1,25 +1,27 @@
 package com.buildingblocks.combat.domain.character.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class Impact implements IValueObject {
-    private final String value;
+    private final Integer value;
 
-    public Impact(String value) {
-        if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("El impacto no puede estar vacío.");
-        }
+    public Impact(Integer value) {
         this.value = value;
+        validate();
+    }
+    public static Impact of(Integer value) {
+        Impact impact = new Impact(value);
+        impact.validate();
+        return impact;
     }
 
-    public String getValue() {
+    public Integer getValue() {
         return value;
     }
 
     @Override
     public void validate() {
-        if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("El impacto no puede estar vacío.");
-        }
+        Validator.validatePositive(value);
     }
 }

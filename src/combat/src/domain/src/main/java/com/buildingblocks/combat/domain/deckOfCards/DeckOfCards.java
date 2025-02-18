@@ -23,8 +23,19 @@ public class DeckOfCards extends AggregateRoot<DeckOfCardsId> {
     private List<SkillCard> lostCards;
 
     //region Constructors
+
+    public DeckOfCards() {
+        super(new DeckOfCardsId());
+        subscribe(new DeckOfCardsHandler(this));
+    }
+    public DeckOfCards(DeckOfCardsId id) {
+        super(id);
+        subscribe(new DeckOfCardsHandler(this));
+    }
+
     public DeckOfCards(DeckOfCardsId identity, ParticipantId participantId, StatusDeck statusDeck, List<SkillCard> skillCards) {
         super(identity);
+        subscribe(new DeckOfCardsHandler(this));
         this.participantId = participantId;
         this.statusDeck = statusDeck;
         this.skillCards = skillCards;
@@ -82,36 +93,30 @@ public class DeckOfCards extends AggregateRoot<DeckOfCardsId> {
     //endregion
     //region Domain Events
     public void addCard(SkillCard card) {
-        skillCards.add(card);
-        apply(new CardAdded(this.getIdentity().getValue(), card.getIdentity().getValue()));
+        apply(new CardAdded(this.getIdentity().getValue(),
+                card.getIdentity().getValue(),
+                card.getSkillCardName().getValue(),
+                card.getIniciative().getValue(),
+                card.getEffectType().getNameEffect(),
+                card.getObjetives().getValue(),
+                card.getScope().getValue(),
+                this.getIdentity().getValue(),
+                card.getEffectType().getImpact(),
+                card.getEffectType().getDuration()
+        ));
     }
 
     public void removeCard(String cardId) {
-        SkillCard card = skillCards.stream()
-                .filter(c -> c.getIdentity().getValue().equals(cardId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Carta no encontrada"));
-        skillCards.remove(card);
         apply(new CardRemoved(this.getIdentity().getValue(), cardId));
     }
 
     public void reorganizeDeck() {
-
-        Collections.shuffle(skillCards);
         apply(new ReorganizedDeck(this.getIdentity().getValue()));
     }
 
     public void restCards(boolean isLongRest) {
-        if (isLongRest) {
-            skillCards.addAll(discardedCards);
-            discardedCards.clear();
-        } else {
-            if (!discardedCards.isEmpty()) {
-                SkillCard card = discardedCards.remove(0);
-                skillCards.add(card);
-            }
-        }
-        apply(new RestedCard(this.getIdentity().getValue()));
+
+        apply(new RestedCard(this.getIdentity().getValue(),isLongRest));
     }
 
     public void recoverCard(String cardId) {
@@ -126,29 +131,18 @@ public class DeckOfCards extends AggregateRoot<DeckOfCardsId> {
     }
 
     public void improveCard(String cardId, String upgrade) {
-        SkillCard card = skillCards.stream()
-                .filter(c -> c.getIdentity().getValue().equals(cardId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Carta no encontrada"));
-        card.applyEffect(upgrade);
         apply(new ImprovedCard(this.getIdentity().getValue(), cardId, upgrade));
     }
 
     public void discardCard(String cardId) {
-        SkillCard card = findCardById(cardId);
-
-        discardedCards.add(card);
         apply(new CardRemoved(this.getIdentity().getValue(), cardId));
     }
 
     public void loseCard(String cardId) {
-        SkillCard card = findCardById(cardId);
-        skillCards.remove(card);
-        lostCards.add(card);
         apply(new CardRemoved(this.getIdentity().getValue(), cardId));
     }
 
-    private SkillCard findCardById(String cardId) {
+    public SkillCard findCardById(String cardId) {
         return skillCards.stream()
                 .filter(c -> c.getIdentity().getValue().equals(cardId))
                 .findFirst()

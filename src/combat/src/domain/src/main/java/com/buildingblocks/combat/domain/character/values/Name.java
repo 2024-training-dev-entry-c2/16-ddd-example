@@ -1,15 +1,19 @@
 package com.buildingblocks.combat.domain.character.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class Name implements IValueObject {
     private final String value;
 
-    public Name(String value) {
-        if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("El nombre del personaje no puede estar vacío.");
-        }
+    private Name(String value) {
+
         this.value = value;
+    }
+    public static Name of(String value) {
+        Name result = new Name(value);
+        result.validate();
+        return result;
     }
 
     public String getValue() {
@@ -18,8 +22,6 @@ public class Name implements IValueObject {
 
     @Override
     public void validate() {
-        if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("El nombre del personaje no puede estar vacío.");
-        }
+        Validator.validateTextNotNull(value);
     }
 }

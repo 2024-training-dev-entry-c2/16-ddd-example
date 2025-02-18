@@ -1,22 +1,24 @@
 package com.buildingblocks.combat.domain.combat.entities;
 
 import com.buildingblocks.combat.domain.combat.values.CharacterCombatID;
-import com.buildingblocks.combat.domain.combat.values.GameTurnId;
+import com.buildingblocks.combat.domain.combat.values.Condition;
 import com.buildingblocks.combat.domain.combat.values.Health;
 import com.buildingblocks.combat.domain.combat.values.Initiative;
+import com.buildingblocks.combat.domain.combat.values.Name;
+import com.buildingblocks.combat.domain.combat.values.IsDefeated;
 import com.buildingblocks.shared.domain.generic.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CharacterCombat extends Entity<CharacterCombatID> {
-    private String name;
+    private Name name;
     private Health health;
     private Initiative initiative;
-    private List<String> conditions;
-    private boolean isDefeated;
+    private List<Condition> conditions;
+    private IsDefeated isDefeated;
 
-    public CharacterCombat(String name, Health health, Initiative initiative, List<String> conditions) {
+    public CharacterCombat(Name name, Health health, Initiative initiative, List<Condition> conditions) {
         super(new CharacterCombatID());
         this.name = name;
         this.health = health;
@@ -24,7 +26,7 @@ public class CharacterCombat extends Entity<CharacterCombatID> {
         this.conditions = conditions;
     }
 
-    public CharacterCombat(CharacterCombatID identity, String name, Health health, Initiative initiative, List<String> conditions) {
+    public CharacterCombat(CharacterCombatID identity, Name name, Health health, Initiative initiative, List<Condition> conditions) {
         super(identity);
         this.name = name;
         this.health = health;
@@ -32,12 +34,12 @@ public class CharacterCombat extends Entity<CharacterCombatID> {
         this.conditions = conditions;
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 
-    public void setName(String name) {
-        if (name == null || name.trim().isEmpty()) {
+    public void setName(Name name) {
+        if (name == null || name.getValue().isEmpty()) {
             throw new IllegalArgumentException("Name cannot be null or empty.");
         }
         this.name = name;
@@ -65,7 +67,7 @@ public class CharacterCombat extends Entity<CharacterCombatID> {
         this.initiative = initiative;
     }
 
-    public List<String> getConditions() {
+    public List<Condition> getConditions() {
         return new ArrayList<>(conditions); // Devuelve una copia para mantener la inmutabilidad
     }
 
@@ -76,7 +78,7 @@ public class CharacterCombat extends Entity<CharacterCombatID> {
         int newHealth = this.health.getValue() - damage;
         this.health = Health.of(Math.max(newHealth, 0)); // La salud no puede ser negativa
         if (this.health.getValue() == 0) {
-            this.isDefeated = true;
+            this.isDefeated = IsDefeated.defeated() ;
         }
     }
 
@@ -88,14 +90,14 @@ public class CharacterCombat extends Entity<CharacterCombatID> {
         this.health = Health.of(newHealth);
     }
 
-    public void applyCondition(String condition) {
-        if (condition == null || condition.trim().isEmpty()) {
+    public void applyCondition(Condition condition) {
+        if (condition == null ) {
             throw new IllegalArgumentException("Condition cannot be null or empty.");
         }
         this.conditions.add(condition);
     }
 
-    public void removeCondition(String condition) {
+    public void removeCondition(Condition condition) {
         this.conditions.remove(condition);
     }
 
@@ -108,10 +110,10 @@ public class CharacterCombat extends Entity<CharacterCombatID> {
     }
 
     public boolean isDefeated() {
-        return isDefeated;
+        return isDefeated.getValue();
     }
 
-    public void setDefeated(boolean defeated) {
+    public void setDefeated(IsDefeated defeated) {
         isDefeated = defeated;
     }
 }

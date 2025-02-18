@@ -4,6 +4,7 @@ import com.buildingblocks.combat.domain.combat.values.ActionTaken;
 import com.buildingblocks.combat.domain.combat.values.GameTurnId;
 import com.buildingblocks.combat.domain.combat.values.OrderInitiative;
 
+import com.buildingblocks.combat.domain.combat.values.StatusTurn;
 import com.buildingblocks.shared.domain.generic.Entity;
 
 
@@ -11,7 +12,7 @@ import com.buildingblocks.shared.domain.generic.Entity;
 public class GameTurn extends Entity<GameTurnId> {
     private OrderInitiative order;
     private ActionTaken action;
-    private String status;
+    private StatusTurn status;
 
     public GameTurn(GameTurnId identity, OrderInitiative order, ActionTaken action) {
         super(identity);
@@ -22,6 +23,12 @@ public class GameTurn extends Entity<GameTurnId> {
         super(new GameTurnId());
         this.order = order;
         this.action = action;
+    }
+
+    public GameTurn( OrderInitiative order, StatusTurn status) {
+        super(new GameTurnId());
+        this.order = order;
+        this.status= status;
     }
 
     public OrderInitiative getOrder() {
@@ -49,7 +56,7 @@ public class GameTurn extends Entity<GameTurnId> {
         if (!this.status.equals("Pending")) {
             throw new IllegalStateException("Turn cannot be started. Current status: " + this.status);
         }
-        this.status = "InProgress";
+        this.status = StatusTurn.of("InProgress");
     }
 
     public void finalizeTurn() {
@@ -57,6 +64,6 @@ public class GameTurn extends Entity<GameTurnId> {
             throw new IllegalStateException("Turn cannot be finalized. Current status: " + this.status);
         }
         this.action.clearActions();
-        this.status = "Completed";
+        this.status = StatusTurn.of("Completed");
     }
 }

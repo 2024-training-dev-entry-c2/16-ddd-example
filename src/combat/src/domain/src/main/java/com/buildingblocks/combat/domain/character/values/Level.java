@@ -3,15 +3,16 @@ package com.buildingblocks.combat.domain.character.values;
 import com.buildingblocks.shared.domain.generic.IValueObject;
 import com.buildingblocks.shared.domain.utils.Validator;
 
-public class Health implements IValueObject {
+public class Level implements IValueObject {
     private final Integer value;
 
-    public Health(Integer value) {
-        if (value < 0) {
-            throw new IllegalArgumentException("La salud no puede ser negativa.");
+    public Level(Integer value) {
+        if (value < 1) {
+            throw new IllegalArgumentException("El nivel no puede ser menor que 1.");
         }
         this.value = value;
     }
+
 
     public Integer getValue() {
         return value;
@@ -22,7 +23,9 @@ public class Health implements IValueObject {
         Validator.validatePositive(value);
     }
 
-    public static Health of(Integer value) {
-        return new Health(value);
+    public static Level of(Integer value) {
+       Level level = new Level(value);
+        level.validate();
+        return level;
     }
 }

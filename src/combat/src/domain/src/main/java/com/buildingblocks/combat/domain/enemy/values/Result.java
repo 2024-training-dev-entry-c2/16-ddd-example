@@ -1,7 +1,6 @@
-package com.buildingblocks.combat.domain.character.values;
+package com.buildingblocks.combat.domain.enemy.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
-import com.buildingblocks.shared.domain.utils.Validator;
 
 public class Result implements IValueObject {
     private final String value;
@@ -22,6 +21,8 @@ public class Result implements IValueObject {
 
     @Override
     public void validate() {
-        Validator.validateTextNotNull(value);
+        if (value == null || value.trim().isEmpty()) {
+            throw new IllegalArgumentException("El resultado no puede estar vacío.");
+        }
     }
 }

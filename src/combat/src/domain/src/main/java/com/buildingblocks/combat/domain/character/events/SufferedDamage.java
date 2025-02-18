@@ -4,9 +4,9 @@ import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 public class SufferedDamage extends DomainEvent {
      private final String characterId;
-     private final int amountDamage;
+     private final Integer amountDamage;
 
-    public SufferedDamage(String type, String characterId, int amountDamage) {
+    public SufferedDamage( String characterId, Integer amountDamage) {
         super(EventsEnum.DAMAGE_SUFFERED.name());
         this.characterId = characterId;
         this.amountDamage = amountDamage;
@@ -16,7 +16,7 @@ public class SufferedDamage extends DomainEvent {
         return characterId;
     }
 
-    public int getAmountDamage() {
+    public Integer getAmountDamage() {
         return amountDamage;
     }
 }

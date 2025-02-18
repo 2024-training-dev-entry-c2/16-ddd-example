@@ -6,14 +6,16 @@ public class AppliedStatus extends DomainEvent {
     private final String characterId;
     private final String effectId;
     private final String nameEffect;
-    private final int remainingTurns;
+    private final Integer impact;
+    private final Integer remainingTurns;
 
-    public AppliedStatus(String type, String characterId, String effectId, String nameEffect, int turnRestans) {
+    public AppliedStatus(String characterId, String effectId, String nameEffect, Integer impact, Integer remainingTurns) {
         super(EventsEnum.STATE_APPLIED.name());
         this.characterId = characterId;
         this.effectId = effectId;
         this.nameEffect = nameEffect;
-        this.remainingTurns = turnRestans;
+        this.impact = impact;
+        this.remainingTurns = remainingTurns;
     }
 
     public String getCharacterId() {
@@ -28,7 +30,11 @@ public class AppliedStatus extends DomainEvent {
         return nameEffect;
     }
 
-    public int getRemainingTurns() {
+    public Integer getRemainingTurns() {
         return remainingTurns;
+    }
+
+    public Integer getImpact() {
+        return impact;
     }
 }

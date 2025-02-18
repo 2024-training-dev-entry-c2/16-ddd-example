@@ -6,7 +6,7 @@ public class RemovedStatus extends DomainEvent {
     private final String characterId;
     private final String effectId;
 
-    public RemovedStatus(String type, String characterId, String effectId) {
+    public RemovedStatus( String characterId, String effectId) {
         super(EventsEnum.STATE_REMOVED.name());
         this.characterId = characterId;
         this.effectId = effectId;

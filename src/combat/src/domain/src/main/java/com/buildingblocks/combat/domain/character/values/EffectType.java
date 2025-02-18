@@ -1,41 +1,43 @@
-package com.buildingblocks.combat.domain.enemy.values;
+package com.buildingblocks.combat.domain.character.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class EffectType implements IValueObject {
     private final String nameEffect;//atacar, curar,habiliadad
-    private final int duration;
-    private final int intensity;//cantidad de daño
+    private final Integer duration;
+    private final Integer intensity;//cantidad de daño
 
 
-    private EffectType(String value, int duration, int intensity) {
+    private EffectType(String value, Integer duration, Integer intensity) {
         this.nameEffect = value;
         this.duration = duration;
         this.intensity = intensity;
     }
 
-    public static EffectType of(String value, int duration, int intensity) {
+    public static EffectType of(String value, Integer duration,Integer intensity) {
         EffectType effectType =  new EffectType(value, duration,intensity);
         effectType.validate();
         return effectType;
     }
 
+
     @Override
     public void validate() {
-        if (nameEffect == null || nameEffect.isEmpty()) {
-            throw new IllegalArgumentException("TipoEfecto cannot be null or empty.");
-        }
+        Validator.validateTextNotNull(nameEffect);
+        Validator.validatePositive(duration);
+        Validator.validatePositive(intensity);
     }
 
     public String getNameEffect() {
         return nameEffect;
     }
 
-    public int getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public int getImpact() {
+    public Integer getImpact() {
         return intensity;
     }
 }

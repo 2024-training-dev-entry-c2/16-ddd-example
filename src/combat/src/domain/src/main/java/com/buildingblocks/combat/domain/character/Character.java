@@ -3,23 +3,24 @@ package com.buildingblocks.combat.domain.character;
 import com.buildingblocks.combat.domain.character.entities.ActionTaken;
 import com.buildingblocks.combat.domain.character.entities.Object;
 import com.buildingblocks.combat.domain.character.entities.StatusActivated;
+import com.buildingblocks.combat.domain.character.events.AppliedStatus;
 import com.buildingblocks.combat.domain.character.events.EquippedObject;
+import com.buildingblocks.combat.domain.character.events.RegisteredAction;
+import com.buildingblocks.combat.domain.character.events.RemovedStatus;
+import com.buildingblocks.combat.domain.character.events.SufferedDamage;
+import com.buildingblocks.combat.domain.character.events.TerminatedTurn;
 import com.buildingblocks.combat.domain.character.events.UsedObject;
+import com.buildingblocks.combat.domain.character.events.beCured;
 import com.buildingblocks.combat.domain.character.values.CharacterId;
 import com.buildingblocks.combat.domain.character.values.DeckOfCardsId;
+import com.buildingblocks.combat.domain.character.values.EffectType;
 import com.buildingblocks.combat.domain.character.values.Health;
-import com.buildingblocks.combat.domain.character.values.Impact;
 import com.buildingblocks.combat.domain.character.values.Name;
 import com.buildingblocks.combat.domain.character.values.ObjectId;
 import com.buildingblocks.combat.domain.character.values.StatusActivateId;
-import com.buildingblocks.combat.domain.deckOfCards.values.EffectType;
-import com.buildingblocks.combat.domain.enemy.events.AppliedStatus;
-import com.buildingblocks.combat.domain.enemy.events.RegisteredAction;
-import com.buildingblocks.combat.domain.enemy.events.RemovedStatus;
-import com.buildingblocks.combat.domain.enemy.events.SufferedDamage;
-import com.buildingblocks.combat.domain.enemy.events.TerminatedTurn;
-import com.buildingblocks.combat.domain.enemy.events.UsedCard;
-import com.buildingblocks.combat.domain.enemy.events.beCured;
+
+
+
 import com.buildingblocks.shared.domain.generic.AggregateRoot;
 
 import java.util.List;
@@ -117,79 +118,58 @@ public class Character extends AggregateRoot<CharacterId> {
     //endregion
     //region Domain Events
 
-
-
     public void applyEffect(EffectType effect) {
-        StatusActivated effectActive = new StatusActivated(
-                new StatusActivateId(),
-                new Name(effect.getNameEffect()),
-                new Impact(effect.getImpact()),
-                Integer.parseInt(effect.getDuration())
-        );
-
-        effectActives.add(effectActive);
-        effectActive.apply();
         apply(new AppliedStatus(
                 this.getIdentity().getValue(),
-                effectActive.getIdentity().getValue(),
-                effectActive.getName().getValue(),
-                effectActive.getRemainingTurns()
+                new StatusActivateId().getValue(),
+                effect.getNameEffect(),
+                effect.getImpact(),
+                effect.getDuration()
+
         ));
     }
 
     public void removeEffect(String effectId) {
-        effectActives.removeIf(effect -> effect.getIdentity().equals(effectId));
         apply(new RemovedStatus(this.getIdentity().getValue(), effectId));
     }
 //
     public void registerAction(ActionTaken action) {
-        historyActions.add(action);
         apply(new RegisteredAction(
                 this.getIdentity().getValue(),
                 action.getIdentity().getValue(),
-                action.getTypeEffect(),
-                action.getObjetive(),
-                action.getDamage(),
-                action.getTypeEffect(),
-                action.getResult().getValue()
+                action.getTypeEffect().getNameEffect(),
+                action.getObjetive().getValue(),
+                action.getDamage().getValue(),
+                action.getTypeEffect().getNameEffect(),
+                action.getResult().getValue(),
+                action.getTypeEffect().getImpact(),
+                action.getTypeEffect().getDuration()
         ));
     }
 
-    public void useObject(ObjectId objectId) {
-        Object object = objects.stream()
-                .filter(o -> o.getIdentity().equals(objectId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Objeto no encontrado."));
-        object.use();
-        apply(new UsedObject(this.getIdentity().getValue(), objectId.getValue(), object.getName().getValue()));
+    public void useObject(ObjectId objectId,Name ObjectName) {
+        apply(new UsedObject(this.getIdentity().getValue(), objectId.getValue(), ObjectName.getValue()));
     }
 //
-    public void equipObject(ObjectId objectId) {
-        Object object = objects.stream()
-                .filter(o -> o.getIdentity().equals(objectId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Objeto no encontrado."));
-        object.equip();
-        apply(new EquippedObject(this.getIdentity().getValue(), objectId.getValue(), object.getName().getValue()));
+    public void equipObject(ObjectId objectId, Name ObjectName) {
+
+        apply(new EquippedObject(this.getIdentity().getValue(), objectId.getValue(), ObjectName.getValue()));
     }
 
     public void endTurn() {
-        // Reducir los turnos restantes de los efectos activos
-        effectActives.forEach(StatusActivated::reduceTurn);
-        // Eliminar efectos que hayan expirado
-        effectActives.removeIf(effect -> effect.getRemainingTurns() <= 0);
+
         apply(new TerminatedTurn(this.getIdentity().getValue()));
     }
 
     public void receiveDamage(int amount) {
-        health = Health.of(Math.max(health.getValue() - amount, 0)); // La salud no puede ser negativa
+      // La salud no puede ser negativa
         apply(new SufferedDamage(this.getIdentity().getValue(), amount));
     }
 
 
 
     public void beCured(int amount) {
-        health = Health.of(health.getValue() + amount);
+
         apply(new beCured(this.getIdentity().getValue(), amount));
     }
 

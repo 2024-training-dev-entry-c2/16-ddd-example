@@ -1,6 +1,5 @@
 package com.buildingblocks.combat.domain.enemy.values;
 
-import com.buildingblocks.combat.domain.character.values.level;
 import com.buildingblocks.shared.domain.generic.IValueObject;
 
 public class Level implements IValueObject {

@@ -5,12 +5,12 @@ import com.buildingblocks.shared.domain.generic.IValueObject;
 import java.util.List;
 
 public class OrderInitiative implements IValueObject {
-    private final List<String> participants;
+    private final List<Object> participants;
 
-    private OrderInitiative(List<String> participants) {
+    private OrderInitiative(List<Object> participants) {
         this.participants = participants;
     }
-    public  static  OrderInitiative of(List<String> participants){
+    public  static  OrderInitiative of(List<Object> participants){
         return new OrderInitiative(participants);
     }
 
@@ -21,7 +21,7 @@ public class OrderInitiative implements IValueObject {
         }
     }
 
-    public List<String> getParticipants() {
+    public List<Object> getParticipants() {
         return participants;
     }
 }

@@ -14,16 +14,17 @@ import com.buildingblocks.combat.domain.combat.events.TurnStarted;
 import com.buildingblocks.combat.domain.combat.values.CharacterCombatID;
 import com.buildingblocks.combat.domain.combat.values.CombatId;
 import com.buildingblocks.combat.domain.combat.values.CombatStatus;
+import com.buildingblocks.combat.domain.combat.values.CurrentTurn;
 import com.buildingblocks.combat.domain.combat.values.EnemiesId;
 import com.buildingblocks.combat.domain.combat.values.Health;
 import com.buildingblocks.combat.domain.combat.values.Initiative;
+import com.buildingblocks.combat.domain.combat.values.Name;
 import com.buildingblocks.combat.domain.combat.values.ScenarioId;
 import com.buildingblocks.shared.domain.generic.AggregateRoot;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 public class Combat extends AggregateRoot<CombatId> {
     private CombatStatus state;
@@ -31,7 +32,7 @@ public class Combat extends AggregateRoot<CombatId> {
     private List<GameTurn> turns;
     private List<EnemyCombat> enemies;
     private List<CharacterCombat> characterTeam;
-    private int currentTurnIndex;
+    private CurrentTurn currentTurnIndex;
     //region Constructor
 
     public Combat(CombatId identity, CombatStatus state, ScenarioId scenarioId, List<GameTurn> turns, List<EnemyCombat> enemies, List<CharacterCombat> team) {
@@ -55,6 +56,26 @@ public class Combat extends AggregateRoot<CombatId> {
     //endregion
     //region Getter & Setter
 
+
+    public void setTurns(List<GameTurn> turns) {
+        this.turns = turns;
+    }
+
+    public void setEnemies(List<EnemyCombat> enemies) {
+        this.enemies = enemies;
+    }
+
+    public void setCharacterTeam(List<CharacterCombat> characterTeam) {
+        this.characterTeam = characterTeam;
+    }
+
+    public CurrentTurn getCurrentTurnIndex() {
+        return currentTurnIndex;
+    }
+
+    public void setCurrentTurnIndex(CurrentTurn currentTurnIndex) {
+        this.currentTurnIndex = currentTurnIndex;
+    }
 
     public CombatStatus getState() {
         return state;
@@ -93,69 +114,49 @@ public class Combat extends AggregateRoot<CombatId> {
     //endregion
     // region Domain Event
     public void addEnemy(String combatId, String enemyId, String name, int healt, int initiative) {
-        EnemyCombat enemy = new EnemyCombat(new EnemiesId(enemyId), name, Health.of(healt), Initiative.of(initiative), new ArrayList<>());
-        this.enemies.add(enemy);
-        apply(new EnemyAdded(combatId, enemyId));
+        apply(new EnemyAdded(combatId, enemyId, name, healt, initiative));
     }
+
     public void removeEnemy(String combatId, String enemyId) {
-        EnemyCombat enemy = enemies.stream()
-                .filter(e -> e.getIdentity().getValue().equals(enemyId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Enemy not found."));
-        this.enemies.remove(enemy);
         apply(new EnemyRemoved(combatId, enemyId));
     }
-    public void addCharacter(String combatId, String characterId, String name, int healt, int initiative) {
-        CharacterCombat character = new CharacterCombat(new CharacterCombatID(characterId), name, Health.of(healt), Initiative.of(initiative), new ArrayList<>());
-        this.characterTeam.add(character);
-        apply(new CharacterAdded(combatId, characterId));
+
+    public void addCharacter(String combatId, String characterId, String name, int health, int initiative) {
+        apply(new CharacterAdded(combatId, characterId, name, health, initiative));
     }
+
     public void removeCharacter(String combatId, String characterId) {
-        CharacterCombat character = characterTeam.stream()
-                .filter(c -> c.getIdentity().getValue().equals(characterId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Character not found."));
-        this.characterTeam.remove(character);
         apply(new CharacterRemoved(combatId, characterId));
     }
+
     public void startCombat() {
-        if (this.state.equals(CombatStatus.of("InProgress"))) {
-            throw new IllegalStateException("Combat is already in progress.");
-        }
-        this.state = CombatStatus.of("InProgress");
-        this.currentTurnIndex = 0;
-        apply(new CombatInitiated(this.getIdentity().getValue(),new Date()));
-        apply(new TurnStarted(this.getIdentity().getValue(), currentTurnIndex, new Date()));
+        apply(new CombatInitiated(this.getIdentity().getValue(), new Date()));
+        apply(new TurnStarted(this.getIdentity().getValue(), currentTurnIndex.getTurnNumber(), new Date()));
     }
+
     public void endCombat() {
-        this.state = CombatStatus.of("Ended");
-        apply(new CombatFinished(this.getIdentity().getValue(),new Date()));
-        boolean charactersWon = enemies.stream().allMatch(EnemyCombat::isDefeated);
-        boolean charactersLost = characterTeam.stream().allMatch(CharacterCombat::isDefeated);
-
-        if (charactersWon) {
-           this.state=  CombatStatus.of("Game Win");
-        } else if (charactersLost) {
-            this.state=  CombatStatus.of("Game Lost");
-
-        }
+        apply(new CombatFinished(this.getIdentity().getValue(), new Date()));
     }
+
     public void nextTurn() {
-        if (currentTurnIndex < turns.size() - 1) {
-            currentTurnIndex++;
-            apply(new TurnStarted(this.getIdentity().getValue(), currentTurnIndex, new Date()));
-            // Obtener el combatante actual
-
-
+        if (currentTurnIndex.getTurnNumber() < turns.size() - 1) {
+            apply(new TurnStarted(this.getIdentity().getValue(), currentTurnIndex.getTurnNumber(), new Date()));
         } else {
             endCombat();
         }
     }
+
     public void previousTurn() {
-        if (currentTurnIndex > 0) {
-            currentTurnIndex--;
-            apply(new TurnEnded(this.getIdentity().getValue(), currentTurnIndex, new Date()));
+        apply(new TurnEnded(this.getIdentity().getValue(), currentTurnIndex.getTurnNumber(), new Date()));
+    }
+
+    public static Initiative getInitiative(Object entity) {
+        if (entity instanceof EnemyCombat) {
+            return ((EnemyCombat) entity).getInitiative();
+        } else if (entity instanceof CharacterCombat) {
+            return ((CharacterCombat) entity).getInitiative();
         }
+        return Initiative.of(0); // Valor por defecto si no es un tipo esperado
     }
     //endregion
 }

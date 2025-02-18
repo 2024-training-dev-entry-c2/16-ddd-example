@@ -1,26 +1,25 @@
 package com.buildingblocks.combat.domain.character.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class Damage  implements IValueObject {
-    private final int valor;
+    private final Integer value;
 
-    private Damage(int valor) {
-        this.valor = valor;
+    public Damage(Integer value) {
+        this.value = value;
     }
 
-    public static Damage of(int valor) {
-        return new Damage(valor);
+    public static Damage of(Integer value) {
+        return new Damage(value);
     }
 
     @Override
     public void validate() {
-        if (valor < 0) {
-            throw new IllegalArgumentException("El daño no puede ser negativo.");
-        }
+        Validator.validatePositive(value);
     }
 
-    public int getValor() {
-        return valor;
+    public Integer getValue() {
+        return value;
     }
 }

@@ -1,15 +1,19 @@
 package com.buildingblocks.combat.domain.character.values;
 
 import com.buildingblocks.shared.domain.generic.IValueObject;
+import com.buildingblocks.shared.domain.utils.Validator;
 
 public class TypeAction implements IValueObject {
     private final String value;
 
-    public TypeAction(String value) {
-        if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("El tipo de acción no puede estar vacío.");
-        }
+
+    private TypeAction(String value) {
         this.value = value;
+    }
+    public static TypeAction of(String value) {
+        TypeAction action = new TypeAction(value);
+        action.validate();
+        return action;
     }
 
     public String getValue() {
@@ -18,8 +22,6 @@ public class TypeAction implements IValueObject {
 
     @Override
     public void validate() {
-        if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("El tipo de acción no puede estar vacío.");
-        }
+        Validator.validateTextNotNull(value);
     }
 }

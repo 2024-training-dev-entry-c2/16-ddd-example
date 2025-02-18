@@ -1,6 +1,7 @@
 package com.buildingblocks.combat.domain.deckOfCards.entities;
 
 import com.buildingblocks.combat.domain.deckOfCards.values.EffectType;
+import com.buildingblocks.combat.domain.deckOfCards.values.Enhanced;
 import com.buildingblocks.combat.domain.deckOfCards.values.InitiativeCard;
 import com.buildingblocks.combat.domain.deckOfCards.values.MagicElement;
 import com.buildingblocks.combat.domain.deckOfCards.values.Objetives;
@@ -18,7 +19,16 @@ public class SkillCard extends Entity<SkillCardId> {
     private Objetives objetives;
     private Scope scope;
     private StatusCondition statusCondition;
-    private boolean isEnhanced;
+    private Enhanced isEnhanced;
+
+    public SkillCard(SkillCardId identity, SkillCardName skillCardName, InitiativeCard initiative, EffectType effectType, Objetives objetives, Scope scope) {
+        super(identity);
+        this.skillCardName = skillCardName;
+        this.iniciative = initiative;
+        this.effectType = effectType;
+        this.objetives = objetives;
+        this.scope = scope;
+    }
 
     public SkillCard(SkillCardId identity, SkillCardName nameSkill, InitiativeCard initiative, EffectType typeEffect, MagicElement element, Objetives objectives, Scope scope, StatusCondition statusCondition) {
         super(identity);
@@ -144,12 +154,13 @@ public class SkillCard extends Entity<SkillCardId> {
         this.statusCondition = statusCondition;
     }
 
-    public boolean isEnhanced() {
+    public Enhanced isEnhanced() {
         return isEnhanced;
     }
 
-    public void setEnhanced(boolean enhanced) {
+    public void setEnhanced(Enhanced enhanced) {
         isEnhanced = enhanced;
     }
+
     //endregion
 }

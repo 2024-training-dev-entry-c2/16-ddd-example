@@ -24,13 +24,15 @@ public class Industry extends AggregateRoot<IndustryId> {
     private TechLevelRequired techLevelRequired;
 
     // region Constructors
-    public Industry() {
+    public Industry(String type, Integer level, String location, Integer cost, String requiredResource, Integer techLevelRequired, Boolean isConnectedToNetwork, String era, Boolean isFlipped) {
         super(new IndustryId());
         subscribe(new IndustryHandler(this));
+        apply(new BuiltIndustry(type, level, location, cost, requiredResource, techLevelRequired, isConnectedToNetwork, era, isFlipped));
     }
 
     private Industry(IndustryId identity) {
         super(identity);
+        subscribe(new IndustryHandler(this));
     }
     // endregion
 

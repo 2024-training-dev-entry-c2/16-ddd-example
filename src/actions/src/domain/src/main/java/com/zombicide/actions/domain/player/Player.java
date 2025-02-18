@@ -6,11 +6,12 @@ import com.zombicide.actions.domain.player.events.ChangedSurvivorPosition;
 import com.zombicide.actions.domain.player.events.ChosenSkill;
 import com.zombicide.actions.domain.player.events.DiscardedWeapon;
 import com.zombicide.actions.domain.player.events.ObtainedWeapon;
-import com.zombicide.actions.domain.player.events.SwappedWeapon;
 import com.zombicide.actions.domain.player.events.UnlockedSkill;
 import com.zombicide.actions.domain.player.values.PlayerId;
 import com.zombicide.shared.domain.generic.AggregateRoot;
+import com.zombicide.shared.domain.generic.DomainEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends AggregateRoot<PlayerId> {
@@ -20,10 +21,13 @@ public class Player extends AggregateRoot<PlayerId> {
 	//region Constructors
 	public Player() {
 		super(new PlayerId());
+		survivors = new ArrayList<>();
+		subscribe(new PlayerHandler(this));
 	}
 
 	private Player(PlayerId identity) {
 		super(identity);
+		subscribe(new PlayerHandler(this));
 	}
 	//endregion
 
@@ -46,32 +50,35 @@ public class Player extends AggregateRoot<PlayerId> {
 	//endregion
 
 	//region Domain Actions
-	public void addSurvivor(String id, String nameSurvivor, Integer experience, String position, String currentState) {
-		apply(new AddedSurvivor(id, nameSurvivor, experience, position, currentState));
+	public void addSurvivor(String id) {
+		apply(new AddedSurvivor(id));
 	}
 
-	public void changeSurvivorPosition(String id, String newPosition) {
-		apply(new ChangedSurvivorPosition(id, newPosition));
+	public void changeSurvivorPosition(String id, Integer positionX, Integer positionY) {
+		apply(new ChangedSurvivorPosition(id, positionX, positionY));
 	}
 
-	public void unlockSkill(String id, String nameSkill, String description, Integer unlockPoints, Integer experience) {
-		apply(new UnlockedSkill(id, nameSkill, description, unlockPoints, experience));
+	public void unlockSkill(String skillId, String survivorId) {
+		apply(new UnlockedSkill(skillId, survivorId));
 	}
 
-	public void chooseSkill(String id, String nameSkill, String description, Integer unlockPoints) {
-		apply(new ChosenSkill(id, nameSkill, description, unlockPoints));
+	public void chooseSkill(String skillId, String survivorId) {
+		apply(new ChosenSkill(skillId, survivorId));
 	}
 
-	public void obtainWeapon(String id, String nameWeapon, Integer scope, Integer precision, Boolean isNoisy, Boolean openDoor) {
-		apply(new ObtainedWeapon(id, nameWeapon, scope, precision, isNoisy, openDoor));
+	public void obtainWeapon(String id) {
+		apply(new ObtainedWeapon(id));
 	}
 
-	public void swapWeapon(String id, String nameWeapon, Integer scope, Integer precision, Boolean isNoisy, Boolean openDoor) {
-		apply(new SwappedWeapon(id, nameWeapon, scope, precision, isNoisy, openDoor));
-	}
-
-	public void discardWeapon(String id, String nameWeapon, Integer scope, Integer precision, Boolean isNoisy, Boolean openDoor) {
-		apply(new DiscardedWeapon(id, nameWeapon, scope, precision, isNoisy, openDoor));
+	public void discardWeapon(String skillId, String survivorId) {
+		apply(new DiscardedWeapon(skillId, survivorId));
 	}
 	//endregion
+
+	public static Player from(final String identity, final List<DomainEvent> events) {
+		Player player = new Player(PlayerId.of(identity));
+
+		events.forEach(player::apply);
+		return player;
+	}
 }

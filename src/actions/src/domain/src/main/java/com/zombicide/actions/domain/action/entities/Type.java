@@ -14,24 +14,27 @@ public class Type extends Entity<TypeId> {
 	private Description description;
 	private Effect effect;
 	private Position position;
+	private IsNoisy isNoisy;
 	private AmountNoise amountNoise;
 
 	//region Constructors
-	public Type(TypeId identity, Name name, Description description, Effect effect, Position position, AmountNoise amountNoise) {
+	public Type(TypeId identity, Name name, Description description, Effect effect, Position position, IsNoisy isNoisy, AmountNoise amountNoise) {
 		super(identity);
 		this.name = name;
 		this.description = description;
 		this.effect = effect;
 		this.position = position;
+		this.isNoisy = isNoisy;
 		this.amountNoise = amountNoise;
 	}
 
-	public Type(Name name, Description description, Effect effect, Position position, AmountNoise amountNoise) {
+	public Type(Name name, Description description, Effect effect, Position position, IsNoisy isNoisy, AmountNoise amountNoise) {
 		super(new TypeId());
 		this.name = name;
 		this.description = description;
 		this.effect = effect;
 		this.position = position;
+		this.isNoisy = isNoisy;
 		this.amountNoise = amountNoise;
 	}
 	//endregion
@@ -67,6 +70,14 @@ public class Type extends Entity<TypeId> {
 
 	public void setPosition(Position position) {
 		this.position = position;
+	}
+
+	public IsNoisy getNoisy() {
+		return isNoisy;
+	}
+
+	public void setNoisy(IsNoisy noisy) {
+		isNoisy = noisy;
 	}
 
 	public AmountNoise getAmountNoise() {

@@ -4,43 +4,13 @@ import com.zombicide.shared.domain.generic.DomainEvent;
 
 public class ObtainedWeapon extends DomainEvent {
 	private final String id;
-	private final String nameWeapon;
-	private final Integer scope;
-	private final Integer precision;
-	private final Boolean isNoisy;
-	private final Boolean openDoor;
 
-	public ObtainedWeapon(String id, String nameWeapon, Integer scope, Integer precision, Boolean isNoisy, Boolean openDoor) {
+	public ObtainedWeapon(String id) {
 		super(EventsEnum.OBTAINED_WEAPON.name());
 		this.id = id;
-		this.nameWeapon = nameWeapon;
-		this.scope = scope;
-		this.precision = precision;
-		this.isNoisy = isNoisy;
-		this.openDoor = openDoor;
 	}
 
 	public String getId() {
 		return id;
-	}
-
-	public String getNameWeapon() {
-		return nameWeapon;
-	}
-
-	public Integer getScope() {
-		return scope;
-	}
-
-	public Integer getPrecision() {
-		return precision;
-	}
-
-	public Boolean getNoisy() {
-		return isNoisy;
-	}
-
-	public Boolean getOpenDoor() {
-		return openDoor;
 	}
 }

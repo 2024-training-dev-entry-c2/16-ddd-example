@@ -2,7 +2,6 @@ package com.zombicide.actions.domain.shared.values;
 
 import com.zombicide.shared.domain.generic.IValueObject;
 
-import static com.zombicide.shared.domain.values.Validate.validateNotBlank;
 import static com.zombicide.shared.domain.values.Validate.validateNotNull;
 
 public class Position implements IValueObject {

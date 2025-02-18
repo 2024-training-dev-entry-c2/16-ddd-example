@@ -10,7 +10,9 @@ import com.zombicide.actions.domain.action.events.MadeMovement;
 import com.zombicide.actions.domain.action.events.OpenedDoor;
 import com.zombicide.actions.domain.action.values.ActionId;
 import com.zombicide.shared.domain.generic.AggregateRoot;
+import com.zombicide.shared.domain.generic.DomainEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Action extends AggregateRoot<ActionId> {
@@ -20,10 +22,13 @@ public class Action extends AggregateRoot<ActionId> {
 	//region Constructors
 	public Action() {
 		super(new ActionId());
+		affecteds = new ArrayList<>();
+		subscribe(new ActionHandler(this));
 	}
 
 	private Action(ActionId identity) {
 		super(identity);
+		subscribe(new ActionHandler(this));
 	}
 	//endregion
 
@@ -50,8 +55,8 @@ public class Action extends AggregateRoot<ActionId> {
 		apply(new OpenedDoor(id, nameAction, description, effect, position, isNoisy));
 	}
 
-	public void attack(String id, String nameAction, String description, String effect, String typeAffectedId, String nameAffected, String positionAffected, Integer damage, String currentState, Boolean isNoisy) {
-		apply(new MadeAttack(id, nameAction, description, effect, typeAffectedId, nameAffected, positionAffected, damage, currentState, isNoisy));
+	public void attack(String id, String nameAction, String description, String effect, String typeAffectedId, String nameAffected, Integer positionX, Integer positionY, Integer damage, String currentState, Boolean isNoisy) {
+		apply(new MadeAttack(id, nameAction, description, effect, typeAffectedId, nameAffected, positionX, positionY, damage, currentState, isNoisy));
 	}
 
 	public void findObject(String id, String nameAction, String description, String effect, String position, Boolean isNoisy) {
@@ -70,4 +75,11 @@ public class Action extends AggregateRoot<ActionId> {
 		apply(new EliminatedZombie(id, nameZombie, position, damage, currentState));
 	}
 	//endregion
+
+	public static Action from(final String identity, final List<DomainEvent> events) {
+		Action action = new Action(ActionId.of(identity));
+
+		events.forEach(action::apply);
+		return action;
+	}
 }

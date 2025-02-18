@@ -8,6 +8,7 @@ import com.zombicide.actions.domain.shared.values.Name;
 import com.zombicide.actions.domain.shared.values.Position;
 import com.zombicide.shared.domain.generic.Entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Survivor extends Entity<SurvivorId> {
@@ -19,6 +20,16 @@ public class Survivor extends Entity<SurvivorId> {
 	private List<Weapon> weapons;
 
 	//region Constructors
+	public Survivor(SurvivorId identity, Name name, Experience experience, Position position, CurrentState currentState) {
+		super(identity);
+		this.name = name;
+		this.experience = experience;
+		this.position = position;
+		this.currentState = currentState;
+		this.skills = new ArrayList<>();
+		this.weapons = new ArrayList<>();
+	}
+
 	public Survivor(SurvivorId identity, Name name, Experience experience, Position position, CurrentState currentState, List<Skill> skills, List<Weapon> weapons) {
 		super(identity);
 		this.name = name;

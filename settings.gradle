@@ -1,8 +1,7 @@
-rootProject.name = 'building-blocks'
+rootProject.name = 'zombicide-ddd'
 
 include ':shared:domain'
-include ':appointments:domain'
+include ':actions:domain'
 
 project(':shared:domain').projectDir = file('./src/shared/src/domain')
-project(':appointments:domain').projectDir = file('./src/appointments/src/domain')
-
+project(':actions:domain').projectDir = file('./src/actions/src/domain')

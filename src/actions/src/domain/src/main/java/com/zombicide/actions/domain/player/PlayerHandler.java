@@ -9,29 +9,17 @@ import com.zombicide.actions.domain.player.events.ChosenSkill;
 import com.zombicide.actions.domain.player.events.DiscardedWeapon;
 import com.zombicide.actions.domain.player.events.ObtainedWeapon;
 import com.zombicide.actions.domain.player.events.UnlockedSkill;
-import com.zombicide.actions.domain.player.values.Dice;
-import com.zombicide.actions.domain.player.values.Experience;
-import com.zombicide.actions.domain.player.values.IsNoisy;
-import com.zombicide.actions.domain.player.values.OpenDoor;
-import com.zombicide.actions.domain.player.values.Precision;
-import com.zombicide.actions.domain.player.values.Scope;
-import com.zombicide.actions.domain.player.values.UnlockPoints;
-import com.zombicide.actions.domain.shared.values.CurrentState;
-import com.zombicide.actions.domain.shared.values.Damage;
-import com.zombicide.actions.domain.shared.values.Description;
-import com.zombicide.actions.domain.shared.values.Name;
 import com.zombicide.actions.domain.shared.values.Position;
 import com.zombicide.shared.domain.generic.DomainActionsContainer;
 import com.zombicide.shared.domain.generic.DomainEvent;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
 
-import static com.zombicide.actions.domain.player.initializer.Player.initializrSurvivors;
-import static com.zombicide.actions.domain.player.initializer.Skill.initializrSkills;
-import static com.zombicide.actions.domain.player.initializer.Weapon.initializrWeapons;
+import static com.zombicide.actions.domain.player.initializer.Players.initializrSurvivors;
+import static com.zombicide.actions.domain.player.initializer.Skills.initializrSkills;
+import static com.zombicide.actions.domain.player.initializer.Weapons.initializrWeapons;
 
 public class PlayerHandler extends DomainActionsContainer {
 	private final List<Survivor> survivors;

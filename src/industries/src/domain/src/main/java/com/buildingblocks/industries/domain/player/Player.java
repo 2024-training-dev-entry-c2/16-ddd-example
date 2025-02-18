@@ -1,7 +1,5 @@
 package com.buildingblocks.industries.domain.player;
 
-import com.buildingblocks.industries.domain.industry.events.ActivatedIndustryMarketLink;
-import com.buildingblocks.industries.domain.industry.values.IndustryId;
 import com.buildingblocks.industries.domain.player.entities.Loan;
 import com.buildingblocks.industries.domain.player.entities.Transaction;
 import com.buildingblocks.industries.domain.player.events.*;
@@ -20,6 +18,7 @@ public class Player extends AggregateRoot<PlayerId> {
     // region Constructors
     public Player() {
         super(new PlayerId());
+        subscribe(new PlayerHandler(this));
     }
 
     private Player(PlayerId identity) {

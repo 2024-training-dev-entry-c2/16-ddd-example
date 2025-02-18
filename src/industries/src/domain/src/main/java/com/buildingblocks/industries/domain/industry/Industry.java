@@ -167,10 +167,6 @@ public class Industry extends AggregateRoot<IndustryId> {
         apply(new ActivatedIndustryMarketLink(id, isConnectedToNetwork));
     }
 
-    public void build(String type, Integer level, String location, Integer cost, String requiredResource, Integer techLevelRequired, Boolean isConnectedToNetwork, String era, Boolean isFlipped) {
-        apply(new BuiltIndustry(type, level, location, cost, requiredResource, techLevelRequired, isConnectedToNetwork, era, isFlipped));
-    }
-
     public void consumeResource(String id, String requiredResource, Integer quantityRequiredResource) {
         apply(new ConsumedResource(id, requiredResource, quantityRequiredResource));
     }

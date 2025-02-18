@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 public class IndustryHandler extends DomainActionsContainer {
 
     public IndustryHandler(Industry industry) {
-        add(buildIndustry(industry));
+        add(build(industry));
         add(activateMarketLink(industry));
         add(consumeResource(industry));
         add(isExhausted(industry));
@@ -20,7 +20,7 @@ public class IndustryHandler extends DomainActionsContainer {
         add(upgrade(industry));
     }
 
-    public Consumer<? extends DomainEvent> buildIndustry(Industry industry) {
+    public Consumer<? extends DomainEvent> build(Industry industry) {
         return (BuiltIndustry event) -> {
             industry.setType(Type.of(event.getType()));
             industry.setLevel(Level.of(event.getLevel()));

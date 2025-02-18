@@ -20,8 +20,11 @@ import com.buildingblocks.combat.domain.character.values.ObjectId;
 import com.buildingblocks.combat.domain.character.values.StatusActivateId;
 
 
+import com.buildingblocks.combat.domain.combat.Combat;
 import com.buildingblocks.combat.domain.combat.CombatHandler;
+import com.buildingblocks.combat.domain.combat.values.CombatId;
 import com.buildingblocks.shared.domain.generic.AggregateRoot;
+import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -162,6 +165,11 @@ public class Character extends AggregateRoot<CharacterId> {
     public void beCured(int amount) {
 
         apply(new beCured(this.getIdentity().getValue(), amount));
+    }
+    public  static Character from(final String identity, final List<DomainEvent> events){
+        Character character = new Character(CharacterId.of(identity));
+        events.forEach(character::apply);
+        return character;
     }
 
     //endregion

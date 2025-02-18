@@ -1,5 +1,6 @@
 package com.buildingblocks.combat.domain.combat;
 
+import com.buildingblocks.combat.domain.character.values.DeckOfCardsId;
 import com.buildingblocks.combat.domain.combat.entities.CharacterCombat;
 import com.buildingblocks.combat.domain.combat.entities.EnemyCombat;
 import com.buildingblocks.combat.domain.combat.entities.GameTurn;
@@ -20,8 +21,10 @@ import com.buildingblocks.combat.domain.combat.values.Health;
 import com.buildingblocks.combat.domain.combat.values.Initiative;
 import com.buildingblocks.combat.domain.combat.values.Name;
 import com.buildingblocks.combat.domain.combat.values.ScenarioId;
+import com.buildingblocks.combat.domain.deckOfCards.DeckOfCards;
 import com.buildingblocks.combat.domain.deckOfCards.DeckOfCardsHandler;
 import com.buildingblocks.shared.domain.generic.AggregateRoot;
+import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -171,6 +174,12 @@ public class Combat extends AggregateRoot<CombatId> {
             return ((CharacterCombat) entity).getInitiative();
         }
         return Initiative.of(0); // Valor por defecto si no es un tipo esperado
+    }
+
+    public  static Combat from(final String identity, final List<DomainEvent> events){
+        Combat combat = new Combat(CombatId.of(identity));
+        events.forEach(combat::apply);
+        return combat;
     }
     //endregion
 }

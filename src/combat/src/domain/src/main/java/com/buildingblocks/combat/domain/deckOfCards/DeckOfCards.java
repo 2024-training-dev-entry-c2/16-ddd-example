@@ -10,7 +10,10 @@ import com.buildingblocks.combat.domain.deckOfCards.events.ReorganizedDeck;
 import com.buildingblocks.combat.domain.deckOfCards.events.RestedCard;
 import com.buildingblocks.combat.domain.deckOfCards.values.ParticipantId;
 import com.buildingblocks.combat.domain.deckOfCards.values.StatusDeck;
+import com.buildingblocks.combat.domain.enemy.Enemy;
+import com.buildingblocks.combat.domain.enemy.values.EnemyId;
 import com.buildingblocks.shared.domain.generic.AggregateRoot;
+import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 import java.util.Collections;
 import java.util.List;
@@ -126,6 +129,11 @@ public class DeckOfCards extends AggregateRoot<DeckOfCardsId> {
                 .filter(c -> c.getIdentity().getValue().equals(cardId))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Carta no encontrada"));
+    }
+    public  static DeckOfCards from(final String identity, final List<DomainEvent> events){
+        DeckOfCards deck = new DeckOfCards(DeckOfCardsId.of(identity));
+        events.forEach(deck::apply);
+        return deck;
     }
     //endregion
 }

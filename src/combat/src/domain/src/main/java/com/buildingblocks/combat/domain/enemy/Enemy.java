@@ -20,6 +20,7 @@ import com.buildingblocks.combat.domain.enemy.values.Level;
 import com.buildingblocks.combat.domain.enemy.values.Name;
 import com.buildingblocks.combat.domain.enemy.values.TypeEnemy;
 import com.buildingblocks.shared.domain.generic.AggregateRoot;
+import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 import java.util.List;
 
@@ -171,6 +172,11 @@ public class Enemy extends AggregateRoot<EnemyId> {
         ));
     }
 
+    public  static  Enemy from(final String identity, final List<DomainEvent> events){
+        Enemy enemy = new Enemy(EnemyId.of(identity));
+        events.forEach(enemy::apply);
+        return enemy;
+    }
     //endregion
 
 }

@@ -58,7 +58,7 @@ public class Table extends AggregateRoot<TableId> {
   }
 
   public void validatePlayersQuantity() {
-    if (this.players.size() > 2) {
+    if (this.players.size() == 2) {
       throw new IllegalStateException("A table must have at maximo 2 players");
     }
   }

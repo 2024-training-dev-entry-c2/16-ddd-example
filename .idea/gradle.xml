@@ -5,23 +5,13 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-<<<<<<< HEAD
-        <option name="gradleHome" value="$PROJECT_DIR$/../../../../../../../Gradle/gradle-8.11.1" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/actions" />
             <option value="$PROJECT_DIR$/shared" />
             <option value="$PROJECT_DIR$/src/actions/src/domain" />
-=======
-        <option name="gradleHome" value="$PROJECT_DIR$/../../../../../Gradle" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/appointments" />
-            <option value="$PROJECT_DIR$/shared" />
-            <option value="$PROJECT_DIR$/src/appointments/src/domain" />
->>>>>>> e1dea831734a20bb7d5bc7bddfbd1e2ec13b129f
             <option value="$PROJECT_DIR$/src/shared/src/domain" />
           </set>
         </option>

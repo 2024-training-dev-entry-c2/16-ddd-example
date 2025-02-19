@@ -37,10 +37,10 @@ public class DomainActionsHandler {
 	}
 
 	private long increaseVersion(final DomainEvent event) {
-		final AtomicLong version = versions.get(event.getFirstName());
+		final AtomicLong version = versions.get(event.getName());
 		final long newVersion = version == null ? event.getVersion() : version.incrementAndGet();
 
-		versions.put(event.getFirstName(), new AtomicLong(newVersion));
+		versions.put(event.getName(), new AtomicLong(newVersion));
 		return newVersion;
 	}
 }

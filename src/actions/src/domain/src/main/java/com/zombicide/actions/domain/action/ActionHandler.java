@@ -38,7 +38,7 @@ public class ActionHandler extends DomainActionsContainer {
 				Name.of(event.getNameAction()),
 				Description.of(event.getDescription()),
 				Effect.of(event.getEffect()),
-				Position.of(Integer.parseInt(event.getPosition()), Integer.parseInt(event.getPosition())),
+				Position.of(event.getPositionX(), event.getPositionY()),
 				IsNoisy.of(event.getNoisy()),
 				AmountNoise.of(1)
 			);
@@ -62,7 +62,7 @@ public class ActionHandler extends DomainActionsContainer {
 				Name.of(event.getNameAffected()),
 				Position.of(event.getPositionX(), event.getPositionY()),
 				Damage.of(event.getDamage()),
-				CurrentState.of("Herido")
+				CurrentState.of(event.getCurrentState())
 			);
 
 			action.getAffecteds().add(affected);
@@ -76,7 +76,7 @@ public class ActionHandler extends DomainActionsContainer {
 				Name.of(event.getNameAction()),
 				Description.of(event.getDescription()),
 				Effect.of(event.getEffect()),
-				Position.of(Integer.parseInt(event.getPosition()), Integer.parseInt(event.getPosition())),
+				Position.of(event.getPositionX(), event.getPositionY()),
 				IsNoisy.of(event.getNoisy()),
 				AmountNoise.of(0)
 			);
@@ -90,7 +90,7 @@ public class ActionHandler extends DomainActionsContainer {
 				Name.of(event.getNameAction()),
 				Description.of(event.getDescription()),
 				Effect.of(event.getEffect()),
-				Position.of(Integer.parseInt(event.getPosition()), Integer.parseInt(event.getPosition())),
+				Position.of(event.getPositionX(), event.getPositionY()),
 				IsNoisy.of(event.getNoisy()),
 				AmountNoise.of(0)
 			);
@@ -103,9 +103,9 @@ public class ActionHandler extends DomainActionsContainer {
 			Affected affected = new Affected(
 				TypeAffected.of("Superviviente"),
 				Name.of(event.getNameSurvivor()),
-				Position.of(Integer.parseInt(event.getPosition()), Integer.parseInt(event.getPosition())),
+				Position.of(event.getPositionX(), event.getPositionY()),
 				Damage.of(event.getDamage()),
-				CurrentState.of("Herido")
+				CurrentState.of(event.getCurrentState())
 			);
 			action.getAffecteds().add(affected);
 		};
@@ -116,11 +116,12 @@ public class ActionHandler extends DomainActionsContainer {
 			Affected affected = new Affected(
 				TypeAffected.of("Zombie"),
 				Name.of(event.getNameZombie()),
-				Position.of(Integer.parseInt(event.getPosition()), Integer.parseInt(event.getPosition())),
+				Position.of(event.getPositionX(), event.getPositionY()),
 				Damage.of(event.getDamage()),
-				CurrentState.of("Muerto")
+				CurrentState.of(event.getCurrentState())
 			);
 			action.getAffecteds().add(affected);
+			action.setAffecteds(action.getAffecteds());
 		};
 	}
 }

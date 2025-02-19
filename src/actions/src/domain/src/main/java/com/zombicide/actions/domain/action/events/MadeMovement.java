@@ -3,25 +3,21 @@ package com.zombicide.actions.domain.action.events;
 import com.zombicide.shared.domain.generic.DomainEvent;
 
 public class MadeMovement extends DomainEvent {
-	private final String id;
 	private final String nameAction;
 	private final String description;
 	private final String effect;
-	private final String position;
+	private final Integer positionX;
+	private final Integer positionY;
 	private final Boolean isNoisy;
 
-	public MadeMovement(String id, String nameAction, String description, String effect, String position, Boolean isNoisy) {
+	public MadeMovement(String nameAction, String description, String effect, Integer positionX, Integer positionY, Boolean isNoisy) {
 		super(EventsEnum.MADE_MOVEMENT.name());
-		this.id = id;
 		this.nameAction = nameAction;
 		this.description = description;
 		this.effect = effect;
-		this.position = position;
+		this.positionX = positionX;
+		this.positionY = positionY;
 		this.isNoisy = isNoisy;
-	}
-
-	public String getId() {
-		return id;
 	}
 
 	public String getNameAction() {
@@ -36,8 +32,12 @@ public class MadeMovement extends DomainEvent {
 		return effect;
 	}
 
-	public String getPosition() {
-		return position;
+	public Integer getPositionX() {
+		return positionX;
+	}
+
+	public Integer getPositionY() {
+		return positionY;
 	}
 
 	public Boolean getNoisy() {

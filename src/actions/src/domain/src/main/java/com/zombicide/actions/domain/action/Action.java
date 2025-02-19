@@ -51,28 +51,28 @@ public class Action extends AggregateRoot<ActionId> {
 	//endregion
 
 	//region Domain Actions
-	public void openDoor(String id, String nameAction, String description, String effect, String position, Boolean isNoisy) {
-		apply(new OpenedDoor(id, nameAction, description, effect, position, isNoisy));
+	public void openDoor(String nameAction, String description, String effect, Integer positionX, Integer positionY, Boolean isNoisy) {
+		apply(new OpenedDoor(nameAction, description, effect, positionX, positionY, isNoisy));
 	}
 
-	public void attack(String id, String nameAction, String description, String effect, String typeAffectedId, String nameAffected, Integer positionX, Integer positionY, Integer damage, String currentState, Boolean isNoisy) {
-		apply(new MadeAttack(id, nameAction, description, effect, typeAffectedId, nameAffected, positionX, positionY, damage, currentState, isNoisy));
+	public void attack(String nameAction, String description, String effect, String nameAffected, Integer positionX, Integer positionY, Integer damage, String currentState, Boolean isNoisy) {
+		apply(new MadeAttack(nameAction, description, effect, nameAffected, positionX, positionY, damage, currentState, isNoisy));
 	}
 
-	public void findObject(String id, String nameAction, String description, String effect, String position, Boolean isNoisy) {
-		apply(new FoundObject(id, nameAction, description, effect, position, isNoisy));
+	public void findObject(String nameAction, String description, String effect, Integer positionX, Integer positionY, Boolean isNoisy) {
+		apply(new FoundObject(nameAction, description, effect, positionX, positionY, isNoisy));
 	}
 
-	public void move(String id, String nameAction, String description, String effect, String position, Boolean isNoisy) {
-		apply(new MadeMovement(id, nameAction, description, effect, position, isNoisy));
+	public void move(String nameAction, String description, String effect, Integer positionX, Integer positionY, Boolean isNoisy) {
+		apply(new MadeMovement(nameAction, description, effect, positionX, positionY, isNoisy));
 	}
 
-	public void injureSurvivor(String id, String nameSurvivor, String position, Integer damage, String currentState) {
-		apply(new InjuredSurvivor(id, nameSurvivor, position, damage, currentState));
+	public void injureSurvivor(String nameSurvivor, Integer positionX, Integer positionY, Integer damage, String currentState) {
+		apply(new InjuredSurvivor(nameSurvivor, positionX, positionY, damage, currentState));
 	}
 
-	public void eliminateZombie(String id, String nameZombie, String position, Integer damage, String currentState) {
-		apply(new EliminatedZombie(id, nameZombie, position, damage, currentState));
+	public void eliminateZombie(String nameZombie, Integer positionX, Integer positionY, Integer damage, String currentState) {
+		apply(new EliminatedZombie(nameZombie, positionX, positionY, damage, currentState));
 	}
 	//endregion
 

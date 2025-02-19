@@ -60,7 +60,7 @@ class PlayerTest {
 	@Test
 	void unlockSkillSuccess() {
 		player.addSurvivor("2", "Mariana");
-		player.unlockSkill("2");
+		player.unlockSkill("2", "10");
 		assertEquals(2, player.getSurvivors().get(0).getSkills().size());
 		assertEquals(1, player.getSurvivors().size());
 		assertEquals(2, player.getUncommittedEvents().size());
@@ -70,7 +70,7 @@ class PlayerTest {
 	@Test
 	void unlockSkillFailed() {
 		player.addSurvivor("2", "Mariana");
-		player.unlockSkill("2");
+		player.unlockSkill("2", "50");
 		assertEquals(1, player.getSurvivors().get(0).getSkills().size());
 		assertEquals(1, player.getSurvivors().size());
 		assertEquals(2, player.getUncommittedEvents().size());

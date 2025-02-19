@@ -59,8 +59,8 @@ public class Player extends AggregateRoot<PlayerId> {
 		apply(new ChangedSurvivorPosition(id, positionX, positionY));
 	}
 
-	public void unlockSkill(String survivorId) {
-		apply(new UnlockedSkill(survivorId));
+	public void unlockSkill(String survivorId, String skillId) {
+		apply(new UnlockedSkill(survivorId, skillId));
 	}
 
 	public void chooseSkill(String skillId, String survivorId) {

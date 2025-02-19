@@ -1,5 +1,6 @@
 package com.buildingblocks.industries.domain.resourceMarket;
 
+import com.buildingblocks.industries.domain.resourceMarket.entities.TradeExchange;
 import com.buildingblocks.industries.domain.resourceMarket.events.DepletedMarketSupply;
 import com.buildingblocks.industries.domain.resourceMarket.events.ExecutedTrade;
 import com.buildingblocks.industries.domain.resourceMarket.events.RefilledMarketSupply;
@@ -18,7 +19,7 @@ public class ResourceMarketHandler extends DomainActionsContainer {
         add(depleteMarketSupply(resourceMarket));
         add(executeTrade(resourceMarket));
         add(refillMarketSupply(resourceMarket));
-        add(updatePrice(resourceMarket));
+        add(updateResourcePrice(resourceMarket));
     }
 
     public Consumer<? extends DomainEvent> depleteMarketSupply(ResourceMarket resourceMarket) {
@@ -31,17 +32,23 @@ public class ResourceMarketHandler extends DomainActionsContainer {
         };
     }
 
-    public Consumer<? extends DomainEvent> executeTrade(ResourceMarket resourceMarket) {
-        return (ExecutedTrade event) -> {
-            String tradeType = event.getTradeType();
-            String resourceType = event.getResourceType();
-            String tradeId = event.getId();
-            Integer totalResourcesPrice = event.getTotalResourcesPrice();
-            Integer resourceQuantity = event.getResourceQuantity();
+public Consumer<? extends DomainEvent> executeTrade(ResourceMarket resourceMarket) {
+    return (ExecutedTrade event) -> {
+        String tradeId = event.getId();
+        Integer totalResourcesPrice = event.getTotalResourcesPrice();
+        Integer resourceQuantity = event.getResourceQuantity();
 
-            resourceMarket.executeTrade(tradeId, tradeType, resourceType, totalResourcesPrice, resourceQuantity);
-        };
-    }
+        resourceMarket.findTradeById(tradeId).ifPresentOrElse(tradeExchange -> {
+            resourceMarket.executeTrade(
+                    tradeId,
+                    tradeExchange.getTradeType().name(),
+                    tradeExchange.getResourceType().getValue(),
+                    totalResourcesPrice,
+                    resourceQuantity
+            );
+        }, () -> System.out.println("Trade not found"));
+    };
+}
 
     public Consumer<? extends DomainEvent> refillMarketSupply(ResourceMarket resourceMarket) {
         return (RefilledMarketSupply event) -> {
@@ -51,13 +58,12 @@ public class ResourceMarketHandler extends DomainActionsContainer {
         };
     }
 
-    public Consumer<? extends DomainEvent> updatePrice(ResourceMarket resourceMarket) {
+    public Consumer<? extends DomainEvent> updateResourcePrice(ResourceMarket resourceMarket) {
         return (UpdatedResourcePrice event) -> {
-            ResourcePrice oldResourcePrice = ResourcePrice.of(event.getOldResourcePrice());
             ResourcePrice newResourcePrice = ResourcePrice.of(event.getNewResourcePrice());
-            resourceMarket.updateResourcePrice(event.getId(), event.getResourceType(),
-                    oldResourcePrice.getValue(), newResourcePrice.getValue());
+            resourceMarket.setResourcePrice(newResourcePrice);
         };
     }
+
 
 }

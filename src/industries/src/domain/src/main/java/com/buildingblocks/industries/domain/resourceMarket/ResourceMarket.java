@@ -12,6 +12,7 @@ import com.buildingblocks.shared.domain.generic.AggregateRoot;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ResourceMarket extends AggregateRoot<ResourceMarketId> {
     private TradeExchange tradeExchange;
@@ -77,6 +78,13 @@ public class ResourceMarket extends AggregateRoot<ResourceMarketId> {
     public void addResources(int quantityToAdd, String resourceType) {
         AvailableResources updatedResources = availableResources.increaseQuantity(quantityToAdd, resourceType);
         setAvailableResources(updatedResources);
+    }
+
+    public Optional<TradeExchange> findTradeById(String tradeId) {
+        if (tradeExchange != null && tradeExchange.getIdentity().getValue().equals(tradeId)) {
+            return Optional.of(tradeExchange);
+        }
+        return Optional.empty();
     }
 
     public static ResourceMarket from(final String identity, final List<DomainEvent> events) {

@@ -7,10 +7,7 @@ import com.buildingblocks.industries.domain.resourceMarket.events.DepletedMarket
 import com.buildingblocks.industries.domain.resourceMarket.events.ExecutedTrade;
 import com.buildingblocks.industries.domain.resourceMarket.events.RefilledMarketSupply;
 import com.buildingblocks.industries.domain.resourceMarket.events.UpdatedResourcePrice;
-import com.buildingblocks.industries.domain.resourceMarket.values.AvailableResources;
-import com.buildingblocks.industries.domain.resourceMarket.values.ResourcePrice;
-import com.buildingblocks.industries.domain.resourceMarket.values.ResourceQuantity;
-import com.buildingblocks.industries.domain.resourceMarket.values.TradeExchangeId;
+import com.buildingblocks.industries.domain.resourceMarket.values.*;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -202,49 +199,37 @@ class ResourceMarketTest {
         assertTrue(result.isEmpty(), "Should return empty when tradeId does not match.");
     }
 
-//    @Test
-//    void shouldNotExecuteTradeWhenTradeTypeIsInvalid() {
-//        String tradeId = "trade-999";
-//        String tradeType = "InvalidTradeType";
-//        String resourceType = "Iron";
-//        Integer totalResourcesPrice = 100;
-//        Integer resourceQuantity = 10;
-//
-//        Exception exception = assertThrows(IllegalArgumentException.class, () ->
-//                resourceMarket.executeTrade(tradeId, tradeType, resourceType, totalResourcesPrice, resourceQuantity)
-//        );
-//
-//        assertEquals("Invalid trade type", exception.getMessage());
-//    }
-//
-//    @Test
-//    void shouldNotExecuteTradeWhenResourceQuantityIsNegative() {
-//        String tradeId = "trade-888";
-//        String tradeType = "Buy";
-//        String resourceType = "Iron";
-//        Integer totalResourcesPrice = 100;
-//        Integer resourceQuantity = -5;
-//
-//        Exception exception = assertThrows(IllegalArgumentException.class, () ->
-//                resourceMarket.executeTrade(tradeId, tradeType, resourceType, totalResourcesPrice, resourceQuantity)
-//        );
-//
-//        assertEquals("Resource quantity must be positive", exception.getMessage());
-//    }
-//
-//    @Test
-//    void shouldNotExecuteTradeWhenTotalResourcesPriceIsNegative() {
-//        String tradeId = "trade-777";
-//        String tradeType = "Sell";
-//        String resourceType = "Iron";
-//        Integer totalResourcesPrice = -50;
-//        Integer resourceQuantity = 10;
-//
-//        Exception exception = assertThrows(IllegalArgumentException.class, () ->
-//                resourceMarket.executeTrade(tradeId, tradeType, resourceType, totalResourcesPrice, resourceQuantity)
-//        );
-//
-//        assertEquals("Total resource price must be positive", exception.getMessage());
-//    }
+    @Test
+    void shouldNotExecuteTradeWhenTradeDoesNotExist() {
+        String tradeId = "trade-123";
+
+        Optional<TradeExchange> trade = resourceMarket.findTradeById(tradeId);
+
+        assertFalse(trade.isPresent(), "TradeExchange should not be found.");
+    }
+
+    @Test
+    void shouldHandleTradeNotFound() {
+        String nonExistentTradeId = "non-existent-trade";
+        ExecutedTrade event = new ExecutedTrade(
+                nonExistentTradeId,
+                "BUY",
+                "Coal",
+                50,
+                5
+        );
+        resourceMarket.findTradeById(event.getId()).ifPresentOrElse(trade -> {
+            resourceMarket.executeTrade(
+                    event.getId(),
+                    event.getTradeType(),
+                    event.getResourceType(),
+                    event.getTotalResourcesPrice(),
+                    event.getResourceQuantity()
+            );
+        }, () -> System.out.println("Trade not found"));
+
+        List<DomainEvent> changes = resourceMarket.getUncommttedEvents();
+        assertTrue(changes.isEmpty(), "No event should be generated if the trade does not exist.");
+    }
 
 }

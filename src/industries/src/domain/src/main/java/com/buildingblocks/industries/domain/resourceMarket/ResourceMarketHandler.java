@@ -1,6 +1,5 @@
 package com.buildingblocks.industries.domain.resourceMarket;
 
-import com.buildingblocks.industries.domain.resourceMarket.entities.TradeExchange;
 import com.buildingblocks.industries.domain.resourceMarket.events.DepletedMarketSupply;
 import com.buildingblocks.industries.domain.resourceMarket.events.ExecutedTrade;
 import com.buildingblocks.industries.domain.resourceMarket.events.RefilledMarketSupply;
@@ -35,18 +34,10 @@ public class ResourceMarketHandler extends DomainActionsContainer {
 public Consumer<? extends DomainEvent> executeTrade(ResourceMarket resourceMarket) {
     return (ExecutedTrade event) -> {
         String tradeId = event.getId();
+        String tradeType = event.getTradeType();
+        String resourceType = event.getResourceType();
         Integer totalResourcesPrice = event.getTotalResourcesPrice();
         Integer resourceQuantity = event.getResourceQuantity();
-
-        resourceMarket.findTradeById(tradeId).ifPresentOrElse(tradeExchange -> {
-            resourceMarket.executeTrade(
-                    tradeId,
-                    tradeExchange.getTradeType().name(),
-                    tradeExchange.getResourceType().getValue(),
-                    totalResourcesPrice,
-                    resourceQuantity
-            );
-        }, () -> System.out.println("Trade not found"));
     };
 }
 

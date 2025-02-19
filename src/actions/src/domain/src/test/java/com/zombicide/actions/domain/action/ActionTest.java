@@ -6,12 +6,9 @@ import com.zombicide.actions.domain.action.events.InjuredSurvivor;
 import com.zombicide.actions.domain.action.events.MadeAttack;
 import com.zombicide.actions.domain.action.events.MadeMovement;
 import com.zombicide.actions.domain.action.events.OpenedDoor;
-import com.zombicide.actions.domain.action.values.ActionId;
-import com.zombicide.shared.domain.generic.DomainEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,7 +28,7 @@ class ActionTest {
 
 	@Test
 	void rebuildAggregateSuccess() {
-		Action action = Action.from("1", List.of(new OpenedDoor("Abrir puerta", "Accion para abrir una puerta", "puerta abierta", 0, 2, true)));
+		action = Action.from("1", List.of(new OpenedDoor("Abrir puerta", "Accion para abrir una puerta", "puerta abierta", 0, 2, true)));
 		assertEquals("1", action.getIdentity().getValue());
 	}
 

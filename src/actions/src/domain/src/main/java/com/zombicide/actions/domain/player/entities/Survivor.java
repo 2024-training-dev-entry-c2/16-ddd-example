@@ -20,14 +20,14 @@ public class Survivor extends Entity<SurvivorId> {
 	private List<Weapon> weapons;
 
 	//region Constructors
-	public Survivor(SurvivorId identity, Name name, Experience experience, Position position, CurrentState currentState, List<Skill> skills, List<Weapon> weapons) {
+	public Survivor(SurvivorId identity, Name name, Experience experience, Position position, CurrentState currentState) {
 		super(identity);
 		this.name = name;
 		this.experience = experience;
 		this.position = position;
 		this.currentState = currentState;
-		this.skills = skills;
-		this.weapons = weapons;
+		this.skills = new ArrayList<>();
+		this.weapons = new ArrayList<>();
 	}
 
 	public Survivor( Name name, Experience experience, Position position, CurrentState currentState) {

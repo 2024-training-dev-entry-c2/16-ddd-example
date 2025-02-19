@@ -40,12 +40,14 @@ public class PlayerHandler extends DomainActionsContainer {
 
 	public Consumer<? extends DomainEvent> addSurvivor(Player player) {
 		return (AddedSurvivor event) -> {
-			Survivor survivor = survivors.stream()
+			Survivor survivor = this.survivors.stream()
 				.filter(s -> s.getIdentity().getValue().equals(event.getId()))
 				.findFirst()
 				.orElseThrow(() -> new RuntimeException("Survivor with id " + event.getId() + " not found"));
 
 			player.getSurvivors().add(survivor);
+			player.setSurvivors(player.getSurvivors());
+			player.setName(event.getPlayerName());
 		};
 	}
 

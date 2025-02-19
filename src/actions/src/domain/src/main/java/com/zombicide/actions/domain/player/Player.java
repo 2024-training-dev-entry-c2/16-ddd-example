@@ -27,6 +27,7 @@ public class Player extends AggregateRoot<PlayerId> {
 
 	private Player(PlayerId identity) {
 		super(identity);
+		survivors = new ArrayList<>();
 		subscribe(new PlayerHandler(this));
 	}
 	//endregion
@@ -50,16 +51,16 @@ public class Player extends AggregateRoot<PlayerId> {
 	//endregion
 
 	//region Domain Actions
-	public void addSurvivor(String id) {
-		apply(new AddedSurvivor(id));
+	public void addSurvivor(String id, String playerName) {
+		apply(new AddedSurvivor(id, playerName));
 	}
 
 	public void changeSurvivorPosition(String id, Integer positionX, Integer positionY) {
 		apply(new ChangedSurvivorPosition(id, positionX, positionY));
 	}
 
-	public void unlockSkill(String skillId, String survivorId) {
-		apply(new UnlockedSkill(skillId, survivorId));
+	public void unlockSkill(String survivorId) {
+		apply(new UnlockedSkill(survivorId));
 	}
 
 	public void chooseSkill(String skillId, String survivorId) {
@@ -70,8 +71,8 @@ public class Player extends AggregateRoot<PlayerId> {
 		apply(new ObtainedWeapon(id));
 	}
 
-	public void discardWeapon(String skillId, String survivorId) {
-		apply(new DiscardedWeapon(skillId, survivorId));
+	public void discardWeapon(String weaponId, String survivorId) {
+		apply(new DiscardedWeapon(weaponId, survivorId));
 	}
 	//endregion
 

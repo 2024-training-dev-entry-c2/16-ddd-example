@@ -1,16 +1,23 @@
 package com.buildingblocks.industries.domain.resourceMarket;
 
 import com.buildingblocks.industries.domain.player.values.PlayerId;
+import com.buildingblocks.industries.domain.player.values.ResourceType;
+import com.buildingblocks.industries.domain.resourceMarket.entities.TradeExchange;
 import com.buildingblocks.industries.domain.resourceMarket.events.DepletedMarketSupply;
 import com.buildingblocks.industries.domain.resourceMarket.events.ExecutedTrade;
 import com.buildingblocks.industries.domain.resourceMarket.events.RefilledMarketSupply;
 import com.buildingblocks.industries.domain.resourceMarket.events.UpdatedResourcePrice;
 import com.buildingblocks.industries.domain.resourceMarket.values.AvailableResources;
+import com.buildingblocks.industries.domain.resourceMarket.values.ResourcePrice;
+import com.buildingblocks.industries.domain.resourceMarket.values.ResourceQuantity;
+import com.buildingblocks.industries.domain.resourceMarket.values.TradeExchangeId;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -127,4 +134,117 @@ class ResourceMarketTest {
         assertNotNull(rebuiltMarket);
         assertEquals(resourceId, resourceId);
     }
+
+    @Test
+    void shouldSetAndGetTradeExchange() {
+        TradeExchange tradeExchange = new TradeExchange(
+                TradeExchange.TradeType.BUY,
+                ResourceType.of("Coal"),
+                ResourceQuantity.of(10),
+                ResourcePrice.of(5),
+                AvailableResources.of(Collections.nCopies(20, "Coal"))
+        );
+        resourceMarket.setTradeExchange(tradeExchange);
+
+        assertNotNull(resourceMarket.getTradeExchange(), "TradeExchange should not be null.");
+        assertEquals(tradeExchange, resourceMarket.getTradeExchange(), "TradeExchange should be the assigned instance.");
+    }
+
+    @Test
+    void shouldReturnNullWhenTradeExchangeNotSet() {
+        assertNull(resourceMarket.getTradeExchange(), "TradeExchange should be null by default.");
+    }
+
+    @Test
+    void shouldReturnNullWhenAvailableResourcesNotSet() {
+        assertNull(resourceMarket.getAvailableResources(), "AvailableResources should be null by default.");
+    }
+
+    @Test
+    void shouldReturnTradeExchangeWhenTradeIdMatches() {
+        TradeExchangeId tradeExchangeId = TradeExchangeId.of("trade-123");
+        TradeExchange tradeExchange = new TradeExchange(
+                tradeExchangeId,
+                TradeExchange.TradeType.BUY,
+                ResourceType.of("Coal"),
+                ResourceQuantity.of(10),
+                ResourcePrice.of(5),
+                AvailableResources.of(Collections.nCopies(20, "Coal"))
+        );
+        resourceMarket.setTradeExchange(tradeExchange);
+
+        Optional<TradeExchange> result = resourceMarket.findTradeById(tradeExchangeId.getValue()); // Se busca por String
+        assertAll(
+                () -> assertTrue(result.isPresent(), "TradeExchange should be found."),
+                () -> assertEquals(tradeExchange, result.get(), "The found TradeExchange should match the assigned one.")
+        );
+    }
+
+    @Test
+    void shouldReturnEmptyWhenTradeExchangeIsNull() {
+        Optional<TradeExchange> result = resourceMarket.findTradeById("trade-123");
+        assertTrue(result.isEmpty(), "Should return empty when tradeExchange is null.");
+    }
+
+    @Test
+    void shouldReturnEmptyWhenTradeIdDoesNotMatch() {
+        TradeExchange tradeExchange = new TradeExchange(
+                TradeExchangeId.of("trade-456"),
+                TradeExchange.TradeType.BUY,
+                ResourceType.of("Coal"),
+                ResourceQuantity.of(10),
+                ResourcePrice.of(5),
+                AvailableResources.of(Collections.nCopies(20, "Coal"))
+        );
+        resourceMarket.setTradeExchange(tradeExchange);
+
+        Optional<TradeExchange> result = resourceMarket.findTradeById("trade-123");
+        assertTrue(result.isEmpty(), "Should return empty when tradeId does not match.");
+    }
+
+//    @Test
+//    void shouldNotExecuteTradeWhenTradeTypeIsInvalid() {
+//        String tradeId = "trade-999";
+//        String tradeType = "InvalidTradeType";
+//        String resourceType = "Iron";
+//        Integer totalResourcesPrice = 100;
+//        Integer resourceQuantity = 10;
+//
+//        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+//                resourceMarket.executeTrade(tradeId, tradeType, resourceType, totalResourcesPrice, resourceQuantity)
+//        );
+//
+//        assertEquals("Invalid trade type", exception.getMessage());
+//    }
+//
+//    @Test
+//    void shouldNotExecuteTradeWhenResourceQuantityIsNegative() {
+//        String tradeId = "trade-888";
+//        String tradeType = "Buy";
+//        String resourceType = "Iron";
+//        Integer totalResourcesPrice = 100;
+//        Integer resourceQuantity = -5;
+//
+//        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+//                resourceMarket.executeTrade(tradeId, tradeType, resourceType, totalResourcesPrice, resourceQuantity)
+//        );
+//
+//        assertEquals("Resource quantity must be positive", exception.getMessage());
+//    }
+//
+//    @Test
+//    void shouldNotExecuteTradeWhenTotalResourcesPriceIsNegative() {
+//        String tradeId = "trade-777";
+//        String tradeType = "Sell";
+//        String resourceType = "Iron";
+//        Integer totalResourcesPrice = -50;
+//        Integer resourceQuantity = 10;
+//
+//        Exception exception = assertThrows(IllegalArgumentException.class, () ->
+//                resourceMarket.executeTrade(tradeId, tradeType, resourceType, totalResourcesPrice, resourceQuantity)
+//        );
+//
+//        assertEquals("Total resource price must be positive", exception.getMessage());
+//    }
+
 }

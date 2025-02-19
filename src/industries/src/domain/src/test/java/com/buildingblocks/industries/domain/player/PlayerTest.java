@@ -1,9 +1,8 @@
 package com.buildingblocks.industries.domain.player;
 
+import com.buildingblocks.industries.domain.player.entities.Transaction;
 import com.buildingblocks.industries.domain.player.events.*;
-import com.buildingblocks.industries.domain.player.values.Budget;
-import com.buildingblocks.industries.domain.player.values.Income;
-import com.buildingblocks.industries.domain.player.values.PlayerId;
+import com.buildingblocks.industries.domain.player.values.*;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -100,4 +99,82 @@ class PlayerTest {
         assertEquals(5, event.getReductionbudget());
         assertEquals(65, event.getUpdatedBudget());
     }
+
+
+    @Test
+    void shouldReconstructPlayerFromEvents() {
+        String playerId = PlayerId.of("player-123").getValue();
+        DomainEvent event = new EarnedMoney(playerId, 50, 150);
+        List<DomainEvent> events = List.of(event);
+
+        Player player = Player.from(playerId, events);
+
+        assertEquals(playerId, playerId);
+        assertNotNull(player);
+    }
+
+    @Test
+    void shouldSetAndGetTransactionCorrectly() {
+        Player player = new Player();
+        Transaction transaction = new Transaction(
+                Amount.of(20),
+                Reason.of("Buying resources"),
+                ResourceType.of("Coal"),
+                Quantity.of(2)
+        );
+
+        player.setTransaction(transaction);
+        Transaction retrievedTransaction = player.getTransaction();
+
+        assertNotNull(retrievedTransaction, "The transaction should not be null");
+        assertEquals(transaction, retrievedTransaction, "The retrieved transaction should be the same as assigned");
+        assertEquals(20, retrievedTransaction.getAmount().getValue(), "The transaction amount should be 20");
+        assertEquals("Buying resources", retrievedTransaction.getReason().getValue(), "The transaction reason should match");
+        assertEquals("Coal", retrievedTransaction.getResourceType().getValue(), "The resource type should match");
+        assertEquals(2, retrievedTransaction.getQuantity().getValue(), "The transaction quantity should be 2");
+    }
+
+    @Test
+    void shouldThrowExceptionWhenExecutingTransactionWithInsufficientBudget() {
+        String playerId = PlayerId.of("player-123").getValue();
+        player.setBudget(Budget.of(10));
+
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () ->
+                player.ExecuteTransaction(playerId, "Iron", 20, -10));
+
+        assertEquals("Not enough budget to execute the transaction.", exception.getMessage());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenSpendingBudgetWithInsufficientFunds() {
+        String playerId = PlayerId.of("player-123").getValue();
+        player.setBudget(Budget.of(5));
+
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () ->
+                player.spendBudget(playerId, 10, -5, "Expensive purchase"));
+
+        assertEquals("Not enough budget to spend.", exception.getMessage());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenTakingInvalidLoan() {
+        String playerId = PlayerId.of("player-123").getValue();
+
+        IllegalArgumentException negativeLoanException = assertThrows(IllegalArgumentException.class, () ->
+                player.takeLoan(playerId, -10, 5, 40));
+        assertEquals("Amount cannot be negative", negativeLoanException.getMessage());
+
+        IllegalArgumentException zeroLoanException = assertThrows(IllegalArgumentException.class, () ->
+                player.takeLoan(playerId, 0, 5, 40));
+        assertEquals("The loan must be in increments of 10, greater than 0 and cannot exceed 30", zeroLoanException.getMessage());
+
+        IllegalArgumentException notMultipleOf10Exception = assertThrows(IllegalArgumentException.class, () ->
+                player.takeLoan(playerId, 25, 5, 40));
+        assertEquals("The loan must be in increments of 10, greater than 0 and cannot exceed 30", notMultipleOf10Exception.getMessage());
+
+        IllegalArgumentException exceedingLoanException = assertThrows(IllegalArgumentException.class, () ->
+                player.takeLoan(playerId, 40, 5, 40));
+        assertEquals("The loan must be in increments of 10, greater than 0 and cannot exceed 30", exceedingLoanException.getMessage());
+    }
+
 }

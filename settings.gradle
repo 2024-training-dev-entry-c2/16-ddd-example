@@ -1,8 +1,12 @@
 rootProject.name = 'building-blocks'
 
 include ':shared:domain'
+include ':shared:application'
 include ':appointments:domain'
+include ':appointments:application'
 
 project(':shared:domain').projectDir = file('./src/shared/src/domain')
+project(':shared:application').projectDir = file('./src/shared/src/application')
 project(':appointments:domain').projectDir = file('./src/appointments/src/domain')
+project(':appointments:application').projectDir = file('./src/appointments/src/application')
 

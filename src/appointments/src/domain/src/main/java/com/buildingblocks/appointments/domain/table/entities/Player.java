@@ -10,7 +10,6 @@ public class Player extends Entity<PlayerId> {
   private Nickname nickname;
   private Score score;
 
-
   public Player(Nickname nickname, Score score) {
     super(new PlayerId());
     this.nickname = nickname;

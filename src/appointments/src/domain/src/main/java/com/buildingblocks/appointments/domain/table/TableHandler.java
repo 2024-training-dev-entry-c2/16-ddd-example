@@ -8,6 +8,7 @@ import com.buildingblocks.appointments.domain.table.events.CheckedWinner;
 import com.buildingblocks.appointments.domain.table.events.CreatedTable;
 import com.buildingblocks.appointments.domain.table.events.FlippedCard;
 import com.buildingblocks.appointments.domain.table.events.StartedGame;
+import com.buildingblocks.appointments.domain.table.values.CardId;
 import com.buildingblocks.appointments.domain.table.values.Emoji;
 import com.buildingblocks.appointments.domain.table.values.IsActive;
 import com.buildingblocks.appointments.domain.table.values.IsFlipped;
@@ -40,22 +41,22 @@ public class TableHandler extends DomainActionsContainer {
       table.setName(Name.of(event.getName()));
 
       List<Card> cards = Arrays.asList(
-        new Card(Emoji.of("😈"), IsActive.of(true), IsFlipped.of(false)),
-        new Card(Emoji.of("🎮"), IsActive.of(true), IsFlipped.of(false)),
-        new Card(Emoji.of("🌟"), IsActive.of(true), IsFlipped.of(false)),
-        new Card(Emoji.of("🎨"), IsActive.of(true), IsFlipped.of(false)),
-        new Card(Emoji.of("🎮"), IsActive.of(true), IsFlipped.of(false)),
-        new Card(Emoji.of("🎨"), IsActive.of(true), IsFlipped.of(false)),
-        new Card(Emoji.of("🌟"), IsActive.of(true), IsFlipped.of(false)),
-        new Card(Emoji.of("😈"), IsActive.of(true), IsFlipped.of(false)),
-        new Card(Emoji.of("🎭"), IsActive.of(true), IsFlipped.of(false)),
-        new Card(Emoji.of("🎪"), IsActive.of(true), IsFlipped.of(false)),
-        new Card(Emoji.of("🎯"), IsActive.of(true), IsFlipped.of(false)),
-        new Card(Emoji.of("🎲"), IsActive.of(true), IsFlipped.of(false)),
-        new Card(Emoji.of("🎲"), IsActive.of(true), IsFlipped.of(false)),
-        new Card(Emoji.of("🎭"), IsActive.of(true), IsFlipped.of(false)),
-        new Card(Emoji.of("🎪"), IsActive.of(true), IsFlipped.of(false)),
-        new Card(Emoji.of("🎯"), IsActive.of(true), IsFlipped.of(false))
+        new Card(CardId.of("1"), Emoji.of("😈"), IsActive.of(true), IsFlipped.of(false)),
+        new Card(CardId.of("2"), Emoji.of("🎮"), IsActive.of(true), IsFlipped.of(false)),
+        new Card(CardId.of("3"), Emoji.of("🌟"), IsActive.of(true), IsFlipped.of(false)),
+        new Card(CardId.of("4"), Emoji.of("🎨"), IsActive.of(true), IsFlipped.of(false)),
+        new Card(CardId.of("5"), Emoji.of("🎮"), IsActive.of(true), IsFlipped.of(false)),
+        new Card(CardId.of("6"), Emoji.of("🎨"), IsActive.of(true), IsFlipped.of(false)),
+        new Card(CardId.of("7"), Emoji.of("🌟"), IsActive.of(true), IsFlipped.of(false)),
+        new Card(CardId.of("8"), Emoji.of("😈"), IsActive.of(true), IsFlipped.of(false)),
+        new Card(CardId.of("9"), Emoji.of("🎭"), IsActive.of(true), IsFlipped.of(false)),
+        new Card(CardId.of("10"), Emoji.of("🎪"), IsActive.of(true), IsFlipped.of(false)),
+        new Card(CardId.of("11"), Emoji.of("🎯"), IsActive.of(true), IsFlipped.of(false)),
+        new Card(CardId.of("12"), Emoji.of("🎲"), IsActive.of(true), IsFlipped.of(false)),
+        new Card(CardId.of("13"), Emoji.of("🎲"), IsActive.of(true), IsFlipped.of(false)),
+        new Card(CardId.of("14"), Emoji.of("🎭"), IsActive.of(true), IsFlipped.of(false)),
+        new Card(CardId.of("15"), Emoji.of("🎪"), IsActive.of(true), IsFlipped.of(false)),
+        new Card(CardId.of("16"), Emoji.of("🎯"), IsActive.of(true), IsFlipped.of(false))
       );
 
       Collections.shuffle(cards);

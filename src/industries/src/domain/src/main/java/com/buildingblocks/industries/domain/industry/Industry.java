@@ -10,8 +10,8 @@ import com.buildingblocks.shared.domain.generic.DomainEvent;
 import java.util.List;
 
 public class Industry extends AggregateRoot<IndustryId> {
-    private MarketLink marketLink;
-    private UpgradeStage upgradeStage;
+    private List<MarketLink> marketLink;
+    private List<UpgradeStage> upgradeStage;
     private Cost cost;
     private Era era;
     private Income income;
@@ -40,19 +40,20 @@ public class Industry extends AggregateRoot<IndustryId> {
     // endregion
 
     // region Getters and Setters
-    public MarketLink getMarketLink() {
+
+    public List<MarketLink> getMarketLink() {
         return marketLink;
     }
 
-    public void setMarketLink(MarketLink marketLink) {
+    public void setMarketLink(List<MarketLink> marketLink) {
         this.marketLink = marketLink;
     }
 
-    public UpgradeStage getUpgradeStage() {
+    public List<UpgradeStage> getUpgradeStage() {
         return upgradeStage;
     }
 
-    public void setUpgradeStage(UpgradeStage upgradeStage) {
+    public void setUpgradeStage(List<UpgradeStage> upgradeStage) {
         this.upgradeStage = upgradeStage;
     }
 

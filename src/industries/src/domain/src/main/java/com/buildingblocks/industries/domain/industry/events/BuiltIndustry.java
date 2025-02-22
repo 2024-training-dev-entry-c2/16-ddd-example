@@ -1,6 +1,5 @@
 package com.buildingblocks.industries.domain.industry.events;
 
-import com.buildingblocks.industries.domain.industry.values.*;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 public class BuiltIndustry extends DomainEvent {

@@ -1,7 +1,5 @@
 package com.buildingblocks.industries.application.shared.industryUtils;
 
-import com.buildingblocks.industries.domain.industry.values.*;
-
 import java.util.List;
 
 public class IndustryResponse {

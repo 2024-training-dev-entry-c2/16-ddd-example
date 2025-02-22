@@ -12,8 +12,8 @@ import com.buildingblocks.shared.domain.generic.DomainEvent;
 import java.util.List;
 
 public class Player extends AggregateRoot<PlayerId> {
-    private Loan loan;
-    private Transaction transaction;
+    private List<Loan> loan;
+    private List<Transaction> transaction;
     private Budget budget;
     private Income income;
 
@@ -29,19 +29,21 @@ public class Player extends AggregateRoot<PlayerId> {
     // endregion
 
     // region Getters and Setters
-    public Loan getLoan() {
+
+
+    public List<Loan> getLoan() {
         return loan;
     }
 
-    public void setLoan(Loan loan) {
+    public void setLoan(List<Loan> loan) {
         this.loan = loan;
     }
 
-    public Transaction getTransaction() {
+    public List<Transaction> getTransaction() {
         return transaction;
     }
 
-    public void setTransaction(Transaction transaction) {
+    public void setTransaction(List<Transaction> transaction) {
         this.transaction = transaction;
     }
 

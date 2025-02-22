@@ -9,6 +9,7 @@ import com.buildingblocks.industries.domain.player.values.Quantity;
 import com.buildingblocks.shared.domain.generic.DomainActionsContainer;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class PlayerHandler extends DomainActionsContainer {
@@ -70,7 +71,7 @@ public class PlayerHandler extends DomainActionsContainer {
 
             Quantity loanQuantity = Quantity.of(loanAmount.getValue() / 10);
             Loan loan = new Loan(loanAmount, loanQuantity);
-            player.setLoan(loan);
+            player.setLoan((List<Loan>) loan);
         };
     }
 

@@ -29,8 +29,6 @@ public class Player extends AggregateRoot<PlayerId> {
     // endregion
 
     // region Getters and Setters
-
-
     public List<Loan> getLoan() {
         return loan;
     }

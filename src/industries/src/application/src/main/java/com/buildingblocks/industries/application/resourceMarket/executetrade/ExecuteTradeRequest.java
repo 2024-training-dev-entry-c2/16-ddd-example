@@ -1,8 +1,8 @@
-package com.buildingblocks.industries.application.resourceMarket.executetradeandupdateprice;
+package com.buildingblocks.industries.application.resourceMarket.executetrade;
 
 import com.buildingblocks.shared.application.Request;
 
-public class ExecuteTradeAndUpdatePriceRequest extends Request {
+public class ExecuteTradeRequest extends Request {
     private final String tradeId;
     private final String resourceId;
     private final String tradeType;
@@ -12,7 +12,7 @@ public class ExecuteTradeAndUpdatePriceRequest extends Request {
     private final Integer oldResourcePrice;
     private final Integer newResourcePrice;
 
-    public ExecuteTradeAndUpdatePriceRequest(String aggregateId, String tradeId, String resourceId, String tradeType, String resourceType, Integer totalResourcesPrice, Integer resourceQuantity, Integer oldResourcePrice, Integer newResourcePrice) {
+    public ExecuteTradeRequest(String aggregateId, String tradeId, String resourceId, String tradeType, String resourceType, Integer totalResourcesPrice, Integer resourceQuantity, Integer oldResourcePrice, Integer newResourcePrice) {
         super(aggregateId);
         this.tradeId = tradeId;
         this.resourceId = resourceId;

@@ -1,10 +1,10 @@
-package com.buildingblocks.industries.application.resourceMarket.refillmarketandupdateprice;
+package com.buildingblocks.industries.application.resourceMarket.refillmarket;
 
 import com.buildingblocks.shared.application.Request;
 
 import java.util.List;
 
-public class RefillMarketAndUpdatePriceRequest extends Request {
+public class RefillMarketRequest extends Request {
     private final String id;
     private final String resourceId;
     private final String resourceType;
@@ -14,7 +14,7 @@ public class RefillMarketAndUpdatePriceRequest extends Request {
     private final Integer oldResourcePrice;
     private final Integer newResourcePrice;
 
-    public RefillMarketAndUpdatePriceRequest(String aggregateId, String id, String resourceId, String resourceType, Integer addedResourceQuantity, List<String> updatedAvailableResources, Integer updatedResourcePrice, Integer oldResourcePrice, Integer newResourcePrice) {
+    public RefillMarketRequest(String aggregateId, String id, String resourceId, String resourceType, Integer addedResourceQuantity, List<String> updatedAvailableResources, Integer updatedResourcePrice, Integer oldResourcePrice, Integer newResourcePrice) {
         super(aggregateId);
         this.id = id;
         this.resourceId = resourceId;

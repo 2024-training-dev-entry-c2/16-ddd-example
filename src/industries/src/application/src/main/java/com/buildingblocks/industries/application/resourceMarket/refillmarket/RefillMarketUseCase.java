@@ -1,4 +1,4 @@
-package com.buildingblocks.industries.application.resourceMarket.executetradeandupdateprice;
+package com.buildingblocks.industries.application.resourceMarket.refillmarket;
 
 import com.buildingblocks.industries.application.shared.ResourceMarketUtils.ResourceMarketResponse;
 import com.buildingblocks.industries.application.shared.repositories.IEventRepository;
@@ -8,28 +8,21 @@ import reactor.core.publisher.Mono;
 
 import static com.buildingblocks.industries.application.shared.ResourceMarketUtils.ResourceMarketMapper.mapToResourceMarket;
 
-public class ExecuteTradeAndUpdatePriceUseCase implements ICommandUseCase<ExecuteTradeAndUpdatePriceRequest, Mono<ResourceMarketResponse>> {
+public class RefillMarketUseCase implements ICommandUseCase<RefillMarketRequest, Mono<ResourceMarketResponse>> {
     private final IEventRepository repository;
 
-    public ExecuteTradeAndUpdatePriceUseCase(IEventRepository repository) {
+    public RefillMarketUseCase(IEventRepository repository) {
         this.repository = repository;
     }
 
     @Override
-    public Mono<ResourceMarketResponse> execute(ExecuteTradeAndUpdatePriceRequest request) {
+    public Mono<ResourceMarketResponse> execute(RefillMarketRequest request) {
         return repository.findEventsByAggregateId(request.getAggregateId())
                 .collectList()
                 .map(events -> {
                     ResourceMarket resourceMarket = ResourceMarket.from(request.getAggregateId(), events);
-
-                    resourceMarket.executeTrade(
-                            request.getTradeId(), request.getTradeType(), request.getResourceType(),
-                            request.getTotalResourcesPrice(), request.getResourceQuantity()
-                    );
-
-                    resourceMarket.updateResourcePrice(
-                            request.getResourceId(), request.getResourceType(), request.getOldResourcePrice(), request.getNewResourcePrice()
-                    );
+                    resourceMarket.refillMarketSupply(request.getId(), request.getResourceType(), request.getAddedResourceQuantity(), request.getUpdatedAvailableResources(), request.getUpdatedResourcePrice());
+                    resourceMarket.updateResourcePrice(request.getResourceId(), request.getResourceType(), request.getOldResourcePrice(), request.getNewResourcePrice());
 
                     resourceMarket.getUncommttedEvents().forEach(repository::save);
                     resourceMarket.markEventsAsCommitted();

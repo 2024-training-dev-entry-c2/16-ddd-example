@@ -168,7 +168,7 @@ class ResourceMarketTest {
                 ResourcePrice.of(5),
                 AvailableResources.of(Collections.nCopies(20, "Coal"))
         );
-        resourceMarket.setTradeExchange(tradeExchange);
+        resourceMarket.setTradeExchange((List<TradeExchange>) tradeExchange);
 
         Optional<TradeExchange> result = resourceMarket.findTradeById(tradeExchangeId.getValue()); // Se busca por String
         assertAll(
@@ -193,7 +193,7 @@ class ResourceMarketTest {
                 ResourcePrice.of(5),
                 AvailableResources.of(Collections.nCopies(20, "Coal"))
         );
-        resourceMarket.setTradeExchange(tradeExchange);
+        resourceMarket.setTradeExchange((List<TradeExchange>) tradeExchange);
 
         Optional<TradeExchange> result = resourceMarket.findTradeById("trade-123");
         assertTrue(result.isEmpty(), "Should return empty when tradeId does not match.");

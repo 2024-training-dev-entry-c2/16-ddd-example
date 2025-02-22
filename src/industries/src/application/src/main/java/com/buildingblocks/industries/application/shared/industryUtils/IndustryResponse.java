@@ -8,21 +8,21 @@ public class IndustryResponse {
     private final String industryId;
     private final List<MarketLink> marketLink;
     private final List<UpgradeStage> upgradeStage;
-    private final Cost cost;
-    private final Era era;
-    private final Income income;
-    private final IsConnectedToNetwork isConnectedToNetwork;
-    private final IsFlipped isFlipped;
-    private final IsRequiredResearch isRequiredResearch;
-    private final Level level;
-    private final Location location;
-    private final QuantityRequiredResource quantityRequiredResource;
-    private final RequiredResource requiredResource;
-    private final StoredResources storedResources;
-    private final Type type;
-    private final TechLevelRequired techLevelRequired;
+    private final Integer cost;
+    private final String era;
+    private final Integer income;
+    private final Boolean isConnectedToNetwork;
+    private final Boolean isFlipped;
+    private final Boolean isRequiredResearch;
+    private final Integer level;
+    private final String location;
+    private final Integer quantityRequiredResource;
+    private final String requiredResource;
+    private final List<String> storedResources;
+    private final String type;
+    private final Integer techLevelRequired;
 
-    public IndustryResponse(String industryId, List<MarketLink> marketLink, List<UpgradeStage> upgradeStage, Cost cost, Era era, Income income, IsConnectedToNetwork isConnectedToNetwork, IsFlipped isFlipped, IsRequiredResearch isRequiredResearch, Level level, Location location, QuantityRequiredResource quantityRequiredResource, RequiredResource requiredResource, StoredResources storedResources, Type type, TechLevelRequired techLevelRequired) {
+    public IndustryResponse(String industryId, List<MarketLink> marketLink, List<UpgradeStage> upgradeStage, Integer cost, String era, Integer income, Boolean isConnectedToNetwork, Boolean isFlipped, Boolean isRequiredResearch, Integer level, String location, Integer quantityRequiredResource, String requiredResource, List<String> storedResources, String type, Integer techLevelRequired) {
         this.industryId = industryId;
         this.marketLink = marketLink;
         this.upgradeStage = upgradeStage;
@@ -41,7 +41,6 @@ public class IndustryResponse {
         this.techLevelRequired = techLevelRequired;
     }
 
-
     public String getIndustryId() {
         return industryId;
     }
@@ -54,65 +53,65 @@ public class IndustryResponse {
         return upgradeStage;
     }
 
-    public Cost getCost() {
+    public Integer getCost() {
         return cost;
     }
 
-    public Era getEra() {
+    public String getEra() {
         return era;
     }
 
-    public Income getIncome() {
+    public Integer getIncome() {
         return income;
     }
 
-    public IsConnectedToNetwork getIsConnectedToNetwork() {
+    public Boolean getConnectedToNetwork() {
         return isConnectedToNetwork;
     }
 
-    public IsFlipped getIsFlipped() {
+    public Boolean getFlipped() {
         return isFlipped;
     }
 
-    public IsRequiredResearch getIsRequiredResearch() {
+    public Boolean getRequiredResearch() {
         return isRequiredResearch;
     }
 
-    public Level getLevel() {
+    public Integer getLevel() {
         return level;
     }
 
-    public Location getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public QuantityRequiredResource getQuantityRequiredResource() {
+    public Integer getQuantityRequiredResource() {
         return quantityRequiredResource;
     }
 
-    public RequiredResource getRequiredResource() {
+    public String getRequiredResource() {
         return requiredResource;
     }
 
-    public StoredResources getStoredResources() {
+    public List<String> getStoredResources() {
         return storedResources;
     }
 
-    public Type getType() {
+    public String getType() {
         return type;
     }
 
-    public TechLevelRequired getTechLevelRequired() {
+    public Integer getTechLevelRequired() {
         return techLevelRequired;
     }
 
     public static class MarketLink {
         private final String id;
-        private final Origin origin;
-        private final Destination destination;
-        private final IsConnectedToNetwork isConnectedToNetwork;
+        private final String origin;
+        private final String destination;
+        private final Boolean isConnectedToNetwork;
 
-        public MarketLink(String id, Origin origin, Destination destination, IsConnectedToNetwork isConnectedToNetwork) {
+        public MarketLink(String id, String origin, String destination, Boolean isConnectedToNetwork) {
             this.id = id;
             this.origin = origin;
             this.destination = destination;
@@ -123,28 +122,28 @@ public class IndustryResponse {
             return id;
         }
 
-        public Origin getOrigin() {
+        public String getOrigin() {
             return origin;
         }
 
-        public Destination getDestination() {
+        public String getDestination() {
             return destination;
         }
 
-        public IsConnectedToNetwork getIsConnectedToNetwork() {
+        public Boolean getConnectedToNetwork() {
             return isConnectedToNetwork;
         }
     }
 
     public static class UpgradeStage {
         private final String id;
-        private final Level currentLevel;
-        private final TechLevelRequired requiredTechLevel;
-        private final Type type;
-        private final RequiredResource requiredResource;
-        private final QuantityRequiredResource quantityRequiredResource;
+        private final Integer currentLevel;
+        private final Integer requiredTechLevel;
+        private final String type;
+        private final String requiredResource;
+        private final Integer quantityRequiredResource;
 
-        public UpgradeStage(String id, Level currentLevel, TechLevelRequired requiredTechLevel, Type type, RequiredResource requiredResource, QuantityRequiredResource quantityRequiredResource) {
+        public UpgradeStage(String id, Integer currentLevel, Integer requiredTechLevel, String type, String requiredResource, Integer quantityRequiredResource) {
             this.id = id;
             this.currentLevel = currentLevel;
             this.requiredTechLevel = requiredTechLevel;
@@ -157,23 +156,23 @@ public class IndustryResponse {
             return id;
         }
 
-        public Level getCurrentLevel() {
+        public Integer getCurrentLevel() {
             return currentLevel;
         }
 
-        public TechLevelRequired getRequiredTechLevel() {
+        public Integer getRequiredTechLevel() {
             return requiredTechLevel;
         }
 
-        public Type getType() {
+        public String getType() {
             return type;
         }
 
-        public RequiredResource getRequiredResource() {
+        public String getRequiredResource() {
             return requiredResource;
         }
 
-        public QuantityRequiredResource getQuantityRequiredResource() {
+        public Integer getQuantityRequiredResource() {
             return quantityRequiredResource;
         }
     }

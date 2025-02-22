@@ -5,3 +5,6 @@ include ':actions:domain'
 
 project(':shared:domain').projectDir = file('./src/shared/src/domain')
 project(':actions:domain').projectDir = file('./src/actions/src/domain')
+include 'src:shared:src:application'
+findProject(':src:shared:src:application')?.name = 'application'
+

@@ -141,7 +141,7 @@ class ResourceMarketTest {
                 ResourcePrice.of(5),
                 AvailableResources.of(Collections.nCopies(20, "Coal"))
         );
-        resourceMarket.setTradeExchange(tradeExchange);
+        resourceMarket.setTradeExchange((List<TradeExchange>) tradeExchange);
 
         assertNotNull(resourceMarket.getTradeExchange(), "TradeExchange should not be null.");
         assertEquals(tradeExchange, resourceMarket.getTradeExchange(), "TradeExchange should be the assigned instance.");

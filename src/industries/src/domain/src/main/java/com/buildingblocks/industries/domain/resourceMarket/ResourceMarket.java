@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ResourceMarket extends AggregateRoot<ResourceMarketId> {
-    private TradeExchange tradeExchange;
+    private List<TradeExchange> tradeExchange;
     private AvailableResources availableResources;
     private ResourcePrice resourcePrice;
 
@@ -31,11 +31,11 @@ public class ResourceMarket extends AggregateRoot<ResourceMarketId> {
     // endregion
 
     // region Getters and Setters
-    public TradeExchange getTradeExchange() {
+    public List<TradeExchange> getTradeExchange() {
         return tradeExchange;
     }
 
-    public void setTradeExchange(TradeExchange tradeExchange) {
+    public void setTradeExchange(List<TradeExchange> tradeExchange) {
         this.tradeExchange = tradeExchange;
     }
 
@@ -81,10 +81,9 @@ public class ResourceMarket extends AggregateRoot<ResourceMarketId> {
     }
 
     public Optional<TradeExchange> findTradeById(String tradeId) {
-        if (tradeExchange != null && tradeExchange.getIdentity().getValue().equals(tradeId)) {
-            return Optional.of(tradeExchange);
-        }
-        return Optional.empty();
+        return tradeExchange.stream()
+                .filter(trade -> trade.getIdentity().getValue().equals(tradeId))
+                .findFirst();
     }
 
     public static ResourceMarket from(final String identity, final List<DomainEvent> events) {

@@ -7,11 +7,12 @@ import com.buildingblocks.industries.domain.industry.values.*;
 import com.buildingblocks.shared.domain.generic.AggregateRoot;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Industry extends AggregateRoot<IndustryId> {
-    private List<MarketLink> marketLink;
-    private List<UpgradeStage> upgradeStage;
+    private List<MarketLink> marketLink = new ArrayList<>();;
+    private List<UpgradeStage> upgradeStage = new ArrayList<>();
     private Cost cost;
     private Era era;
     private Income income;
@@ -30,6 +31,10 @@ public class Industry extends AggregateRoot<IndustryId> {
     public Industry(String type, Integer level, String location, Integer cost, String requiredResource, Integer techLevelRequired, Boolean isConnectedToNetwork, String era, Boolean isFlipped) {
         super(new IndustryId());
         subscribe(new IndustryHandler(this));
+        this.income = Income.of(0);
+        this.isRequiredResearch = IsRequiredResearch.of(false);
+        this.quantityRequiredResource = QuantityRequiredResource.of(0);
+        this.storedResources = StoredResources.of(List.of("default"));
         apply(new BuiltIndustry(type, level, location, cost, requiredResource, techLevelRequired, isConnectedToNetwork, era, isFlipped));
     }
 

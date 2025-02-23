@@ -26,7 +26,7 @@ public class IndustryResponse {
         this.upgradeStage = upgradeStage;
         this.cost = cost;
         this.era = era;
-        this.income = income;
+        this.income = income; 
         this.isConnectedToNetwork = isConnectedToNetwork;
         this.isFlipped = isFlipped;
         this.isRequiredResearch = isRequiredResearch;

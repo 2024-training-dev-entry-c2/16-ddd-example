@@ -1,6 +1,7 @@
 package com.buildingblocks.industries.application.shared.industryUtils;
 
 import com.buildingblocks.industries.domain.industry.Industry;
+import com.buildingblocks.industries.domain.industry.values.Income;
 
 import java.util.stream.Collectors;
 

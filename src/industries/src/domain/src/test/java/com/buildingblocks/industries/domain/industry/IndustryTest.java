@@ -153,13 +153,13 @@ class IndustryTest {
 
     @Test
     void testSetAndGetMarketLink() {
-        industry.setMarketLink(marketLink);
+        industry.setMarketLink((List<MarketLink>) marketLink);
         assertEquals(marketLink, industry.getMarketLink());
     }
 
     @Test
     void testSetAndGetUpgradeStage() {
-        industry.setUpgradeStage(upgradeStage);
+        industry.setUpgradeStage((List<UpgradeStage>) upgradeStage);
         assertEquals(upgradeStage, industry.getUpgradeStage());
     }
 }

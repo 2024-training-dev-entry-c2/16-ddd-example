@@ -17,12 +17,12 @@ import java.util.List;
 
 public class Action extends AggregateRoot<ActionId> {
 	private Type type;
-	private List<Affected> affecteds;
+	private List<Affected> affects;
 
 	//region Constructors
 	public Action() {
 		super(new ActionId());
-		affecteds = new ArrayList<>();
+		affects = new ArrayList<>();
 		subscribe(new ActionHandler(this));
 	}
 
@@ -41,12 +41,8 @@ public class Action extends AggregateRoot<ActionId> {
 		this.type = type;
 	}
 
-	public List<Affected> getAffecteds() {
-		return affecteds;
-	}
-
-	public void setAffecteds(List<Affected> affecteds) {
-		this.affecteds = affecteds;
+	public List<Affected> getAffects() {
+		return affects;
 	}
 	//endregion
 
@@ -55,8 +51,8 @@ public class Action extends AggregateRoot<ActionId> {
 		apply(new OpenedDoor(nameAction, description, effect, positionX, positionY, isNoisy));
 	}
 
-	public void attack(String nameAction, String description, String effect, String nameAffected, Integer positionX, Integer positionY, Integer damage, String currentState, Boolean isNoisy) {
-		apply(new MadeAttack(nameAction, description, effect, nameAffected, positionX, positionY, damage, currentState, isNoisy));
+	public void attack(String nameAction, String description, String effect, Integer positionX, Integer positionY, Boolean isNoisy) {
+		apply(new MadeAttack(nameAction, description, effect, positionX, positionY, isNoisy));
 	}
 
 	public void findObject(String nameAction, String description, String effect, Integer positionX, Integer positionY, Boolean isNoisy) {
@@ -67,12 +63,12 @@ public class Action extends AggregateRoot<ActionId> {
 		apply(new MadeMovement(nameAction, description, effect, positionX, positionY, isNoisy));
 	}
 
-	public void injureSurvivor(String nameSurvivor, Integer positionX, Integer positionY, Integer damage, String currentState) {
-		apply(new InjuredSurvivor(nameSurvivor, positionX, positionY, damage, currentState));
+	public void injureSurvivor(String survivorId, String nameSurvivor, Integer positionX, Integer positionY, Integer damage, String currentState) {
+		apply(new InjuredSurvivor(survivorId, nameSurvivor, positionX, positionY, damage, currentState));
 	}
 
-	public void eliminateZombie(String nameZombie, Integer positionX, Integer positionY, Integer damage, String currentState) {
-		apply(new EliminatedZombie(nameZombie, positionX, positionY, damage, currentState));
+	public void eliminateZombie(String zombieId, String nameZombie, Integer positionX, Integer positionY, Integer damage) {
+		apply(new EliminatedZombie(zombieId, nameZombie, positionX, positionY, damage));
 	}
 	//endregion
 

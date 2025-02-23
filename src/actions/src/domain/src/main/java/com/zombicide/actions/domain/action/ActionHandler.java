@@ -8,6 +8,7 @@ import com.zombicide.actions.domain.action.events.InjuredSurvivor;
 import com.zombicide.actions.domain.action.events.MadeAttack;
 import com.zombicide.actions.domain.action.events.MadeMovement;
 import com.zombicide.actions.domain.action.events.OpenedDoor;
+import com.zombicide.actions.domain.action.values.AffectedId;
 import com.zombicide.actions.domain.action.values.AmountNoise;
 import com.zombicide.actions.domain.action.values.Effect;
 import com.zombicide.actions.domain.action.values.TypeAffected;
@@ -57,15 +58,6 @@ public class ActionHandler extends DomainActionsContainer {
 				AmountNoise.of(1)
 			);
 
-			Affected affected = new Affected(
-				TypeAffected.of("Superviviente"),
-				Name.of(event.getNameAffected()),
-				Position.of(event.getPositionX(), event.getPositionY()),
-				Damage.of(event.getDamage()),
-				CurrentState.of(event.getCurrentState())
-			);
-
-			action.getAffecteds().add(affected);
 			action.setType(typeAction);
 		};
 	}
@@ -101,27 +93,28 @@ public class ActionHandler extends DomainActionsContainer {
 	public Consumer<? extends DomainEvent> injureSurvivor(Action action) {
 		return (InjuredSurvivor event) -> {
 			Affected affected = new Affected(
+				AffectedId.of(event.getSurvivorId()),
 				TypeAffected.of("Superviviente"),
 				Name.of(event.getNameSurvivor()),
 				Position.of(event.getPositionX(), event.getPositionY()),
 				Damage.of(event.getDamage()),
 				CurrentState.of(event.getCurrentState())
 			);
-			action.getAffecteds().add(affected);
+			action.getAffects().add(affected);
 		};
 	}
 
 	public Consumer<? extends DomainEvent> eliminateZombie(Action action) {
 		return (EliminatedZombie event) -> {
 			Affected affected = new Affected(
+				AffectedId.of(event.getZombieId()),
 				TypeAffected.of("Zombie"),
 				Name.of(event.getNameZombie()),
 				Position.of(event.getPositionX(), event.getPositionY()),
 				Damage.of(event.getDamage()),
-				CurrentState.of(event.getCurrentState())
+				CurrentState.of("Muerto")
 			);
-			action.getAffecteds().add(affected);
-			action.setAffecteds(action.getAffecteds());
+			action.getAffects().add(affected);
 		};
 	}
 }

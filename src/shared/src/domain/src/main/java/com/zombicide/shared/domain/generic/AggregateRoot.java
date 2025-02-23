@@ -17,15 +17,11 @@ public abstract class AggregateRoot<I extends Identity> extends Entity<I>{
 		actionsHandler.getEvents().clear();
 	}
 
-	public void apply(final DomainEvent event) {
-		actionsHandler.apply(event);
-	}
-
 	protected void subscribe(final DomainActionsContainer container) {
 		actionsHandler.subscribe(container);
 	}
 
-	protected void unsubscribe(final DomainEvent event) {
+	protected void apply(final DomainEvent event) {
 		final String aggregateName = getIdentity()
 			.getClass()
 			.getSimpleName()

@@ -3,19 +3,23 @@ package com.zombicide.actions.domain.action.events;
 import com.zombicide.shared.domain.generic.DomainEvent;
 
 public class EliminatedZombie extends DomainEvent {
+	private final String zombieId;
 	private final String nameZombie;
 	private final Integer positionX;
 	private final Integer positionY;
 	private final Integer damage;
-	private final String currentState;
 
-	public EliminatedZombie(String nameZombie, Integer positionX, Integer positionY, Integer damage, String currentState) {
+	public EliminatedZombie(String zombieId, String nameZombie, Integer positionX, Integer positionY, Integer damage) {
 		super(EventsEnum.ELIMINATED_ZOMBIE.name());
+		this.zombieId = zombieId;
 		this.nameZombie = nameZombie;
 		this.positionX = positionX;
 		this.positionY = positionY;
 		this.damage = damage;
-		this.currentState = currentState;
+	}
+
+	public String getZombieId() {
+		return zombieId;
 	}
 
 	public String getNameZombie() {
@@ -32,9 +36,5 @@ public class EliminatedZombie extends DomainEvent {
 
 	public Integer getDamage() {
 		return damage;
-	}
-
-	public String getCurrentState() {
-		return currentState;
 	}
 }

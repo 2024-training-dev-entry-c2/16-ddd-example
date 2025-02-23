@@ -23,7 +23,7 @@ class ActionTest {
 
 	@Test
 	void createActionSuccess() {
-		assertNotNull(action.getAffecteds());
+		assertNotNull(action.getAffects());
 	}
 
 	@Test
@@ -47,14 +47,12 @@ class ActionTest {
 
 	@Test
 	void makeAttackSuccess() {
-		action.attack("Hacer ataque", "Accion para hacer un ataque", "ataque", "Wanda", 1, 2, 1, "Herido", true);
+		action.attack("Hacer ataque", "Accion para hacer un ataque", "ataque", 1, 2, 1, "Herido", true);
 		assertEquals("Hacer ataque", action.getType().getName().getValue());
 		assertEquals("Accion para hacer un ataque", action.getType().getDescription().getValue());
 		assertEquals("ataque", action.getType().getEffect().getValue());
-		assertEquals("Wanda", action.getAffecteds().get(0).getName().getValue());
-		assertEquals(1, action.getAffecteds().get(0).getPosition().getX());
-		assertEquals(2, action.getAffecteds().get(0).getPosition().getY());
-		assertEquals(1, action.getAffecteds().size());
+		assertEquals(1, action.getType().getPosition().getX());
+		assertEquals(2, action.getType().getPosition().getY());
 		assertEquals(1, action.getUncommittedEvents().size());
 		assertInstanceOf(MadeAttack.class, action.getUncommittedEvents().get(0));
 	}
@@ -87,28 +85,28 @@ class ActionTest {
 
 	@Test
 	void injureSurvivorSuccess() {
-		action.injureSurvivor("Wanda", 1, 2, 1, "Herido");
-		assertEquals("Superviviente", action.getAffecteds().get(0).getTypeAffected().getValue());
-		assertEquals("Wanda", action.getAffecteds().get(0).getName().getValue());
-		assertEquals(1, action.getAffecteds().get(0).getPosition().getX());
-		assertEquals(2, action.getAffecteds().get(0).getPosition().getY());
-		assertEquals(1, action.getAffecteds().size());
-		assertEquals("Herido", action.getAffecteds().get(0).getCurrentState().getValue());
-		assertEquals(1, action.getAffecteds().size());
+		action.injureSurvivor("1", "Wanda", 1, 2, 1, "Herido");
+		assertEquals("Superviviente", action.getAffects().get(0).getTypeAffected().getValue());
+		assertEquals("Wanda", action.getAffects().get(0).getName().getValue());
+		assertEquals(1, action.getAffects().get(0).getPosition().getX());
+		assertEquals(2, action.getAffects().get(0).getPosition().getY());
+		assertEquals(1, action.getAffects().size());
+		assertEquals("Herido", action.getAffects().get(0).getCurrentState().getValue());
+		assertEquals(1, action.getAffects().size());
 		assertEquals(1, action.getUncommittedEvents().size());
 		assertInstanceOf(InjuredSurvivor.class, action.getUncommittedEvents().get(0));
 	}
 
 	@Test
 	void eliminateZombieSuccess() {
-		action.eliminateZombie("Zombie corredor", 1, 2, 1, "Muerto");
-		assertEquals("Zombie", action.getAffecteds().get(0).getTypeAffected().getValue());
-		assertEquals("Zombie corredor", action.getAffecteds().get(0).getName().getValue());
-		assertEquals(1, action.getAffecteds().get(0).getPosition().getX());
-		assertEquals(2, action.getAffecteds().get(0).getPosition().getY());
-		assertEquals(1, action.getAffecteds().size());
-		assertEquals("Muerto", action.getAffecteds().get(0).getCurrentState().getValue());
-		assertEquals(1, action.getAffecteds().size());
+		action.eliminateZombie("1", "Zombie corredor", 1, 2, 1);
+		assertEquals("Zombie", action.getAffects().get(0).getTypeAffected().getValue());
+		assertEquals("Zombie corredor", action.getAffects().get(0).getName().getValue());
+		assertEquals(1, action.getAffects().get(0).getPosition().getX());
+		assertEquals(2, action.getAffects().get(0).getPosition().getY());
+		assertEquals(1, action.getAffects().size());
+		assertEquals("Muerto", action.getAffects().get(0).getCurrentState().getValue());
+		assertEquals(1, action.getAffects().size());
 		assertEquals(1, action.getUncommittedEvents().size());
 		assertInstanceOf(EliminatedZombie.class, action.getUncommittedEvents().get(0));
 	}

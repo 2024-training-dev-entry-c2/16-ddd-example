@@ -11,10 +11,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/actions" />
             <option value="$PROJECT_DIR$/shared" />
-            <option value="$PROJECT_DIR$/src" />
+            <option value="$PROJECT_DIR$/src/actions/src/application" />
             <option value="$PROJECT_DIR$/src/actions/src/domain" />
-            <option value="$PROJECT_DIR$/src/shared" />
-            <option value="$PROJECT_DIR$/src/shared/src" />
             <option value="$PROJECT_DIR$/src/shared/src/application" />
             <option value="$PROJECT_DIR$/src/shared/src/domain" />
           </set>

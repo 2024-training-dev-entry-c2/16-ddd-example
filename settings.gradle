@@ -1,10 +1,11 @@
 rootProject.name = 'zombicide-ddd'
 
 include ':shared:domain'
+include ':shared:application'
 include ':actions:domain'
+include ':actions:application'
 
 project(':shared:domain').projectDir = file('./src/shared/src/domain')
+project(':shared:application').projectDir = file('./src/shared/src/application')
 project(':actions:domain').projectDir = file('./src/actions/src/domain')
-include 'src:shared:src:application'
-findProject(':src:shared:src:application')?.name = 'application'
-
+project(':actions:application').projectDir = file('./src/actions/src/application')

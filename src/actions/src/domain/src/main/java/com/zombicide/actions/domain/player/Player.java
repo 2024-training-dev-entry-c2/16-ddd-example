@@ -1,13 +1,15 @@
 package com.zombicide.actions.domain.player;
 
+import com.zombicide.actions.domain.player.entities.Skill;
 import com.zombicide.actions.domain.player.entities.Survivor;
+import com.zombicide.actions.domain.player.entities.Weapon;
 import com.zombicide.actions.domain.player.events.AddedSurvivor;
 import com.zombicide.actions.domain.player.events.ChangedSurvivorPosition;
-import com.zombicide.actions.domain.player.events.ChosenSkill;
 import com.zombicide.actions.domain.player.events.DiscardedWeapon;
 import com.zombicide.actions.domain.player.events.ObtainedWeapon;
-import com.zombicide.actions.domain.player.events.UnlockedSkill;
+import com.zombicide.actions.domain.player.events.ChosenSkill;
 import com.zombicide.actions.domain.player.values.PlayerId;
+import com.zombicide.actions.domain.shared.values.Name;
 import com.zombicide.shared.domain.generic.AggregateRoot;
 import com.zombicide.shared.domain.generic.DomainEvent;
 
@@ -16,7 +18,10 @@ import java.util.List;
 
 public class Player extends AggregateRoot<PlayerId> {
 	private List<Survivor> survivors;
-	private String name;
+	private Name name;
+	private List<Survivor> availableSurvivors;
+	private List<Skill> availableSkills;
+	private List<Weapon> availableWeapons;
 
 	//region Constructors
 	public Player() {
@@ -41,13 +46,38 @@ public class Player extends AggregateRoot<PlayerId> {
 		this.survivors = survivors;
 	}
 
-	public String getName() {
+	public Name getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(Name name) {
 		this.name = name;
 	}
+
+	public List<Survivor> getAvailableSurvivors() {
+		return availableSurvivors;
+	}
+
+	public void setAvailableSurvivors(List<Survivor> availableSurvivors) {
+		this.availableSurvivors = availableSurvivors;
+	}
+
+	public List<Skill> getAvailableSkills() {
+		return availableSkills;
+	}
+
+	public void setAvailableSkills(List<Skill> availableSkills) {
+		this.availableSkills = availableSkills;
+	}
+
+	public List<Weapon> getAvailableWeapons() {
+		return availableWeapons;
+	}
+
+	public void setAvailableWeapons(List<Weapon> availableWeapons) {
+		this.availableWeapons = availableWeapons;
+	}
+
 	//endregion
 
 	//region Domain Actions
@@ -59,12 +89,8 @@ public class Player extends AggregateRoot<PlayerId> {
 		apply(new ChangedSurvivorPosition(id, positionX, positionY));
 	}
 
-	public void unlockSkill(String survivorId, String skillId) {
-		apply(new UnlockedSkill(survivorId, skillId));
-	}
-
-	public void chooseSkill(String skillId, String survivorId) {
-		apply(new ChosenSkill(skillId, survivorId));
+	public void chooseSkill(String survivorId, String skillId) {
+		apply(new ChosenSkill(survivorId, skillId));
 	}
 
 	public void obtainWeapon(String id) {

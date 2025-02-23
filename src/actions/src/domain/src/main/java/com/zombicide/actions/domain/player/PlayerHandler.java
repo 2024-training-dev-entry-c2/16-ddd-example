@@ -5,10 +5,10 @@ import com.zombicide.actions.domain.player.entities.Survivor;
 import com.zombicide.actions.domain.player.entities.Weapon;
 import com.zombicide.actions.domain.player.events.AddedSurvivor;
 import com.zombicide.actions.domain.player.events.ChangedSurvivorPosition;
-import com.zombicide.actions.domain.player.events.ChosenSkill;
 import com.zombicide.actions.domain.player.events.DiscardedWeapon;
 import com.zombicide.actions.domain.player.events.ObtainedWeapon;
-import com.zombicide.actions.domain.player.events.UnlockedSkill;
+import com.zombicide.actions.domain.player.events.ChosenSkill;
+import com.zombicide.actions.domain.shared.values.Name;
 import com.zombicide.actions.domain.shared.values.Position;
 import com.zombicide.shared.domain.generic.DomainActionsContainer;
 import com.zombicide.shared.domain.generic.DomainEvent;
@@ -22,32 +22,27 @@ import static com.zombicide.actions.domain.player.initializer.Skills.initializrS
 import static com.zombicide.actions.domain.player.initializer.Weapons.initializrWeapons;
 
 public class PlayerHandler extends DomainActionsContainer {
-  private final List<Survivor> survivors;
-  private final List<Skill> skills;
-  private final List<Weapon> weapons;
-
   public PlayerHandler(Player player) {
-    survivors = initializrSurvivors();
-    skills = initializrSkills();
-    weapons = initializrWeapons();
+    player.setAvailableSurvivors(initializrSurvivors());
+    player.setAvailableSkills(initializrSkills());
+    player.setAvailableWeapons(initializrWeapons());
     add(addSurvivor(player));
     add(changeSurvivorPosition(player));
-    add(unlockSkill(player));
-    add(choseSkill(player));
+    add(chooseSkill(player));
     add(obtainWeapon(player));
     add(discardWeapon(player));
   }
 
   public Consumer<? extends DomainEvent> addSurvivor(Player player) {
     return (AddedSurvivor event) -> {
-      Survivor survivor = this.survivors.stream()
+      Survivor survivor = player.getAvailableSurvivors().stream()
         .filter(s -> s.getIdentity().getValue().equals(event.getId()))
         .findFirst()
         .orElseThrow(() -> new RuntimeException("Survivor with id " + event.getId() + " not found"));
 
       player.getSurvivors().add(survivor);
       player.setSurvivors(player.getSurvivors());
-      player.setName(event.getPlayerName());
+      player.setName(Name.of(event.getPlayerName()));
     };
   }
 
@@ -62,13 +57,13 @@ public class PlayerHandler extends DomainActionsContainer {
     };
   }
 
-  public Consumer<? extends DomainEvent> unlockSkill(Player player) {
-    return (UnlockedSkill event) -> {
+  public Consumer<? extends DomainEvent> chooseSkill(Player player) {
+    return (ChosenSkill event) -> {
       player.getSurvivors().stream()
         .filter(s -> s.getIdentity().getValue().equals(event.getSurvivorId()))
         .findFirst()
         .ifPresent(survivor -> {
-          this.skills.stream()
+          player.getAvailableSkills().stream()
             .filter(s -> s.getIdentity().getValue().equals(event.getSkillId()))
             .findFirst()
             .ifPresent(skill -> {
@@ -80,29 +75,13 @@ public class PlayerHandler extends DomainActionsContainer {
     };
   }
 
-  public Consumer<? extends DomainEvent> choseSkill(Player player) {
-    return (ChosenSkill event) -> {
-      player.getSurvivors().stream()
-        .filter(s -> s.getIdentity().getValue().equals(event.getSurvivorId()))
-        .findFirst()
-        .ifPresent(survivor -> {
-          this.skills.stream()
-            .filter(s -> s.getIdentity().getValue().equals(event.getSkillId()))
-            .findFirst()
-            .ifPresent(skill -> {
-              survivor.getSkills().add(skill);
-            });
-        });
-    };
-  }
-
   public Consumer<? extends DomainEvent> obtainWeapon(Player player) {
     return (ObtainedWeapon event) -> {
       player.getSurvivors().stream()
         .filter(s -> s.getIdentity().getValue().equals(event.getId()))
         .findFirst()
         .ifPresent(survivor -> {
-          Weapon weapon = this.weapons.get(randomIndex(weapons.size()));
+          Weapon weapon = player.getAvailableWeapons().get(randomIndex(player.getAvailableWeapons().size()));
           survivor.getWeapons().add(weapon);
         });
     };

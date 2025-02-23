@@ -3,20 +3,20 @@ package com.zombicide.actions.domain.player.events;
 import com.zombicide.shared.domain.generic.DomainEvent;
 
 public class ChosenSkill extends DomainEvent {
-	private final String skillId;
 	private final String survivorId;
+	private final String skillId;
 
-	public ChosenSkill(String skillId, String survivorId) {
+	public ChosenSkill(String survivorId, String skillId) {
 		super(EventsEnum.CHOSEN_SKILL.name());
-		this.skillId = skillId;
 		this.survivorId = survivorId;
-	}
-
-	public String getSkillId() {
-		return skillId;
+		this.skillId = skillId;
 	}
 
 	public String getSurvivorId() {
 		return survivorId;
+	}
+
+	public String getSkillId() {
+		return skillId;
 	}
 }

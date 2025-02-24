@@ -1,6 +1,6 @@
 package com.buildingblocks.industries.application.player.takeloan;
 
-import com.buildingblocks.industries.application.shared.repositories.IEventRepository;
+import com.buildingblocks.industries.application.shared.ports.IEventRepositoryPort;
 import com.buildingblocks.industries.domain.player.events.TakenLoan;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,11 +10,11 @@ import reactor.test.StepVerifier;
 
 class TakeLoanUseCaseTest {
     private TakeLoanUseCase useCase;
-    private IEventRepository repository;
+    private IEventRepositoryPort repository;
 
     @BeforeEach
     void setUp() {
-        repository = Mockito.mock(IEventRepository.class);
+        repository = Mockito.mock(IEventRepositoryPort.class);
         useCase = new TakeLoanUseCase(repository);
     }
 

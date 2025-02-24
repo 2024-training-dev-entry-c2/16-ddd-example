@@ -1,18 +1,13 @@
 package com.buildingblocks.industries.application.industry.consumeresource;
 
-import com.buildingblocks.industries.application.shared.repositories.IEventRepository;
+import com.buildingblocks.industries.application.shared.ports.IEventRepositoryPort;
 import com.buildingblocks.industries.domain.industry.events.BuiltIndustry;
 import com.buildingblocks.industries.domain.industry.events.ConsumedResource;
-import com.buildingblocks.shared.domain.generic.DomainEvent;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
-import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -20,11 +15,11 @@ import static org.mockito.Mockito.when;
 
 class ConsumeResourceUseCaseTest {
     private ConsumeResourceUseCase useCase;
-    private IEventRepository repository;
+    private IEventRepositoryPort repository;
 
     @BeforeEach
     void setUp() {
-        repository = Mockito.mock(IEventRepository.class);
+        repository = Mockito.mock(IEventRepositoryPort.class);
         useCase = new ConsumeResourceUseCase(repository);
     }
 

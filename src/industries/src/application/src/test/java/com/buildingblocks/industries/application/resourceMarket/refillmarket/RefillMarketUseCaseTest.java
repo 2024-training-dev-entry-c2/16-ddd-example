@@ -1,6 +1,6 @@
 package com.buildingblocks.industries.application.resourceMarket.refillmarket;
 
-import com.buildingblocks.industries.application.shared.repositories.IEventRepository;
+import com.buildingblocks.industries.application.shared.ports.IEventRepositoryPort;
 import com.buildingblocks.industries.domain.resourceMarket.events.RefilledMarketSupply;
 import com.buildingblocks.industries.domain.resourceMarket.events.UpdatedResourcePrice;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,11 +13,11 @@ import java.util.List;
 
 class RefillMarketUseCaseTest {
     private RefillMarketUseCase useCase;
-    private IEventRepository repository;
+    private IEventRepositoryPort repository;
 
     @BeforeEach
     void setUp() {
-        repository = Mockito.mock(IEventRepository.class);
+        repository = Mockito.mock(IEventRepositoryPort.class);
         useCase = new RefillMarketUseCase(repository);
     }
 

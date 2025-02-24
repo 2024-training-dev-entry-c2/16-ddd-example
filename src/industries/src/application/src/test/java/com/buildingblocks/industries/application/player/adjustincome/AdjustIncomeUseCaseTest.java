@@ -1,6 +1,6 @@
 package com.buildingblocks.industries.application.player.adjustincome;
 
-import com.buildingblocks.industries.application.shared.repositories.IEventRepository;
+import com.buildingblocks.industries.application.shared.ports.IEventRepositoryPort;
 import com.buildingblocks.industries.domain.player.events.AdjustedIncome;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,11 +10,11 @@ import reactor.test.StepVerifier;
 
 class AdjustIncomeUseCaseTest {
     private AdjustIncomeUseCase useCase;
-    private IEventRepository repository;
+    private IEventRepositoryPort repository;
 
     @BeforeEach
     void setUp() {
-        repository = Mockito.mock(IEventRepository.class);
+        repository = Mockito.mock(IEventRepositoryPort.class);
         useCase = new AdjustIncomeUseCase(repository);
     }
 

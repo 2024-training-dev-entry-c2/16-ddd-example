@@ -1,6 +1,6 @@
 package com.buildingblocks.industries.application.industry.activatemarketlink;
 
-import com.buildingblocks.industries.application.shared.repositories.IEventRepository;
+import com.buildingblocks.industries.application.shared.ports.IEventRepositoryPort;
 import com.buildingblocks.industries.domain.industry.events.ActivatedIndustryMarketLink;
 import com.buildingblocks.industries.domain.industry.events.BuiltIndustry;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,11 +11,11 @@ import reactor.test.StepVerifier;
 
 class ActivateMarketLinkUseCaseTest {
     private ActivateMarketLinkUseCase useCase;
-    private IEventRepository repository;
+    private IEventRepositoryPort repository;
 
     @BeforeEach
     void setUp() {
-        repository = Mockito.mock(IEventRepository.class);
+        repository = Mockito.mock(IEventRepositoryPort.class);
         useCase = new ActivateMarketLinkUseCase(repository);
     }
 

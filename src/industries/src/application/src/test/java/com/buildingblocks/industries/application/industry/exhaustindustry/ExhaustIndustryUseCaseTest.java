@@ -1,6 +1,6 @@
 package com.buildingblocks.industries.application.industry.exhaustindustry;
 
-import com.buildingblocks.industries.application.shared.repositories.IEventRepository;
+import com.buildingblocks.industries.application.shared.ports.IEventRepositoryPort;
 import com.buildingblocks.industries.domain.industry.events.BuiltIndustry;
 import com.buildingblocks.industries.domain.industry.events.ExhaustedIndustry;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,11 +11,11 @@ import reactor.test.StepVerifier;
 
 class ExhaustIndustryUseCaseTest {
     private ExhaustIndustryUseCase useCase;
-    private IEventRepository repository;
+    private IEventRepositoryPort repository;
 
     @BeforeEach
     void setUp() {
-        repository = Mockito.mock(IEventRepository.class);
+        repository = Mockito.mock(IEventRepositoryPort.class);
         useCase = new ExhaustIndustryUseCase(repository);
     }
 

@@ -1,7 +1,7 @@
 package com.buildingblocks.industries.application.industry.buildindustry;
 
 import com.buildingblocks.industries.application.shared.industryUtils.IndustryResponse;
-import com.buildingblocks.industries.application.shared.repositories.IEventRepository;
+import com.buildingblocks.industries.application.shared.ports.IEventRepositoryPort;
 import com.buildingblocks.industries.domain.industry.Industry;
 import com.buildingblocks.shared.application.ICommandUseCase;
 import reactor.core.publisher.Mono;
@@ -9,9 +9,9 @@ import reactor.core.publisher.Mono;
 import static com.buildingblocks.industries.application.shared.industryUtils.IndustryMapper.mapToIndustry;
 
 public class BuildIndustryUseCase implements ICommandUseCase<BuildIndustryRequest, Mono<IndustryResponse>> {
-    private final IEventRepository repository;
+    private final IEventRepositoryPort repository;
 
-    public BuildIndustryUseCase(IEventRepository repository) {
+    public BuildIndustryUseCase(IEventRepositoryPort repository) {
         this.repository = repository;
     }
 

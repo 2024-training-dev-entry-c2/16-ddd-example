@@ -4,9 +4,12 @@ include ':shared:domain'
 include ':shared:application'
 include ':industries:domain'
 include ':industries:application'
+include ':industries:mongo'
+include ':industries:main-service'
 
 project(':shared:domain').projectDir = file('./src/shared/src/domain')
 project(':shared:application').projectDir = file('./src/shared/src/application')
 project(':industries:domain').projectDir = file('./src/industries/src/domain')
 project(':industries:application').projectDir = file('./src/industries/src/application')
-
+project(':industries:mongo').projectDir = file('./src/industries/src/infrastructure/driven-adapters/mongo')
+project(':industries:main-service').projectDir = file('./src/industries/src/infrastructure/driving-adapters/main-service')

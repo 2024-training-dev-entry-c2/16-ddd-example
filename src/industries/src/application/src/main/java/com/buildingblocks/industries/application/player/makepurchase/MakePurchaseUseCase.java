@@ -1,7 +1,7 @@
 package com.buildingblocks.industries.application.player.makepurchase;
 
 import com.buildingblocks.industries.application.shared.playerUtils.PlayerResponse;
-import com.buildingblocks.industries.application.shared.repositories.IEventRepository;
+import com.buildingblocks.industries.application.shared.ports.IEventRepositoryPort;
 import com.buildingblocks.industries.domain.player.Player;
 import com.buildingblocks.shared.application.ICommandUseCase;
 import reactor.core.publisher.Mono;
@@ -9,9 +9,9 @@ import reactor.core.publisher.Mono;
 import static com.buildingblocks.industries.application.shared.playerUtils.PlayerMapper.mapToPlayer;
 
 public class MakePurchaseUseCase implements ICommandUseCase<MakePurchaseRequest, Mono<PlayerResponse>> {
-    private final IEventRepository repository;
+    private final IEventRepositoryPort repository;
 
-    public MakePurchaseUseCase(IEventRepository repository) {
+    public MakePurchaseUseCase(IEventRepositoryPort repository) {
         this.repository = repository;
     }
 

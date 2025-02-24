@@ -1,6 +1,6 @@
 package com.buildingblocks.industries.application.resourceMarket.executetrade;
 
-import com.buildingblocks.industries.application.shared.repositories.IEventRepository;
+import com.buildingblocks.industries.application.shared.ports.IEventRepositoryPort;
 import com.buildingblocks.industries.domain.resourceMarket.events.ExecutedTrade;
 import com.buildingblocks.industries.domain.resourceMarket.events.UpdatedResourcePrice;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,11 +11,11 @@ import reactor.test.StepVerifier;
 
 class ExecuteTradeUseCaseTest {
     private ExecuteTradeUseCase useCase;
-    private IEventRepository repository;
+    private IEventRepositoryPort repository;
 
     @BeforeEach
     void setUp() {
-        repository = Mockito.mock(IEventRepository.class);
+        repository = Mockito.mock(IEventRepositoryPort.class);
         useCase = new ExecuteTradeUseCase(repository);
     }
 

@@ -1,6 +1,6 @@
 package com.buildingblocks.industries.application.player.makepurchase;
 
-import com.buildingblocks.industries.application.shared.repositories.IEventRepository;
+import com.buildingblocks.industries.application.shared.ports.IEventRepositoryPort;
 import com.buildingblocks.industries.domain.player.events.ExecutedTransaction;
 import com.buildingblocks.industries.domain.player.events.SpentBudget;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,11 +11,11 @@ import reactor.test.StepVerifier;
 
 class MakePurchaseUseCaseTest {
     private MakePurchaseUseCase useCase;
-    private IEventRepository repository;
+    private IEventRepositoryPort repository;
 
     @BeforeEach
     void setUp() {
-        repository = Mockito.mock(IEventRepository.class);
+        repository = Mockito.mock(IEventRepositoryPort.class);
         useCase = new MakePurchaseUseCase(repository);
     }
 

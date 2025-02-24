@@ -16,23 +16,33 @@ import com.zombicide.shared.domain.generic.DomainEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.zombicide.actions.domain.player.initializer.Players.initializrSurvivors;
+import static com.zombicide.actions.domain.player.initializer.Skills.initializrSkills;
+import static com.zombicide.actions.domain.player.initializer.Weapons.initializrWeapons;
+
 public class Player extends AggregateRoot<PlayerId> {
 	private List<Survivor> survivors;
 	private Name name;
-	private List<Survivor> availableSurvivors;
-	private List<Skill> availableSkills;
-	private List<Weapon> availableWeapons;
+	private final List<Survivor> availableSurvivors;
+	private final List<Skill> availableSkills;
+	private final List<Weapon> availableWeapons;
 
 	//region Constructors
 	public Player() {
 		super(new PlayerId());
 		survivors = new ArrayList<>();
+		availableSurvivors = initializrSurvivors();
+		availableSkills = initializrSkills();
+		availableWeapons = initializrWeapons();
 		subscribe(new PlayerHandler(this));
 	}
 
 	private Player(PlayerId identity) {
 		super(identity);
 		survivors = new ArrayList<>();
+		availableSurvivors = initializrSurvivors();
+		availableSkills = initializrSkills();
+		availableWeapons = initializrWeapons();
 		subscribe(new PlayerHandler(this));
 	}
 	//endregion
@@ -40,10 +50,6 @@ public class Player extends AggregateRoot<PlayerId> {
 	//region Getters and Setters
 	public List<Survivor> getSurvivors() {
 		return survivors;
-	}
-
-	public void setSurvivors(List<Survivor> survivors) {
-		this.survivors = survivors;
 	}
 
 	public Name getName() {
@@ -58,26 +64,13 @@ public class Player extends AggregateRoot<PlayerId> {
 		return availableSurvivors;
 	}
 
-	public void setAvailableSurvivors(List<Survivor> availableSurvivors) {
-		this.availableSurvivors = availableSurvivors;
-	}
-
 	public List<Skill> getAvailableSkills() {
 		return availableSkills;
-	}
-
-	public void setAvailableSkills(List<Skill> availableSkills) {
-		this.availableSkills = availableSkills;
 	}
 
 	public List<Weapon> getAvailableWeapons() {
 		return availableWeapons;
 	}
-
-	public void setAvailableWeapons(List<Weapon> availableWeapons) {
-		this.availableWeapons = availableWeapons;
-	}
-
 	//endregion
 
 	//region Domain Actions

@@ -28,6 +28,7 @@ public class Action extends AggregateRoot<ActionId> {
 
 	private Action(ActionId identity) {
 		super(identity);
+		affects = new ArrayList<>();
 		subscribe(new ActionHandler(this));
 	}
 	//endregion

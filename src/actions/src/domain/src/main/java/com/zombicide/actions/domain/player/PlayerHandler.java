@@ -23,9 +23,6 @@ import static com.zombicide.actions.domain.player.initializer.Weapons.initializr
 
 public class PlayerHandler extends DomainActionsContainer {
   public PlayerHandler(Player player) {
-    player.setAvailableSurvivors(initializrSurvivors());
-    player.setAvailableSkills(initializrSkills());
-    player.setAvailableWeapons(initializrWeapons());
     add(addSurvivor(player));
     add(changeSurvivorPosition(player));
     add(chooseSkill(player));
@@ -41,7 +38,6 @@ public class PlayerHandler extends DomainActionsContainer {
         .orElseThrow(() -> new RuntimeException("Survivor with id " + event.getId() + " not found"));
 
       player.getSurvivors().add(survivor);
-      player.setSurvivors(player.getSurvivors());
       player.setName(Name.of(event.getPlayerName()));
     };
   }

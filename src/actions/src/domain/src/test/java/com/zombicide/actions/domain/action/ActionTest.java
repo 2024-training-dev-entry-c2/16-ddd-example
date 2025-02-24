@@ -47,7 +47,7 @@ class ActionTest {
 
 	@Test
 	void makeAttackSuccess() {
-		action.attack("Hacer ataque", "Accion para hacer un ataque", "ataque", 1, 2, 1, "Herido", true);
+		action.attack("Hacer ataque", "Accion para hacer un ataque", "ataque", 1, 2, true);
 		assertEquals("Hacer ataque", action.getType().getName().getValue());
 		assertEquals("Accion para hacer un ataque", action.getType().getDescription().getValue());
 		assertEquals("ataque", action.getType().getEffect().getValue());

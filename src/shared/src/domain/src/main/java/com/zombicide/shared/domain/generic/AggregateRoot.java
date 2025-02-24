@@ -31,6 +31,6 @@ public abstract class AggregateRoot<I extends Identity> extends Entity<I>{
 		event.setAggregateName(aggregateName);
 		event.setAggregateRootId(getIdentity().getValue());
 
-		actionsHandler.getEvents().add(event);
+		actionsHandler.apply(event);
 	}
 }

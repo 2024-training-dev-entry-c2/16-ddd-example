@@ -22,7 +22,7 @@ public class OpenDoorUseCase implements ICommandUseCase<OpenDoorRequest, Mono<Ac
       .collectList()
       .map(events -> {
         Action action = Action.from(request.getAggregateId(), events);
-        action.openDoor(request.getNameAction(), request.getDescription(), request.getEffect(), request.getPositionX(), request.getPositionY(), request.getNoisy());
+        action.openDoor(request.getPositionX(), request.getPositionY(), request.getNoisy());
 
         action.getUncommittedEvents();
         action.markEventsAsCommitted();

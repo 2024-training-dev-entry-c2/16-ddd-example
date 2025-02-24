@@ -5,35 +5,17 @@ import com.zombicide.shared.application.Request;
 import java.util.List;
 
 public class MakeAttackRequest extends Request {
-  private final String nameAction;
-  private final String description;
-  private final String effect;
   private final Integer positionX;
   private final Integer positionY;
   private final Boolean isNoisy;
   private final List<Affected> affects;
 
-  public MakeAttackRequest( String nameAction, String description, String effect, Integer positionX, Integer positionY, Boolean isNoisy, List<Affected> affects) {
-    super(null);
-    this.nameAction = nameAction;
-    this.description = description;
-    this.effect = effect;
+  public MakeAttackRequest(String aggregateId, Integer positionX, Integer positionY, Boolean isNoisy, List<Affected> affects) {
+    super(aggregateId);
     this.positionX = positionX;
     this.positionY = positionY;
     this.isNoisy = isNoisy;
     this.affects = affects;
-  }
-
-  public String getNameAction() {
-    return nameAction;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public String getEffect() {
-    return effect;
   }
 
   public Integer getPositionX() {

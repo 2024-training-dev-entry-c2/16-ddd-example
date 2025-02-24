@@ -22,7 +22,7 @@ public class MakeAttackUseCase implements ICommandUseCase<MakeAttackRequest, Mon
       .collectList()
       .map(events -> {
         Action action = Action.from(request.getAggregateId(), events);
-        action.attack(request.getNameAction(), request.getDescription(), request.getEffect(), request.getPositionX(), request.getPositionY(), request.getNoisy());
+        action.attack(request.getPositionX(), request.getPositionY(), request.getNoisy());
 
         request.getAffects().forEach(affected -> {
           if (affected.typeAffected().equals("Superviviente")) {

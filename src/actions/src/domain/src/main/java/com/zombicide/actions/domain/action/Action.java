@@ -48,20 +48,20 @@ public class Action extends AggregateRoot<ActionId> {
 	//endregion
 
 	//region Domain Actions
-	public void openDoor(String nameAction, String description, String effect, Integer positionX, Integer positionY, Boolean isNoisy) {
-		apply(new OpenedDoor(nameAction, description, effect, positionX, positionY, isNoisy));
+	public void openDoor(Integer positionX, Integer positionY, Boolean isNoisy) {
+		apply(new OpenedDoor(positionX, positionY, isNoisy));
 	}
 
-	public void attack(String nameAction, String description, String effect, Integer positionX, Integer positionY, Boolean isNoisy) {
-		apply(new MadeAttack(nameAction, description, effect, positionX, positionY, isNoisy));
+	public void attack(Integer positionX, Integer positionY, Boolean isNoisy) {
+		apply(new MadeAttack(positionX, positionY, isNoisy));
 	}
 
-	public void findObject(String nameAction, String description, String effect, Integer positionX, Integer positionY, Boolean isNoisy) {
-		apply(new FoundObject(nameAction, description, effect, positionX, positionY, isNoisy));
+	public void findObject(Integer positionX, Integer positionY, Boolean isNoisy) {
+		apply(new FoundObject(positionX, positionY, isNoisy));
 	}
 
-	public void move(String nameAction, String description, String effect, Integer positionX, Integer positionY, Boolean isNoisy) {
-		apply(new MadeMovement(nameAction, description, effect, positionX, positionY, isNoisy));
+	public void move(Integer positionX, Integer positionY, Boolean isNoisy) {
+		apply(new MadeMovement(positionX, positionY, isNoisy));
 	}
 
 	public void injureSurvivor(String survivorId, String nameSurvivor, Integer positionX, Integer positionY, Integer damage, String currentState) {

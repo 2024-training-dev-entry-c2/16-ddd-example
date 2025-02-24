@@ -1,8 +1,7 @@
-package com.zombicide.actions.application.player.obtainweapon;
+package com.zombicide.actions.application.action.findobject;
 
 import com.zombicide.actions.application.shared.repositories.IEventsRepository;
-import com.zombicide.actions.domain.player.events.AddedSurvivor;
-import com.zombicide.actions.domain.player.events.ChosenSkill;
+import com.zombicide.actions.domain.action.events.FoundObject;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import reactor.core.publisher.Flux;
@@ -10,31 +9,30 @@ import reactor.test.StepVerifier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ObtainWeaponUseCaseTest {
-  private final ObtainWeaponUseCase useCase;
+class FindObjectUseCaseTest {
+  private final FindObjectUseCase useCase;
   private final IEventsRepository repository;
 
-  public ObtainWeaponUseCaseTest() {
+  public FindObjectUseCaseTest() {
     repository = Mockito.mock(IEventsRepository.class);
-    useCase = new ObtainWeaponUseCase(repository);
+    useCase = new FindObjectUseCase(repository);
   }
 
   @Test
   void executeSuccess() {
     Mockito.when(repository.findEventsByAggregateId(Mockito.anyString()))
       .thenReturn(Flux.just(
-        new AddedSurvivor("2", "Mariana"),
-        new AddedSurvivor("3", "Mariana"),
-        new ChosenSkill("2", "10")
+        new FoundObject( 2, 4, false)
       ));
 
-    ObtainWaponRequest request = new ObtainWaponRequest("aggregatexyz", "3");
+    FindObjectRequest request = new FindObjectRequest("aggregatexyz", 2, 2, false);
     StepVerifier
       .create(useCase.execute(request))
       .assertNext(response -> {
         assertNotNull(response);
-        assertEquals(2, response.survivors().size());
-        assertEquals(2, response.survivors().get(1).weapons().size());
+        assertEquals(2, response.type().positionX());
+        assertEquals(2, response.type().positionY());
+        assertEquals(0, response.type().amountNoise());
       })
       .verifyComplete();
 

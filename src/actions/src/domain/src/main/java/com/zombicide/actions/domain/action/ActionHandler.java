@@ -36,13 +36,14 @@ public class ActionHandler extends DomainActionsContainer {
 	public Consumer<? extends DomainEvent> openDoor(Action action) {
 		return (OpenedDoor event) -> {
 			Type typeAction = new Type(
-				Name.of(event.getNameAction()),
-				Description.of(event.getDescription()),
-				Effect.of(event.getEffect()),
+				Name.of("Abrir puerta"),
+				Description.of("Accion para abrir una puerta"),
+				Effect.of("Puerta abierta"),
 				Position.of(event.getPositionX(), event.getPositionY()),
-				IsNoisy.of(event.getNoisy()),
-				AmountNoise.of(1)
+				IsNoisy.of(event.getNoisy())
 			);
+
+			typeAction.increaseNoise();
 			action.setType(typeAction);
 		};
 	}
@@ -50,14 +51,14 @@ public class ActionHandler extends DomainActionsContainer {
 	public Consumer<? extends DomainEvent> makeAttack(Action action) {
 		return (MadeAttack event) -> {
 			Type typeAction = new Type(
-				Name.of(event.getNameAction()),
-				Description.of(event.getDescription()),
-				Effect.of(event.getEffect()),
+				Name.of("Realizar ataque"),
+				Description.of("Accion para hacer un ataque"),
+				Effect.of("Ataque realizado"),
 				Position.of(event.getPositionX(), event.getPositionY()),
-				IsNoisy.of(event.getNoisy()),
-				AmountNoise.of(1)
+				IsNoisy.of(event.getNoisy())
 			);
 
+			typeAction.increaseNoise();
 			action.setType(typeAction);
 		};
 	}
@@ -65,13 +66,14 @@ public class ActionHandler extends DomainActionsContainer {
 	public Consumer<? extends DomainEvent> findObject(Action action) {
 		return (FoundObject event) -> {
 			Type typeAction = new Type(
-				Name.of(event.getNameAction()),
-				Description.of(event.getDescription()),
-				Effect.of(event.getEffect()),
+				Name.of("Buscar objeto"),
+				Description.of("Accion para buscar un objeto"),
+				Effect.of("Objeto encontrado"),
 				Position.of(event.getPositionX(), event.getPositionY()),
-				IsNoisy.of(event.getNoisy()),
-				AmountNoise.of(0)
+				IsNoisy.of(event.getNoisy())
 			);
+
+			typeAction.increaseNoise();
 			action.setType(typeAction);
 		};
 	}
@@ -79,13 +81,14 @@ public class ActionHandler extends DomainActionsContainer {
 	public Consumer<? extends DomainEvent> makeMovement(Action action) {
 		return (MadeMovement event) -> {
 			Type typeAction = new Type(
-				Name.of(event.getNameAction()),
-				Description.of(event.getDescription()),
-				Effect.of(event.getEffect()),
+				Name.of("Moverse"),
+				Description.of("Accion para moverse"),
+				Effect.of("Movimiento realizado"),
 				Position.of(event.getPositionX(), event.getPositionY()),
-				IsNoisy.of(event.getNoisy()),
-				AmountNoise.of(0)
+				IsNoisy.of(event.getNoisy())
 			);
+
+			typeAction.increaseNoise();
 			action.setType(typeAction);
 		};
 	}

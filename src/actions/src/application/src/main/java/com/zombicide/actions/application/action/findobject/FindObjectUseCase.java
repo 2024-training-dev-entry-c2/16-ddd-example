@@ -22,7 +22,7 @@ public class FindObjectUseCase implements ICommandUseCase<FindObjectRequest, Mon
       .collectList()
       .map(events -> {
         Action action = Action.from(request.getAggregateId(), events);
-        action.findObject(request.getNameAction(), request.getDescription(), request.getEffect(), request.getPositionX(), request.getPositionY(), request.getNoisy());
+        action.findObject(request.getPositionX(), request.getPositionY(), request.getNoisy());
 
         action.getUncommittedEvents().forEach(repository::save);
         action.markEventsAsCommitted();

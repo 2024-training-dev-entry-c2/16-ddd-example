@@ -27,7 +27,7 @@ public class MakeMovementUseCase implements ICommandUseCase<MakeMovementRequest,
     return events
       .map(tuple -> {
         Action action = Action.from(request.getAggregateId(), tuple.getT1());
-        action.move(request.getNameAction(), request.getDescription(), request.getEffect(), request.getPositionX(), request.getPositionY(), request.getNoisy());
+        action.move(request.getPositionX(), request.getPositionY(), request.getNoisy());
 
         action.getUncommittedEvents().forEach(repository::save);
         action.markEventsAsCommitted();

@@ -1,12 +1,14 @@
-rootProject.name = 'building-blocks'
+rootProject.name = 'building-clue'
 
 include ':shared:domain'
 include ':shared:application'
-include ':appointments:domain'
-include ':appointments:application'
+include ':gameDynamics:domain'
+include ':gameDynamics:application'
 
 project(':shared:domain').projectDir = file('./src/shared/src/domain')
 project(':shared:application').projectDir = file('./src/shared/src/application')
-project(':appointments:domain').projectDir = file('./src/appointments/src/domain')
-project(':appointments:application').projectDir = file('./src/appointments/src/application')
+project(':gameDynamics:domain').projectDir = file('./src/gameDynamics/src/domain')
+project(':gameDynamics:application').projectDir = file('./src/gameDynamics/src/application')
+include 'src:gameDynamics:src:application'
+findProject(':src:gameDynamics:src:application')?.name = 'application'
 

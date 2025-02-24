@@ -5,14 +5,17 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="$PROJECT_DIR$/../../../../../Gradle" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../../../../../../../../Gradle/gradle-8.11.1" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/appointments" />
+            <option value="$PROJECT_DIR$/gameDynamics" />
             <option value="$PROJECT_DIR$/shared" />
-            <option value="$PROJECT_DIR$/src/appointments/src/application" />
-            <option value="$PROJECT_DIR$/src/appointments/src/domain" />
+            <option value="$PROJECT_DIR$/src" />
+            <option value="$PROJECT_DIR$/src/gameDynamics" />
+            <option value="$PROJECT_DIR$/src/gameDynamics/src" />
+            <option value="$PROJECT_DIR$/src/gameDynamics/src/application" />
+            <option value="$PROJECT_DIR$/src/gameDynamics/src/domain" />
             <option value="$PROJECT_DIR$/src/shared/src/application" />
             <option value="$PROJECT_DIR$/src/shared/src/domain" />
           </set>

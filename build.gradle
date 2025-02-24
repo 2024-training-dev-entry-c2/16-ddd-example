@@ -1,16 +1,16 @@
 plugins {
-  id 'java'
+    id 'java'
 }
 
-group = 'com.buildingblocks'
+group = 'com.buildingclue'
 version = '1'
 
 allprojects {
-  repositories {
-    mavenCentral()
-  }
+    repositories {
+        mavenCentral()
+    }
 }
 
 subprojects {
-  apply plugin: 'java'
+    apply plugin: 'java'
 }

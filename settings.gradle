@@ -1,4 +1,5 @@
 rootProject.name = 'building-blocks'
+<<<<<<< HEAD
 include ':shared:domain'
 project(':shared:domain').projectDir = file('./src/shared/src/domain')
 include 'combat:domain'
@@ -8,4 +9,16 @@ include ':shared:application'
 project(':shared:application').projectDir = file('./src/shared/src/application')
 include 'combat:application'
 project(':combat:application').projectDir = file('./src/combat/src/application')
+=======
+
+include ':shared:domain'
+include ':shared:application'
+include ':appointments:domain'
+include ':appointments:application'
+
+project(':shared:domain').projectDir = file('./src/shared/src/domain')
+project(':shared:application').projectDir = file('./src/shared/src/application')
+project(':appointments:domain').projectDir = file('./src/appointments/src/domain')
+project(':appointments:application').projectDir = file('./src/appointments/src/application')
+>>>>>>> d99e95c55ec8ff4b3ec7bee85519df2683c5e43a
 

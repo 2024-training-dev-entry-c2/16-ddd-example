@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 
 group = 'com.buildingblocks.shared'
 version = '1'
 
+=======
+group = 'com.buildingblocks.shared'
+version = '1'
+>>>>>>> d99e95c55ec8ff4b3ec7bee85519df2683c5e43a

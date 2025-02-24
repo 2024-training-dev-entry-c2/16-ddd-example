@@ -1,0 +1,11 @@
+package com.buildingblocks.appointments.domain.appointment.events;
+
+public enum EventsEnum {
+  MEDICAL_OFFICE_ASSIGNED,
+  MEDICAL_OFFICE_UNOCCUPIED,
+  MEDICAL_OFFICE_MODIFIED,
+  PATIENT_MODIFIED,
+  PATIENT_SCHEDULED,
+  SPECIALIST_ASSIGNED,
+  SPECIALIST_MODIFIED,
+}

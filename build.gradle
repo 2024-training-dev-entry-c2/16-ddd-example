@@ -1,9 +1,14 @@
 plugins {
+<<<<<<< HEAD
     id 'java'
+=======
+  id 'java'
+>>>>>>> d99e95c55ec8ff4b3ec7bee85519df2683c5e43a
 }
 
 group = 'com.buildingblocks'
 version = '1'
+<<<<<<< HEAD
 allprojects {
     repositories {
         mavenCentral()
@@ -23,3 +28,15 @@ subprojects {
 //test {
 //    useJUnitPlatform()
 //}
+=======
+
+allprojects {
+  repositories {
+    mavenCentral()
+  }
+}
+
+subprojects {
+  apply plugin: 'java'
+}
+>>>>>>> d99e95c55ec8ff4b3ec7bee85519df2683c5e43a

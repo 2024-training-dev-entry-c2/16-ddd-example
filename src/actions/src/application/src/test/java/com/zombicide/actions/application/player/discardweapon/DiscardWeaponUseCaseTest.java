@@ -25,8 +25,7 @@ class DiscardWeaponUseCaseTest {
     Mockito.when(repository.findEventsByAggregateId(Mockito.anyString()))
       .thenReturn(Flux.just(
         new AddedSurvivor("2", "Mariana"),
-        new ChosenSkill("2", "10"),
-        new ObtainedWeapon("2")
+        new ChosenSkill("2", "10")
       ));
 
     DiscardWeaponRequest request = new DiscardWeaponRequest("aggregatexyz", "200", "2");
@@ -35,7 +34,7 @@ class DiscardWeaponUseCaseTest {
       .assertNext(response -> {
         assertNotNull(response);
         assertEquals(1, response.survivors().size());
-        assertEquals(1, response.survivors().get(0).weapons().size());
+        assertEquals(0, response.survivors().get(0).weapons().size());
       })
       .verifyComplete();
 

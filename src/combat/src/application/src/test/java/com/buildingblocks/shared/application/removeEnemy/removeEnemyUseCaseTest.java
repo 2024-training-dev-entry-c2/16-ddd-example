@@ -30,7 +30,6 @@ class removeEnemyUseCaseTest {
 
     @Test
     void executeSuccess() {
-        // Arrange
         String aggregateId = "combat123";
         String enemyId = "enemy567";
 

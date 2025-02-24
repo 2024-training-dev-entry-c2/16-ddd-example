@@ -33,7 +33,6 @@ class RemoveCardUseCaseTest {
         String aggregateId = "aggregate123";
         String cardId = "card567";
 
-        // Simular que la carta fue agregada previamente
         CardAdded cardAddedEvent = new CardAdded(cardId, "Fireball", 5, "Burn", 3, 10, 1, 2);
         RemoveCardRequest request = new RemoveCardRequest(aggregateId, cardAddedEvent.getCardId());
         Mockito.when(repository.findEventsByAggregateId(Mockito.anyString()))

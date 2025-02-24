@@ -30,7 +30,6 @@ class RemoveCharacterUseCaseTest {
 
     @Test
     void executeSuccess() {
-        // Arrange
         String aggregateId = "combat123";
         String characterId = "warrior567";
 

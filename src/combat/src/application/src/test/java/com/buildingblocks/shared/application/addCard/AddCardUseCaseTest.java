@@ -46,8 +46,6 @@ class AddCardUseCaseTest {
                     assertNotNull(response);
                     assertEquals(aggregateId, response.getDeckId());
                     assertNotNull(response.getEventDetails());
-
-                    // Verificamos los detalles del evento
                     Map<String, Object> eventDetails = (Map<String, Object>) response.getEventDetails();
                     assertEquals(skillCardName, eventDetails.get("cardName"));
                     assertEquals(initiative, eventDetails.get("initiative"));

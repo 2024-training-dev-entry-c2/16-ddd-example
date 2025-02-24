@@ -29,7 +29,6 @@ class restCardUseCaseTest {
         String cardId1 = "card567";
         String cardId2 = "card890";
 
-        // Simular que se agregaron dos cartas previamente
         CardAdded cardAddedEvent1 = new CardAdded(cardId1, "Fireball", 5, "Burn", 3, 10, 1, 2);
         CardAdded cardAddedEvent2 = new CardAdded(cardId2, "Ice Blast", 3, "Freeze", 2, 8, 1, 2);
 

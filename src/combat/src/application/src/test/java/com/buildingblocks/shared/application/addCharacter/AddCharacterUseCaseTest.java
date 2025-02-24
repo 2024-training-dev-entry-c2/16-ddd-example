@@ -35,31 +35,21 @@ class AddCharacterUseCaseTest {
         Integer characterHeal = 20;
         Integer characterInitiative = 7;
 
-        // Simular que no hay eventos previos (combate nuevo)
         Mockito.when(repository.findEventsByAggregateId(aggregateId))
-                .thenReturn(Flux.empty()); // Simular un combate sin eventos previos
+                .thenReturn(Flux.empty());
         doNothing().when(repository).save(any(DomainEvent.class));
 
-        // Crear la solicitud para agregar un personaje
         AddCharacterRequest request = new AddCharacterRequest(aggregateId, characterId, characterName, characterHeal, characterInitiative);
 
-        // Act
         Mono<CombatResponse> result = useCase.execute(request);
 
-        // Assert
         StepVerifier.create(result)
                 .assertNext(response -> {
-                    // Verificar que la respuesta no es nula
                     assertNotNull(response);
-
-                    // Verificar que el combatId es correcto
                     assertEquals(aggregateId, response.getCombatId());
-
-                    // Verificar que el personaje fue agregado correctamente
                     assertNotNull(response.getCharacterTeam());
-                    assertEquals(1, response.getCharacterTeam().size()); // Asegurarse de que hay un personaje en el combate
+                    assertEquals(1, response.getCharacterTeam().size());
 
-                    // Verificar los detalles del personaje agregado
                     CombatResponse.CharacterDetails characterDetails = response.getCharacterTeam().get(0);
                     assertEquals(characterId, characterDetails.getCharacterId());
                     assertEquals(characterName, characterDetails.getName());
@@ -68,7 +58,6 @@ class AddCharacterUseCaseTest {
                 })
                 .verifyComplete();
 
-        // Verificar que los métodos del repositorio se llamaron correctamente
         Mockito.verify(repository).findEventsByAggregateId(aggregateId);
         Mockito.verify(repository, atLeastOnce()).save(any(DomainEvent.class));
     }

@@ -31,26 +31,21 @@ class StartTurnUseCaseTest {
     void executeSuccess() {
         // Arrange
         String aggregateId = "combat123";
-
-        // Simular que no hay eventos previos (combate nuevo)
         Mockito.when(repository.findEventsByAggregateId(aggregateId))
-                .thenReturn(Flux.empty()); // Simular un combate sin eventos previos
+                .thenReturn(Flux.empty());
         doNothing().when(repository).save(any(DomainEvent.class));
 
-        // Crear la solicitud para avanzar al siguiente turno
         StartTurnRequest request = new StartTurnRequest(aggregateId);
 
-        // Act
         Mono<CombatResponse> result = useCase.execute(request);
 
-        // Assert
         StepVerifier.create(result)
                 .assertNext(response -> {
                     assertNotNull(response);
                     assertEquals(aggregateId, response.getCombatId());
+
                 })
                 .verifyComplete();
-
 
         Mockito.verify(repository).findEventsByAggregateId(aggregateId);
         Mockito.verify(repository, Mockito.atLeastOnce()).save(any(DomainEvent.class));

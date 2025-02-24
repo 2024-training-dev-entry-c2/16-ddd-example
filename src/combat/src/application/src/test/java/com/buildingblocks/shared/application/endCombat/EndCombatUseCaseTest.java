@@ -33,36 +33,25 @@ class EndCombatUseCaseTest {
     void executeSuccess() {
         String aggregateId = "combat123";
 
-        // Simular que no hay eventos previos (combate nuevo)
         when(repository.findEventsByAggregateId(aggregateId))
-                .thenReturn(Flux.empty()); // Simular un combate sin eventos previos
+                .thenReturn(Flux.empty());
         doNothing().when(repository).save(any(DomainEvent.class));
 
-        // Crear la solicitud para finalizar el combate
         EndCombatRequest request = new EndCombatRequest(aggregateId);
 
-        // Act
         Mono<CombatResponse> result = useCase.execute(request);
 
-        // Assert
         StepVerifier.create(result)
                 .assertNext(response -> {
-
                     assertNotNull(response);
-
-
                     assertEquals(aggregateId, response.getCombatId());
-
-
                     assertNotNull(response.getCharacterTeam());
-                    assertEquals(0, response.getCharacterTeam().size()); // Asegurarse de que no hay personajes en el combate
-
+                    assertEquals(0, response.getCharacterTeam().size());
                     assertNotNull(response.getEnemies());
-                    assertEquals(0, response.getEnemies().size()); // Asegurarse de que no hay enemigos en el combate
+                    assertEquals(0, response.getEnemies().size());
                 })
                 .verifyComplete();
 
-        // Verificar que los métodos del repositorio se llamaron correctamente
         verify(repository).findEventsByAggregateId(aggregateId);
         verify(repository, atLeastOnce()).save(any(DomainEvent.class));
     }

@@ -30,7 +30,7 @@ class ImproveCardUseCaseTest {
     }
     @Test
     void executeSuccess() {
-        // Arrange
+
         String aggregateId = "aggregate123";
         String cardId = "card567";
         String improvement = "Increase damage by 2";

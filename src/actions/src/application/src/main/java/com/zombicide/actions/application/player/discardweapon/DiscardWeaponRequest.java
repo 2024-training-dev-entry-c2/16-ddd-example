@@ -6,8 +6,8 @@ public class DiscardWeaponRequest extends Request {
   private final String weaponId;
   private final String survivorId;
 
-  public DiscardWeaponRequest(String weaponId, String survivorId) {
-    super(null);
+  public DiscardWeaponRequest(String aggregateId, String weaponId, String survivorId) {
+    super(aggregateId);
     this.weaponId = weaponId;
     this.survivorId = survivorId;
   }

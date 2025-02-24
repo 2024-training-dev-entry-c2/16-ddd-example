@@ -21,7 +21,7 @@ public class MakePurchaseUseCase implements ICommandUseCase<MakePurchaseRequest,
                 .collectList()
                 .map(events -> {
                     Player player = Player.from(request.getAggregateId(), events);
-                    player.spendBudget(request.getBudgetId(), request.getAmount(), request.getNewBudget(), "Purchase");
+                    player.spendBudget(request.getBudgetId(), request.getAmount(), request.getNewBudget(), request.getReason());
                     player.ExecuteTransaction(request.getTransactionId(), request.getResourceType(), request.getAmount(), request.getUpdatedBudget());
 
                     player.getUncommttedEvents().forEach(repository::save);

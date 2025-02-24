@@ -41,12 +41,6 @@ public class IndustryMapper {
                 industry.getQuantityRequiredResource().getValue(),
                 industry.getRequiredResource().getValue(),
                 industry.getStoredResources().getValue(),
-//                Optional.ofNullable(industry.getStoredResources())
-//                        .map(resources -> resources.getValue().stream()
-//                                .map(Object::toString)
-//                                .collect(Collectors.toList()))
-//                        .orElse(List.of()),
-
                 industry.getType().getValue(),
                 industry.getTechLevelRequired().getValue()
         );

@@ -23,12 +23,12 @@ class MakePurchaseUseCaseTest {
     void executeSuccess() {
         Mockito.when(repository.findEventsByAggregateId(Mockito.anyString()))
                 .thenReturn(Flux.just(
-                        new SpentBudget("asdasd", 30, 70, "Initial Purchase"),
+                        new SpentBudget("asdasd", 30, 70, "Purchase"),
                         new ExecutedTransaction("111", "coal", 30, 70)
                 ));
 
         MakePurchaseRequest request = new MakePurchaseRequest(
-                "123", "asdasd", "111", 30, 70, "Initial Purchase", "coal", 70
+                "123", "asdasd", "111", 30, 70, "Purchase", "coal", 70
         );
 
         Mockito.doNothing().when(repository).save(Mockito.any());

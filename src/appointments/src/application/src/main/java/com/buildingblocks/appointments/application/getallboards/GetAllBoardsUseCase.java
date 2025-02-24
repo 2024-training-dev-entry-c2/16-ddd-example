@@ -1,6 +1,6 @@
 package com.buildingblocks.appointments.application.getallboards;
 
-import com.buildingblocks.appointments.application.shared.repositories.IEventsRepository;
+import com.buildingblocks.appointments.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.appointments.application.shared.table.TableMapper;
 import com.buildingblocks.appointments.application.shared.table.TableResponse;
 import com.buildingblocks.appointments.domain.table.Table;
@@ -8,13 +8,12 @@ import com.buildingblocks.shared.application.IQueryUseCase;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 import reactor.core.publisher.Flux;
 
-import java.time.Duration;
 import java.util.stream.Collectors;
 
 public class GetAllBoardsUseCase implements IQueryUseCase<Flux<TableResponse>> {
-  private final IEventsRepository repository;
+  private final IEventsRepositoryPort repository;
 
-  public GetAllBoardsUseCase(IEventsRepository repository) {
+  public GetAllBoardsUseCase(IEventsRepositoryPort repository) {
     this.repository = repository;
   }
 

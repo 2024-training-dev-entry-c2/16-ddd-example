@@ -1,8 +1,6 @@
 package com.buildingblocks.appointments.application.creategame;
 
-import com.buildingblocks.appointments.application.shared.repositories.IEventsRepository;
-import com.buildingblocks.shared.domain.generic.DomainEvent;
-import org.junit.jupiter.api.Assertions;
+import com.buildingblocks.appointments.application.shared.ports.IEventsRepositoryPort;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import reactor.test.StepVerifier;
@@ -13,10 +11,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CreateGameUseCaseTest {
   private final CreateGameUseCase useCase;
-  private final IEventsRepository repository;
+  private final IEventsRepositoryPort repository;
 
   public CreateGameUseCaseTest() {
-    repository = Mockito.mock(IEventsRepository.class);
+    repository = Mockito.mock(IEventsRepositoryPort.class);
     useCase = new CreateGameUseCase(repository);
   }
 

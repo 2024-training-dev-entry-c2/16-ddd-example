@@ -1,6 +1,6 @@
 package com.buildingblocks.appointments.application.creategame;
 
-import com.buildingblocks.appointments.application.shared.repositories.IEventsRepository;
+import com.buildingblocks.appointments.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.appointments.application.shared.table.TableResponse;
 import com.buildingblocks.shared.application.ICommandUseCase;
 import reactor.core.publisher.Mono;
@@ -8,9 +8,9 @@ import reactor.core.publisher.Mono;
 import static com.buildingblocks.appointments.application.shared.table.TableMapper.mapToTable;
 
 public class CreateGameUseCase implements ICommandUseCase<CreateGameRequest, Mono<TableResponse>> {
-  private final IEventsRepository repository;
+  private final IEventsRepositoryPort repository;
 
-  public CreateGameUseCase(IEventsRepository repository) {
+  public CreateGameUseCase(IEventsRepositoryPort repository) {
     this.repository = repository;
   }
 

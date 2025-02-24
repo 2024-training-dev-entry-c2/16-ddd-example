@@ -1,6 +1,6 @@
 package com.buildingblocks.appointments.application.flipcard;
 
-import com.buildingblocks.appointments.application.shared.repositories.IEventsRepository;
+import com.buildingblocks.appointments.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.appointments.application.shared.table.TableResponse;
 import com.buildingblocks.appointments.domain.table.events.AddedPlayer;
 import com.buildingblocks.appointments.domain.table.events.CreatedTable;
@@ -15,10 +15,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FlipCardUseCaseTest {
   private final FlipCardUseCase useCase;
-  private final IEventsRepository repository;
+  private final IEventsRepositoryPort repository;
 
   public FlipCardUseCaseTest() {
-    repository = Mockito.mock(IEventsRepository.class);
+    repository = Mockito.mock(IEventsRepositoryPort.class);
     useCase = new FlipCardUseCase(repository);
   }
 

@@ -4,9 +4,13 @@ include ':shared:domain'
 include ':shared:application'
 include ':appointments:domain'
 include ':appointments:application'
+include ':appointments:mongo'
+include ':appointments:main-service'
 
 project(':shared:domain').projectDir = file('./src/shared/src/domain')
 project(':shared:application').projectDir = file('./src/shared/src/application')
 project(':appointments:domain').projectDir = file('./src/appointments/src/domain')
 project(':appointments:application').projectDir = file('./src/appointments/src/application')
+project(':appointments:mongo').projectDir = file('./src/appointments/src/infrastructure/driven-adapters/mongo')
+project(':appointments:main-service').projectDir = file('./src/appointments/src/infrastructure/driving-adapters/main-service')
 

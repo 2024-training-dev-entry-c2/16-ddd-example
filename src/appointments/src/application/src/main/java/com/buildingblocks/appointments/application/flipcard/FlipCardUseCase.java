@@ -1,6 +1,6 @@
 package com.buildingblocks.appointments.application.flipcard;
 
-import com.buildingblocks.appointments.application.shared.repositories.IEventsRepository;
+import com.buildingblocks.appointments.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.appointments.application.shared.table.TableResponse;
 import com.buildingblocks.appointments.domain.table.Table;
 import com.buildingblocks.shared.application.ICommandUseCase;
@@ -9,9 +9,9 @@ import reactor.core.publisher.Mono;
 import static com.buildingblocks.appointments.application.shared.table.TableMapper.mapToTable;
 
 public class FlipCardUseCase implements ICommandUseCase<FlipCardRequest, Mono<TableResponse>> {
-  private final IEventsRepository repository;
+  private final IEventsRepositoryPort repository;
 
-  public FlipCardUseCase(IEventsRepository repository) {
+  public FlipCardUseCase(IEventsRepositoryPort repository) {
     this.repository = repository;
   }
 

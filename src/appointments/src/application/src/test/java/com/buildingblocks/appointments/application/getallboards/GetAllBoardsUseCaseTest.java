@@ -1,6 +1,6 @@
 package com.buildingblocks.appointments.application.getallboards;
 
-import com.buildingblocks.appointments.application.shared.repositories.IEventsRepository;
+import com.buildingblocks.appointments.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.appointments.domain.table.events.AddedPlayer;
 import com.buildingblocks.appointments.domain.table.events.CreatedTable;
 import com.buildingblocks.appointments.domain.table.events.StartedGame;
@@ -17,10 +17,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GetAllBoardsUseCaseTest {
   private final GetAllBoardsUseCase useCase;
-  private final IEventsRepository repository;
+  private final IEventsRepositoryPort repository;
 
   public GetAllBoardsUseCaseTest() {
-    repository = Mockito.mock(IEventsRepository.class);
+    repository = Mockito.mock(IEventsRepositoryPort.class);
     useCase = new GetAllBoardsUseCase(repository);
   }
 

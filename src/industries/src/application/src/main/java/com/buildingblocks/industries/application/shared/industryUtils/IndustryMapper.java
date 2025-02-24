@@ -3,6 +3,8 @@ package com.buildingblocks.industries.application.shared.industryUtils;
 import com.buildingblocks.industries.domain.industry.Industry;
 import com.buildingblocks.industries.domain.industry.values.Income;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class IndustryMapper {
@@ -38,7 +40,12 @@ public class IndustryMapper {
                 industry.getLocation().getValue(),
                 industry.getQuantityRequiredResource().getValue(),
                 industry.getRequiredResource().getValue(),
-                industry.getStoredResources().getValue(),
+                Optional.ofNullable(industry.getStoredResources())
+                        .map(resources -> resources.getValue().stream()
+                                .map(Object::toString)
+                                .collect(Collectors.toList()))
+                        .orElse(List.of()),
+
                 industry.getType().getValue(),
                 industry.getTechLevelRequired().getValue()
         );

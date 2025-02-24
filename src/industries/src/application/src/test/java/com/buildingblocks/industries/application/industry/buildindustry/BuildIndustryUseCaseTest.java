@@ -22,7 +22,6 @@ class BuildIndustryUseCaseTest {
                 "Iron Work", 1, "Birmingham", 10, "Coal", 2, false, "Canals", false
         );
 
-        // Act & Assert
         StepVerifier.create(useCase.execute(request))
                 .expectNextMatches(response ->
                         response.getType().equals(request.getType()) &&
@@ -36,7 +35,6 @@ class BuildIndustryUseCaseTest {
                                 response.getFlipped().equals(request.getFlipped()))
                 .verifyComplete();
 
-        // Verify events were stored
         Mockito.verify(repository, Mockito.times(1)).save(Mockito.any());
     }
 }

@@ -6,8 +6,8 @@ public class AddSurvivorRequest extends Request {
   private final String survivorId;
   private final String playerName;
 
-  public AddSurvivorRequest(String survivorId, String playerName) {
-    super(null);
+  public AddSurvivorRequest(String aggregateId, String survivorId, String playerName) {
+    super(aggregateId);
     this.survivorId = survivorId;
     this.playerName = playerName;
   }

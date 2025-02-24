@@ -6,8 +6,8 @@ public class ChooseSkillRequest extends Request {
   private final String survivorId;
   private final String skillId;
 
-  public ChooseSkillRequest(String survivorId, String skillId) {
-    super(null);
+  public ChooseSkillRequest(String aggregateId, String survivorId, String skillId) {
+    super(aggregateId);
     this.survivorId = survivorId;
     this.skillId = skillId;
   }

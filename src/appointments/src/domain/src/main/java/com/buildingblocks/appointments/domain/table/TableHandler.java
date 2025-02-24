@@ -38,7 +38,7 @@ public class TableHandler extends DomainActionsContainer {
 
   private Consumer<? extends DomainEvent> createTable(Table table) {
     return (CreatedTable event) -> {
-      table.setName(Name.of(event.getName()));
+      table.setName(Name.of(event.getTableName()));
 
       List<Card> cards = Arrays.asList(
         new Card(CardId.of("1"), Emoji.of("😈"), IsActive.of(true), IsFlipped.of(false)),

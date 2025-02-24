@@ -8,6 +8,7 @@ import com.buildingblocks.shared.application.IQueryUseCase;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 import reactor.core.publisher.Flux;
 
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 public class GetAllBoardsUseCase implements IQueryUseCase<Flux<TableResponse>> {
@@ -23,7 +24,10 @@ public class GetAllBoardsUseCase implements IQueryUseCase<Flux<TableResponse>> {
       .findAllAggregates()
       .collectList()
       .map(events -> events.stream().collect(Collectors.groupingBy(DomainEvent::getAggregateRootId)))
-      .map(aggregates -> aggregates.entrySet().stream().map(entry ->Table.from(entry.getKey(), entry.getValue())).toList())
+      .map(aggregates -> aggregates.entrySet().stream().map(entry -> {
+        entry.getValue().sort(Comparator.comparing(DomainEvent::getWhen));
+        return Table.from(entry.getKey(), entry.getValue());
+      }).toList())
       .map(tables -> tables.stream().map(TableMapper::mapToTable).toList())
       .flatMapMany(Flux::fromIterable);
   }

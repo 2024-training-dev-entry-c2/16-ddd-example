@@ -3,7 +3,11 @@ package com.buildingblocks.appointments.domain.table.events;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 public class AddedPlayer extends DomainEvent {
-  private final String nickname;
+  private String nickname;
+
+  public AddedPlayer() {
+    super(EventsEnum.ADDED_PLAYER.name());
+  }
 
   public AddedPlayer(String nickname) {
     super(EventsEnum.ADDED_PLAYER.name());
@@ -12,5 +16,9 @@ public class AddedPlayer extends DomainEvent {
 
   public String getNickname() {
     return nickname;
+  }
+
+  public void setNickname(String nickname) {
+    this.nickname = nickname;
   }
 }

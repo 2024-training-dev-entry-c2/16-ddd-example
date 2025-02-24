@@ -5,8 +5,8 @@ import com.zombicide.shared.application.Request;
 public class ObtainWaponRequest extends Request {
   private final String survivorId;
 
-  public ObtainWaponRequest(String survivorId) {
-    super(null);
+  public ObtainWaponRequest(String aggregateId, String survivorId) {
+    super(aggregateId);
     this.survivorId = survivorId;
   }
 

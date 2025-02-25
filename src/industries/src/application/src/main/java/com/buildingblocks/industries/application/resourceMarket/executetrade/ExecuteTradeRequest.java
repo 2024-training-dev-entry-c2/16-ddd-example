@@ -3,14 +3,18 @@ package com.buildingblocks.industries.application.resourceMarket.executetrade;
 import com.buildingblocks.shared.application.Request;
 
 public class ExecuteTradeRequest extends Request {
-    private final String tradeId;
-    private final String resourceId;
-    private final String tradeType;
-    private final String resourceType;
-    private final Integer totalResourcesPrice;
-    private final Integer resourceQuantity;
-    private final Integer oldResourcePrice;
-    private final Integer newResourcePrice;
+    private String tradeId;
+    private String resourceId;
+    private String tradeType;
+    private String resourceType;
+    private Integer totalResourcesPrice;
+    private Integer resourceQuantity;
+    private Integer oldResourcePrice;
+    private Integer newResourcePrice;
+
+    public ExecuteTradeRequest() {
+        super(null);
+    }
 
     public ExecuteTradeRequest(String aggregateId, String tradeId, String resourceId, String tradeType, String resourceType, Integer totalResourcesPrice, Integer resourceQuantity, Integer oldResourcePrice, Integer newResourcePrice) {
         super(aggregateId);
@@ -54,5 +58,37 @@ public class ExecuteTradeRequest extends Request {
 
     public Integer getNewResourcePrice() {
         return newResourcePrice;
+    }
+
+    public void setTradeId(String tradeId) {
+        this.tradeId = tradeId;
+    }
+
+    public void setResourceId(String resourceId) {
+        this.resourceId = resourceId;
+    }
+
+    public void setTradeType(String tradeType) {
+        this.tradeType = tradeType;
+    }
+
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
+    }
+
+    public void setTotalResourcesPrice(Integer totalResourcesPrice) {
+        this.totalResourcesPrice = totalResourcesPrice;
+    }
+
+    public void setResourceQuantity(Integer resourceQuantity) {
+        this.resourceQuantity = resourceQuantity;
+    }
+
+    public void setOldResourcePrice(Integer oldResourcePrice) {
+        this.oldResourcePrice = oldResourcePrice;
+    }
+
+    public void setNewResourcePrice(Integer newResourcePrice) {
+        this.newResourcePrice = newResourcePrice;
     }
 }

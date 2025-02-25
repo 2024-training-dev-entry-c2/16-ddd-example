@@ -3,13 +3,17 @@ package com.buildingblocks.industries.application.player.makepurchase;
 import com.buildingblocks.shared.application.Request;
 
 public class MakePurchaseRequest extends Request {
-    private final String budgetId;
-    private final String transactionId;
-    private final Integer amount;
-    private final Integer newBudget;
-    private final String reason;
-    private final String resourceType;
-    private final Integer updatedBudget;
+    private String budgetId;
+    private String transactionId;
+    private Integer amount;
+    private Integer newBudget;
+    private String reason;
+    private String resourceType;
+    private Integer updatedBudget;
+
+    public MakePurchaseRequest() {
+        super(null);
+    }
 
     public MakePurchaseRequest(String aggregateId, String budgetId, String transactionId, Integer amount, Integer newBudget, String reason, String resourceType, Integer updatedBudget) {
         super(aggregateId);
@@ -48,5 +52,33 @@ public class MakePurchaseRequest extends Request {
 
     public Integer getUpdatedBudget() {
         return updatedBudget;
+    }
+
+    public void setBudgetId(String budgetId) {
+        this.budgetId = budgetId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public void setNewBudget(Integer newBudget) {
+        this.newBudget = newBudget;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
+    }
+
+    public void setUpdatedBudget(Integer updatedBudget) {
+        this.updatedBudget = updatedBudget;
     }
 }

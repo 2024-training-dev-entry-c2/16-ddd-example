@@ -3,10 +3,14 @@ package com.buildingblocks.industries.application.industry.overbuildindustry;
 import com.buildingblocks.shared.application.Request;
 
 public class OverBuildIndustryRequest extends Request {
-    private final String id;
-    private final String type;
-    private final Integer level;
-    private final Integer cost;
+    private String id;
+    private String type;
+    private Integer level;
+    private Integer cost;
+
+    public OverBuildIndustryRequest() {
+        super(null);
+    }
 
     public OverBuildIndustryRequest(String aggregateId, String id, String type, Integer level, Integer cost) {
         super(aggregateId);
@@ -30,5 +34,21 @@ public class OverBuildIndustryRequest extends Request {
 
     public Integer getCost() {
         return cost;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public void setCost(Integer cost) {
+        this.cost = cost;
     }
 }

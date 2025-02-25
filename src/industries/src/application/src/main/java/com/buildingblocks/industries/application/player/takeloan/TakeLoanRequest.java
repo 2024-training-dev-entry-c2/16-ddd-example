@@ -3,10 +3,14 @@ package com.buildingblocks.industries.application.player.takeloan;
 import com.buildingblocks.shared.application.Request;
 
 public class TakeLoanRequest extends Request {
-    private final String id;
-    private final Integer amount;
-    private final Integer reductionbudget;
-    private final Integer updatedBudget;
+    private String id;
+    private Integer amount;
+    private Integer reductionbudget;
+    private Integer updatedBudget;
+
+    public TakeLoanRequest() {
+        super(null);
+    }
 
     public TakeLoanRequest(String aggregateId, String id, Integer amount, Integer reductionbudget, Integer updatedBudget) {
         super(aggregateId);
@@ -30,5 +34,21 @@ public class TakeLoanRequest extends Request {
 
     public Integer getUpdatedBudget() {
         return updatedBudget;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public void setReductionbudget(Integer reductionbudget) {
+        this.reductionbudget = reductionbudget;
+    }
+
+    public void setUpdatedBudget(Integer updatedBudget) {
+        this.updatedBudget = updatedBudget;
     }
 }

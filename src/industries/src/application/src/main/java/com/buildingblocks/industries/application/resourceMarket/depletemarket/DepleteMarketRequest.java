@@ -3,12 +3,16 @@ package com.buildingblocks.industries.application.resourceMarket.depletemarket;
 import com.buildingblocks.shared.application.Request;
 
 public class DepleteMarketRequest extends Request {
-    private final String id;
-    private final String resourceId;
-    private final String resourceType;
-    private final Integer updatedAvailableResources;
-    private final Integer oldResourcePrice;
-    private final Integer newResourcePrice;
+    private String id;
+    private String resourceId;
+    private String resourceType;
+    private Integer updatedAvailableResources;
+    private Integer oldResourcePrice;
+    private Integer newResourcePrice;
+
+    public DepleteMarketRequest() {
+        super(null);
+    }
 
     public DepleteMarketRequest(String aggregateId, String id, String resourceId, String resourceType, Integer updatedAvailableResources, Integer oldResourcePrice, Integer newResourcePrice) {
         super(aggregateId);
@@ -42,5 +46,29 @@ public class DepleteMarketRequest extends Request {
 
     public Integer getNewResourcePrice() {
         return newResourcePrice;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setResourceId(String resourceId) {
+        this.resourceId = resourceId;
+    }
+
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
+    }
+
+    public void setUpdatedAvailableResources(Integer updatedAvailableResources) {
+        this.updatedAvailableResources = updatedAvailableResources;
+    }
+
+    public void setOldResourcePrice(Integer oldResourcePrice) {
+        this.oldResourcePrice = oldResourcePrice;
+    }
+
+    public void setNewResourcePrice(Integer newResourcePrice) {
+        this.newResourcePrice = newResourcePrice;
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/api/player/purchase")
+@RequestMapping("/api/player-purchase")
 public class MakePurchaseController {
     private final MakePurchaseUseCase useCase;
 

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/api/player/loan")
+@RequestMapping("/api/player-loan")
 public class TakeLoanController {
     private final TakeLoanUseCase useCase;
 

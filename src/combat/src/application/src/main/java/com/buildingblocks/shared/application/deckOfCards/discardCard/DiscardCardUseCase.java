@@ -2,7 +2,7 @@ package com.buildingblocks.shared.application.deckOfCards.discardCard;
 
 import com.buildingblocks.shared.application.ICommandUseCase;
 import com.buildingblocks.shared.application.combat.domain.deckOfCards.DeckOfCards;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.deckOfCards.DeckOfCardsResponse;
 import reactor.core.publisher.Mono;
 
@@ -12,9 +12,9 @@ import java.util.Map;
 import static com.buildingblocks.shared.application.shared.deckOfCards.DeckOfCardsMapper.mapToResponse;
 
 public class DiscardCardUseCase implements ICommandUseCase<DiscardCardRequest, Mono<DeckOfCardsResponse>> {
-    private final IEventsRepository repository;
+    private final IEventsRepositoryPort repository;
 
-    public DiscardCardUseCase(IEventsRepository repository) {
+    public DiscardCardUseCase(IEventsRepositoryPort repository) {
         this.repository = repository;
     }
 

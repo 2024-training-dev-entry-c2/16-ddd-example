@@ -3,15 +3,21 @@ package com.buildingblocks.shared.application.combat.domain.deckOfCards.events;
 import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 
 public class CardAdded extends DomainEvent {
-    private  final String cardId;
-    private final String cardName;
-    private final Integer initiative;
-    private final String effectType;
-    private final Integer objectives;
-    private final Integer scope;
-    private final Integer intensity;
-    private  final Integer duration;
-    public CardAdded( String cardId, String cardName, Integer initiative, String effectType, Integer objectives, Integer scope , Integer intensity, Integer duration) {
+    private   String cardId;
+    private  String cardName;
+    private  Integer initiative;
+    private  String effectType;
+    private  Integer objectives;
+    private  Integer scope;
+    private  Integer intensity;
+    private   Integer duration;
+
+    public CardAdded() {
+        super(EventsEnum.CARD_ADDED.name());
+    }
+
+
+    public CardAdded(String cardId, String cardName, Integer initiative, String effectType, Integer objectives, Integer scope , Integer intensity, Integer duration) {
         super(EventsEnum.CARD_ADDED.name());
         this.cardId = cardId;
         this.cardName = cardName;
@@ -54,5 +60,37 @@ public class CardAdded extends DomainEvent {
 
     public Integer getDuration() {
         return duration;
+    }
+
+    public void setCardId(String cardId) {
+        this.cardId = cardId;
+    }
+
+    public void setCardName(String cardName) {
+        this.cardName = cardName;
+    }
+
+    public void setInitiative(Integer initiative) {
+        this.initiative = initiative;
+    }
+
+    public void setEffectType(String effectType) {
+        this.effectType = effectType;
+    }
+
+    public void setObjectives(Integer objectives) {
+        this.objectives = objectives;
+    }
+
+    public void setScope(Integer scope) {
+        this.scope = scope;
+    }
+
+    public void setIntensity(Integer intensity) {
+        this.intensity = intensity;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 }

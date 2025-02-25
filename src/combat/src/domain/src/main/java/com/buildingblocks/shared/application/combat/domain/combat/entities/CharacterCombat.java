@@ -24,6 +24,7 @@ public class CharacterCombat extends Entity<CharacterCombatID> {
         this.health = health;
         this.initiative = initiative;
         this.conditions = conditions;
+        this.isDefeated = IsDefeated.of(false);
     }
 
     public CharacterCombat(CharacterCombatID identity, Name name, Health health, Initiative initiative, List<Condition> conditions) {
@@ -32,6 +33,7 @@ public class CharacterCombat extends Entity<CharacterCombatID> {
         this.health = health;
         this.initiative = initiative;
         this.conditions = conditions;
+        this.isDefeated = IsDefeated.of(false);
     }
 
     public Name getName() {

@@ -2,7 +2,7 @@ package com.buildingblocks.shared.application.addEnemy;
 
 import com.buildingblocks.shared.application.combat.addEnemy.AddEnemyRequest;
 import com.buildingblocks.shared.application.combat.addEnemy.AddEnemyUseCase;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.combat.CombatResponse;
 import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,11 +16,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 
 class AddEnemyRequestTest {
-    private IEventsRepository repository;
+    private IEventsRepositoryPort repository;
     private AddEnemyUseCase useCase;
     @BeforeEach
     void setUp() {
-        repository = Mockito.mock(IEventsRepository.class);
+        repository = Mockito.mock(IEventsRepositoryPort.class);
         useCase = new AddEnemyUseCase(repository);
     }
     @Test
@@ -38,6 +38,9 @@ class AddEnemyRequestTest {
                 .assertNext(response -> {
                     assertNotNull(response);
                     assertEquals(aggregateId, response.getCombatId());
+                    assertEquals("goblin-1", response.getEnemies().get(0).getName());
+                    assertEquals(heal, response.getEnemies().get(0).getHealth());
+                    assertEquals(initiative, response.getEnemies().get(0).getInitiative());
                     assertNotNull(response.getEnemies());
                     assertEquals(1, response.getEnemies().size());
                 })

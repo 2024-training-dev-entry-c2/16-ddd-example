@@ -2,7 +2,7 @@ package com.buildingblocks.shared.application.addCharacter;
 
 import com.buildingblocks.shared.application.combat.addCharacter.AddCharacterRequest;
 import com.buildingblocks.shared.application.combat.addCharacter.AddCharacterUseCase;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.combat.CombatResponse;
 import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,12 +18,12 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;
 
 class AddCharacterUseCaseTest {
-    private IEventsRepository repository;
+    private IEventsRepositoryPort repository;
     private AddCharacterUseCase useCase;
 
     @BeforeEach
     void setUp() {
-        repository = Mockito.mock(IEventsRepository.class);
+        repository = Mockito.mock(IEventsRepositoryPort.class);
         useCase = new AddCharacterUseCase(repository);
     }
     @Test

@@ -5,11 +5,15 @@ import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 import java.util.Date;
 
 public class TurnEnded extends DomainEvent {
-    private final Integer NumTurn;
-    private final Date endDate;
+    private Integer NumTurn;
+    private Date endDate;
+
+    public TurnEnded() {
+        super(EventsEnum.SHIFT_ENDED.name());
+    }
 
     public TurnEnded(String type, Integer numTurn, Date endDate) {
-        super(type);
+        super(EventsEnum.SHIFT_ENDED.name());
         NumTurn = numTurn;
         this.endDate = endDate;
     }
@@ -20,5 +24,13 @@ public class TurnEnded extends DomainEvent {
 
     public Date getEndDate() {
         return endDate;
+    }
+
+    public void setNumTurn(Integer numTurn) {
+        NumTurn = numTurn;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

@@ -3,11 +3,14 @@ package com.buildingblocks.shared.application.combat.domain.combat.events;
 import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 
 public class EnemyAdded extends DomainEvent {
-    private final String id;
-    private final String name;
-    private final Integer heal;
-    private final Integer initiative;
+    private  String id;
+    private  String name;
+    private  Integer heal;
+    private  Integer initiative;
 
+    public EnemyAdded() {
+        super(EventsEnum.ENEMY_ADDED.name());
+    }
     public EnemyAdded(String id, String name, Integer heal, Integer initiative) {
         super(EventsEnum.ENEMY_ADDED.name());
         this.id = id;
@@ -38,5 +41,21 @@ public class EnemyAdded extends DomainEvent {
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setHeal(Integer heal) {
+        this.heal = heal;
+    }
+
+    public void setInitiative(Integer initiative) {
+        this.initiative = initiative;
     }
 }

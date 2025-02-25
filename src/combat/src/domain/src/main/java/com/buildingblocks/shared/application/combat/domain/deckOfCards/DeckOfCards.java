@@ -15,6 +15,7 @@ import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DeckOfCards extends AggregateRoot<DeckOfCardsId> {
     private List<SkillCard> skillCards;
@@ -76,20 +77,6 @@ public class DeckOfCards extends AggregateRoot<DeckOfCardsId> {
                 card.getEffectType().getDuration()
         ));
     }
-    public void addCardWithId(SkillCard card)
-    {
-        apply(new CardAdded(
-                card.getIdentity().getValue(),
-                card.getSkillCardName().getValue(),
-                card.getIniciative().getValue(),
-                card.getEffectType().getNameEffect(),
-                card.getObjetives().getValue(),
-                card.getScope().getValue(),
-                card.getEffectType().getImpact(),
-                card.getEffectType().getDuration()
-        ));
-    }
-
     public void removeCard(String cardId) {
 
         apply(new CardRemoved(this.getIdentity().getValue(), cardId));
@@ -130,9 +117,17 @@ public class DeckOfCards extends AggregateRoot<DeckOfCardsId> {
         }
         throw new IllegalArgumentException("Carta no encontrada");
     }
+    public void clearState() {
+        skillCards.clear();
+        discardedCards.clear();
+        lostCards.clear();
+    }
     public  static DeckOfCards from(final String identity, final List<DomainEvent> events){
         DeckOfCards deck = new DeckOfCards(DeckOfCardsId.of(identity));
-        events.forEach(deck::apply);
+        List<DomainEvent> uniqueEvents = events.stream()
+                .distinct() // Elimina duplicados
+                .collect(Collectors.toList());
+        uniqueEvents.forEach(deck::apply);
         return deck;
     }
     //endregion

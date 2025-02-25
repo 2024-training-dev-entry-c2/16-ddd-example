@@ -32,39 +32,33 @@ public class DeckOfCardsHandler extends DomainActionsContainer {
         add(lostCard(deck));
         add(recoverCard(deck));
         add(discardCard(deck));
-        add(addCardWithID(deck));
     }
 
     public Consumer<? extends DomainEvent> addCard(DeckOfCards deck) {
         return (CardAdded event) -> {
             System.out.println("agregando carta.......");
+            if(event.getCardId()==null || event.getCardId().isEmpty()){
+                deck.getSkillCards().add(new SkillCard(
+                        SkillCardName.of(event.getCardName()),
+                        InitiativeCard.of(event.getInitiative()),
+                        EffectType.of(event.getEffectType(), event.getDuration(), event.getIntensity()),
+                        Objetives.of(event.getObjectives(), false),
+                        Scope.of(event.getScope())
+                ));
+            }
+            else {
+                deck.getSkillCards().add(new SkillCard(
+                        SkillCardId.of(event.getCardId()),
+                        SkillCardName.of(event.getCardName()),
+                        InitiativeCard.of(event.getInitiative()),
+                        EffectType.of(event.getEffectType(), event.getDuration(), event.getIntensity()),
+                        Objetives.of(event.getObjectives(), false),
+                        Scope.of(event.getScope())
+                ));
 
-            deck.getSkillCards().add(new SkillCard(
-                    SkillCardName.of(event.getCardName()),
-                    InitiativeCard.of(event.getInitiative()),
-                    EffectType.of(event.getEffectType(), event.getDuration(), event.getIntensity()),
-                    Objetives.of(event.getObjectives(), false),
-                    Scope.of(event.getScope())
-            ));
-
-            System.out.println(deck.getSkillCards().get(0).getIdentity().getValue());
-        };
-    }
-    public Consumer<? extends DomainEvent> addCardWithID(DeckOfCards deck) {
-        return (CardAdded event) -> {
-            System.out.println("agregando carta.......");
-
-            deck.getSkillCards().add(new SkillCard(
-                    SkillCardId.of(event.getCardId()),
-                    SkillCardName.of(event.getCardName()),
-                    InitiativeCard.of(event.getInitiative()),
-                    EffectType.of(event.getEffectType(), event.getDuration(), event.getIntensity()),
-                    Objetives.of(event.getObjectives(), false),
-                    Scope.of(event.getScope())
-            ));
+            }
 
             System.out.println(deck.getSkillCards().get(0).getIdentity().getValue());
-            System.out.println(deck.getSkillCards().get(0));
         };
     }
 

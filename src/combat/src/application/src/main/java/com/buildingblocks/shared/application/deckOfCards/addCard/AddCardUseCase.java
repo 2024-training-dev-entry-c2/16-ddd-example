@@ -7,8 +7,9 @@ import com.buildingblocks.shared.application.combat.domain.deckOfCards.values.Ef
 import com.buildingblocks.shared.application.combat.domain.deckOfCards.values.InitiativeCard;
 import com.buildingblocks.shared.application.combat.domain.deckOfCards.values.Objetives;
 import com.buildingblocks.shared.application.combat.domain.deckOfCards.values.Scope;
+import com.buildingblocks.shared.application.combat.domain.deckOfCards.values.SkillCardId;
 import com.buildingblocks.shared.application.combat.domain.deckOfCards.values.SkillCardName;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.deckOfCards.DeckOfCardsResponse;
 import reactor.core.publisher.Mono;
 
@@ -18,9 +19,9 @@ import java.util.Map;
 import static com.buildingblocks.shared.application.shared.deckOfCards.DeckOfCardsMapper.mapToResponse;
 
 public class AddCardUseCase implements ICommandUseCase<AddCardRequest, Mono<DeckOfCardsResponse>> {
-    private final IEventsRepository repository;
+    private final IEventsRepositoryPort repository;
 
-    public AddCardUseCase(IEventsRepository repository) {
+    public AddCardUseCase(IEventsRepositoryPort repository) {
         this.repository = repository;
     }
 
@@ -32,6 +33,7 @@ public class AddCardUseCase implements ICommandUseCase<AddCardRequest, Mono<Deck
                 .map(events->{
                     DeckOfCards deck =  DeckOfCards.from(request.getAggregateId(),events);
                     SkillCard card = new SkillCard(
+                            SkillCardId.of(request.getCardId()),
                             SkillCardName.of(request.getSkillCardName()),
                             InitiativeCard.of(request.getInitiative()),
                             EffectType.of(request.getNameEffect(), request.getDuration(), request.getImpact()),

@@ -3,7 +3,7 @@ package com.buildingblocks.shared.application.improveCard;
 import com.buildingblocks.shared.application.combat.domain.deckOfCards.events.CardAdded;
 import com.buildingblocks.shared.application.deckOfCards.improveCard.ImproveCardRequest;
 import com.buildingblocks.shared.application.deckOfCards.improveCard.ImproveCardUseCase;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.deckOfCards.DeckOfCardsResponse;
 import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,12 +20,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 
 class ImproveCardUseCaseTest {
-    private IEventsRepository repository;
+    private IEventsRepositoryPort repository;
     private ImproveCardUseCase useCase;
 
     @BeforeEach
     void setUp() {
-        repository = Mockito.mock(IEventsRepository.class);
+        repository = Mockito.mock(IEventsRepositoryPort.class);
         useCase = new ImproveCardUseCase(repository);
     }
     @Test

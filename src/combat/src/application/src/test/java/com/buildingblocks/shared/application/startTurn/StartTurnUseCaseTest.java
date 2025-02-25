@@ -2,7 +2,7 @@ package com.buildingblocks.shared.application.startTurn;
 
 import com.buildingblocks.shared.application.combat.startTurn.StartTurnRequest;
 import com.buildingblocks.shared.application.combat.startTurn.StartTurnUseCase;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.combat.CombatResponse;
 import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,12 +18,12 @@ import static org.mockito.Mockito.doNothing;
 
 class StartTurnUseCaseTest {
 
-    private IEventsRepository repository;
+    private IEventsRepositoryPort repository;
     private StartTurnUseCase useCase;
 
     @BeforeEach
     void setUp() {
-        repository = Mockito.mock(IEventsRepository.class);
+        repository = Mockito.mock(IEventsRepositoryPort.class);
         useCase = new StartTurnUseCase(repository);
     }
 

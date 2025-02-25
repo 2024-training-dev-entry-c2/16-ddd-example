@@ -2,7 +2,7 @@ package com.buildingblocks.shared.application.addCard;
 
 import com.buildingblocks.shared.application.deckOfCards.addCard.AddCardRequest;
 import com.buildingblocks.shared.application.deckOfCards.addCard.AddCardUseCase;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -20,10 +20,10 @@ import static org.mockito.Mockito.doNothing;
 class AddCardUseCaseTest {
     private final AddCardUseCase useCase;
 
-    private final IEventsRepository repository;
+    private final IEventsRepositoryPort repository;
 
     public AddCardUseCaseTest(){
-        repository = Mockito.mock(IEventsRepository.class);
+        repository = Mockito.mock(IEventsRepositoryPort.class);
         useCase = new AddCardUseCase(repository);
     }
     @Test
@@ -47,6 +47,7 @@ class AddCardUseCaseTest {
                     assertEquals(aggregateId, response.getDeckId());
                     assertNotNull(response.getEventDetails());
                     Map<String, Object> eventDetails = (Map<String, Object>) response.getEventDetails();
+
                     assertEquals(skillCardName, eventDetails.get("cardName"));
                     assertEquals(initiative, eventDetails.get("initiative"));
                 })

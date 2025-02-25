@@ -2,7 +2,7 @@ package com.buildingblocks.shared.application.endTurn;
 
 import com.buildingblocks.shared.application.combat.endTurn.EndTurnRequest;
 import com.buildingblocks.shared.application.combat.endTurn.EndTurnUseCase;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.combat.CombatResponse;
 import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,12 +18,12 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;
 
 class EndTurnUseCaseTest {
-    private IEventsRepository repository;
+    private IEventsRepositoryPort repository;
     private EndTurnUseCase useCase;
 
     @BeforeEach
     void setUp() {
-        repository = Mockito.mock(IEventsRepository.class);
+        repository = Mockito.mock(IEventsRepositoryPort.class);
         useCase = new EndTurnUseCase(repository);
     }
 

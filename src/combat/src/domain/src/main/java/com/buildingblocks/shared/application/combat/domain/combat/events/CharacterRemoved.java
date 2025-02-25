@@ -4,8 +4,10 @@ import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 
 public class CharacterRemoved extends DomainEvent {
 
-    private final String characterId;
-
+    private  String characterId;
+    public CharacterRemoved() {
+        super(EventsEnum.CHARACTER_REMOVED.name());
+    }
     public CharacterRemoved( String characterId) {
         super(EventsEnum.CHARACTER_REMOVED.name());
 
@@ -18,4 +20,7 @@ public class CharacterRemoved extends DomainEvent {
         return characterId;
     }
 
+    public void setCharacterId(String characterId) {
+        this.characterId = characterId;
+    }
 }

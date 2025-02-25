@@ -2,16 +2,16 @@ package com.buildingblocks.shared.application.combat.endTurn;
 
 import com.buildingblocks.shared.application.ICommandUseCase;
 import com.buildingblocks.shared.application.combat.domain.combat.Combat;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.combat.CombatResponse;
 import reactor.core.publisher.Mono;
 
 import static com.buildingblocks.shared.application.shared.combat.CombatMapper.mapToResponse;
 
 public class EndTurnUseCase implements ICommandUseCase<EndTurnRequest, Mono<CombatResponse>> {
-    private final IEventsRepository repository;
+    private final IEventsRepositoryPort repository;
 
-    public EndTurnUseCase(IEventsRepository repository) {
+    public EndTurnUseCase(IEventsRepositoryPort repository) {
         this.repository = repository;
     }
 

@@ -28,10 +28,11 @@ public class CombatMapper {
                 combat.getTurns().stream()
                         .map(turn -> new CombatResponse.TurnDetails(
                                 combat.getCurrentTurnIndex().getTurnNumber(),
-                                turn.getOrder().toString(),
-                                turn.getAction().toString()
+                                turn.getOrder().getParticipants().stream().map(Object::toString).collect(Collectors.joining(",")),
+                                turn.getAction().getActions().stream().map(Object::toString).collect(Collectors.joining(","))
                         ))
                         .collect(Collectors.toList())
+
 
         );
     }

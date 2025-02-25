@@ -2,7 +2,7 @@ package com.buildingblocks.shared.application.startCombat;
 
 import com.buildingblocks.shared.application.combat.startCombat.StartCombatRequest;
 import com.buildingblocks.shared.application.combat.startCombat.StartCombatUseCase;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.combat.CombatResponse;
 import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,12 +18,12 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;
 
 class StartCombatUseCaseTest {
-    private IEventsRepository repository;
+    private IEventsRepositoryPort repository;
     private StartCombatUseCase useCase;
 
     @BeforeEach
     void setUp() {
-        repository = Mockito.mock(IEventsRepository.class);
+        repository = Mockito.mock(IEventsRepositoryPort.class);
         useCase = new StartCombatUseCase(repository);
     }
 

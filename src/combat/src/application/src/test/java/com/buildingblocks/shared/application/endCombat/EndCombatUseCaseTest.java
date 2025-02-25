@@ -3,7 +3,7 @@ package com.buildingblocks.shared.application.endCombat;
 
 import com.buildingblocks.shared.application.combat.endCombat.EndCombatRequest;
 import com.buildingblocks.shared.application.combat.endCombat.EndCombatUseCase;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.combat.CombatResponse;
 import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,12 +20,12 @@ import static org.mockito.Mockito.*;
 
 class EndCombatUseCaseTest {
 
-    private IEventsRepository repository;
+    private IEventsRepositoryPort repository;
     private EndCombatUseCase useCase;
 
     @BeforeEach
     void setUp() {
-        repository = Mockito.mock(IEventsRepository.class);
+        repository = Mockito.mock(IEventsRepositoryPort.class);
         useCase = new EndCombatUseCase(repository);
     }
 

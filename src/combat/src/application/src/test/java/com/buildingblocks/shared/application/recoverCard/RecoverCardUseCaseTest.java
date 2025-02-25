@@ -4,7 +4,7 @@ import com.buildingblocks.shared.application.combat.domain.deckOfCards.events.Ca
 import com.buildingblocks.shared.application.combat.domain.deckOfCards.events.CardDiscarded;
 import com.buildingblocks.shared.application.deckOfCards.recoverCard.RecoverCardRequest;
 import com.buildingblocks.shared.application.deckOfCards.recoverCard.RecoverCardUseCase;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.deckOfCards.DeckOfCardsResponse;
 import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,13 +22,13 @@ import static org.mockito.Mockito.atLeastOnce;
 
 class RecoverCardUseCaseTest {
 
-    private IEventsRepository repository;
+    private IEventsRepositoryPort repository;
     private RecoverCardUseCase useCase;
 
     @BeforeEach
     void setUp() {
 
-        repository = Mockito.mock(IEventsRepository.class);
+        repository = Mockito.mock(IEventsRepositoryPort.class);
         useCase = new RecoverCardUseCase(repository);
         Mockito.reset(repository);
     }

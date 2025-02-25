@@ -2,7 +2,7 @@ package com.buildingblocks.shared.application.deckOfCards.removeCard;
 
 import com.buildingblocks.shared.application.ICommandUseCase;
 import com.buildingblocks.shared.application.combat.domain.deckOfCards.DeckOfCards;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.deckOfCards.DeckOfCardsResponse;
 import reactor.core.publisher.Mono;
 
@@ -13,9 +13,9 @@ import static com.buildingblocks.shared.application.shared.deckOfCards.DeckOfCar
 
 public class RemoveCardUseCase implements ICommandUseCase<RemoveCardRequest, Mono<DeckOfCardsResponse>> {
 
-    private final IEventsRepository repository;
+    private final IEventsRepositoryPort repository;
 
-    public RemoveCardUseCase(IEventsRepository repository) {
+    public RemoveCardUseCase(IEventsRepositoryPort repository) {
         this.repository = repository;
     }
 

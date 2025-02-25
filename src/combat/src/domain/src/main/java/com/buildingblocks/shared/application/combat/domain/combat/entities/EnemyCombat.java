@@ -24,6 +24,7 @@ public class EnemyCombat extends Entity<EnemiesId> {
         this.health = health;
         this.initiative = initiative;
         this.conditions = conditions;
+        this.isDefeated = IsDefeated.of(false);
     }
 
 
@@ -33,6 +34,7 @@ public class EnemyCombat extends Entity<EnemiesId> {
         this.health = health;
         this.initiative = initiative;
         this.conditions = conditions;
+        this.isDefeated = IsDefeated.of(false);
     }
 
     public Name getName() {

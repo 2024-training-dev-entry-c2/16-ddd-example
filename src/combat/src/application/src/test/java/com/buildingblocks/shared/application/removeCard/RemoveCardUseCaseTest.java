@@ -3,7 +3,7 @@ package com.buildingblocks.shared.application.removeCard;
 import com.buildingblocks.shared.application.combat.domain.deckOfCards.events.CardAdded;
 import com.buildingblocks.shared.application.deckOfCards.removeCard.RemoveCardRequest;
 import com.buildingblocks.shared.application.deckOfCards.removeCard.RemoveCardUseCase;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,11 +21,11 @@ import static org.mockito.Mockito.doNothing;
 
 class RemoveCardUseCaseTest {
 
-    private IEventsRepository repository;
+    private IEventsRepositoryPort repository;
     private RemoveCardUseCase useCase;
     @BeforeEach
     void setUp(){
-        repository = Mockito.mock(IEventsRepository.class);
+        repository = Mockito.mock(IEventsRepositoryPort.class);
         useCase = new RemoveCardUseCase(repository);
     }
     @Test

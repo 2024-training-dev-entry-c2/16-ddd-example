@@ -1,9 +1,9 @@
 package com.buildingblocks.shared.application.restCards;
 
 import com.buildingblocks.shared.application.combat.domain.deckOfCards.events.CardAdded;
-import com.buildingblocks.shared.application.deckOfCards.restCards.restCardRequest;
-import com.buildingblocks.shared.application.deckOfCards.restCards.restCardUseCase;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.deckOfCards.restCards.RestCardRequest;
+import com.buildingblocks.shared.application.deckOfCards.restCards.RestCardUseCase;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.deckOfCards.DeckOfCardsResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,13 +15,13 @@ import reactor.test.StepVerifier;
 import static org.junit.jupiter.api.Assertions.*;
 
 class restCardUseCaseTest {
-    private IEventsRepository repository;
-    private restCardUseCase useCase;
+    private IEventsRepositoryPort repository;
+    private RestCardUseCase useCase;
 
     @BeforeEach
     void setUp(){
-        repository = Mockito.mock(IEventsRepository.class);
-        useCase = new restCardUseCase(repository);
+        repository = Mockito.mock(IEventsRepositoryPort.class);
+        useCase = new RestCardUseCase(repository);
     }
     @Test
     void executeSuccess() {
@@ -37,7 +37,7 @@ class restCardUseCaseTest {
                         cardAddedEvent1,
                         cardAddedEvent2
                 ));
-        restCardRequest request = new restCardRequest(aggregateId, false);
+        RestCardRequest request = new RestCardRequest(aggregateId, false);
         Mono<DeckOfCardsResponse> result = useCase.execute(request);
         StepVerifier.create(result)
                 .assertNext(response -> {

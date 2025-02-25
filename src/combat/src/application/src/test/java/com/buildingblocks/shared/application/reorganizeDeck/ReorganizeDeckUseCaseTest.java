@@ -3,7 +3,7 @@ package com.buildingblocks.shared.application.reorganizeDeck;
 import com.buildingblocks.shared.application.combat.domain.deckOfCards.events.CardAdded;
 import com.buildingblocks.shared.application.deckOfCards.reorganizeDeck.ReorganizeDeckRequest;
 import com.buildingblocks.shared.application.deckOfCards.reorganizeDeck.ReorganizeDeckUseCase;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.deckOfCards.DeckOfCardsResponse;
 import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,12 +21,12 @@ import static org.mockito.Mockito.doNothing;
 
 class ReorganizeDeckUseCaseTest {
 
-    private IEventsRepository repository;
+    private IEventsRepositoryPort repository;
     private ReorganizeDeckUseCase useCase;
 
     @BeforeEach
     void setUp(){
-        repository = Mockito.mock(IEventsRepository.class);
+        repository = Mockito.mock(IEventsRepositoryPort.class);
         useCase = new ReorganizeDeckUseCase(repository);
 
     }

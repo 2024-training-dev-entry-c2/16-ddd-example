@@ -3,7 +3,7 @@ package com.buildingblocks.shared.application.removeCharacter;
 import com.buildingblocks.shared.application.combat.domain.combat.events.CharacterAdded;
 import com.buildingblocks.shared.application.combat.removeCharacter.RemoveCharacterRequest;
 import com.buildingblocks.shared.application.combat.removeCharacter.RemoveCharacterUseCase;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.combat.CombatResponse;
 import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,12 +19,12 @@ import static org.mockito.Mockito.atLeastOnce;
 
 class RemoveCharacterUseCaseTest {
 
-    private IEventsRepository repository;
+    private IEventsRepositoryPort repository;
     private RemoveCharacterUseCase useCase;
 
     @BeforeEach
     void setUp() {
-        repository = Mockito.mock(IEventsRepository.class);
+        repository = Mockito.mock(IEventsRepositoryPort.class);
         useCase = new RemoveCharacterUseCase(repository);
     }
 

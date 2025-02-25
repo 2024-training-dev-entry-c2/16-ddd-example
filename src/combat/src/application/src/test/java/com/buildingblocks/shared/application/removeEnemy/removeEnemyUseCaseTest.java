@@ -1,9 +1,9 @@
 package com.buildingblocks.shared.application.removeEnemy;
 
 import com.buildingblocks.shared.application.combat.domain.combat.events.EnemyAdded;
-import com.buildingblocks.shared.application.combat.removeEnemy.removeEnemyRequest;
-import com.buildingblocks.shared.application.combat.removeEnemy.removeEnemyUseCase;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.combat.removeEnemy.RemoveEnemyRequest;
+import com.buildingblocks.shared.application.combat.removeEnemy.RemoveEnemyUseCase;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.combat.CombatResponse;
 import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,13 +19,13 @@ import static org.mockito.Mockito.atLeastOnce;
 
 class removeEnemyUseCaseTest {
 
-    private IEventsRepository repository;
-    private removeEnemyUseCase useCase;
+    private IEventsRepositoryPort repository;
+    private RemoveEnemyUseCase useCase;
 
     @BeforeEach
     void setUp() {
-        repository = Mockito.mock(IEventsRepository.class);
-        useCase = new removeEnemyUseCase(repository);
+        repository = Mockito.mock(IEventsRepositoryPort.class);
+        useCase = new RemoveEnemyUseCase(repository);
     }
 
     @Test
@@ -38,7 +38,7 @@ class removeEnemyUseCaseTest {
         Mockito.when(repository.findEventsByAggregateId(aggregateId))
                 .thenReturn(Flux.just(enemyAddedEvent));
 
-        removeEnemyRequest request = new removeEnemyRequest(aggregateId, enemyId);
+        RemoveEnemyRequest request = new RemoveEnemyRequest(aggregateId, enemyId);
 
         Mono<CombatResponse> result = useCase.execute(request);
 

@@ -2,16 +2,17 @@ package com.buildingblocks.shared.application.combat.startCombat;
 
 import com.buildingblocks.shared.application.ICommandUseCase;
 import com.buildingblocks.shared.application.combat.domain.combat.Combat;
-import com.buildingblocks.shared.application.shared.IEventsRepository;
+import com.buildingblocks.shared.application.combat.domain.combat.values.ScenarioId;
+import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.combat.CombatResponse;
 import reactor.core.publisher.Mono;
 
 import static com.buildingblocks.shared.application.shared.combat.CombatMapper.mapToResponse;
 
 public class StartCombatUseCase implements ICommandUseCase<StartCombatRequest, Mono<CombatResponse>> {
-    private final IEventsRepository repository;
+    private final IEventsRepositoryPort repository;
 
-    public StartCombatUseCase(IEventsRepository repository) {
+    public StartCombatUseCase(IEventsRepositoryPort repository) {
         this.repository = repository;
     }
 
@@ -22,8 +23,10 @@ public class StartCombatUseCase implements ICommandUseCase<StartCombatRequest, M
                 .map(events -> {
                     Combat combat = Combat.from(request.getAggregateId(), events);
                     combat.startCombat();
+                    combat.setScenarioId(ScenarioId.of(request.getScenarioId()));
                     combat.getUncommittedEvents().forEach(repository::save);
                     combat.markEventAsCommited();
+
                     return mapToResponse(combat);
                 });
     }

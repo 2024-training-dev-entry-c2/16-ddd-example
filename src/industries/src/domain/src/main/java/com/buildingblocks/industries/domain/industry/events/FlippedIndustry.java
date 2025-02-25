@@ -3,11 +3,15 @@ package com.buildingblocks.industries.domain.industry.events;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 public class FlippedIndustry extends DomainEvent {
-    private final String id;
-    private final String location;
-    private final String requiredResource;
-    private final Integer quantityRequiredResource;
-    private final Integer income;
+    private String id;
+    private String location;
+    private String requiredResource;
+    private Integer quantityRequiredResource;
+    private Integer income;
+
+    public FlippedIndustry() {
+        super(EventsEnum.FLIPPED_INDUSTRY.name());
+    }
 
     public FlippedIndustry(String id, String location, String requiredResource, Integer quantityRequiredResource, Integer income) {
         super(EventsEnum.FLIPPED_INDUSTRY.name());
@@ -36,5 +40,25 @@ public class FlippedIndustry extends DomainEvent {
 
     public Integer getIncome() {
         return income;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setRequiredResource(String requiredResource) {
+        this.requiredResource = requiredResource;
+    }
+
+    public void setQuantityRequiredResource(Integer quantityRequiredResource) {
+        this.quantityRequiredResource = quantityRequiredResource;
+    }
+
+    public void setIncome(Integer income) {
+        this.income = income;
     }
 }

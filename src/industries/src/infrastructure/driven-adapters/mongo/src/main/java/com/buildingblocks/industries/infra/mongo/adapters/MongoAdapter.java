@@ -1,8 +1,8 @@
-package com.buildingblocks.infra.mongo.adapters;
+package com.buildingblocks.industries.infra.mongo.adapters;
 
 import com.buildingblocks.industries.application.shared.ports.IEventRepositoryPort;
-import com.buildingblocks.infra.mongo.entities.Event;
-import com.buildingblocks.infra.mongo.repositories.IEventsRepository;
+import com.buildingblocks.industries.infra.mongo.entities.Event;
+import com.buildingblocks.industries.infra.mongo.repositories.IEventsRepository;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 import reactor.core.publisher.Flux;
 

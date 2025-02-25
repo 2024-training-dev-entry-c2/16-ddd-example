@@ -3,10 +3,14 @@ package com.buildingblocks.industries.domain.industry.events;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 public class OverBuiltIndustry extends DomainEvent {
-    private final String id;
-    private final String type;
-    private final Integer level;
-    private final Integer cost;
+    private String id;
+    private String type;
+    private Integer level;
+    private Integer cost;
+
+    public OverBuiltIndustry() {
+        super(EventsEnum.OVERBUILT_INDUSTRY.name());
+    }
 
     public OverBuiltIndustry(String id, String type, Integer level, Integer cost) {
         super(EventsEnum.OVERBUILT_INDUSTRY.name());
@@ -30,5 +34,21 @@ public class OverBuiltIndustry extends DomainEvent {
 
     public Integer getCost() {
         return cost;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public void setCost(Integer cost) {
+        this.cost = cost;
     }
 }

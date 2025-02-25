@@ -3,17 +3,21 @@ package com.buildingblocks.industries.domain.industry.events;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 public class UpgradedIndustry extends DomainEvent {
-    private final String id;
-    private final String type;
-    private final Integer level;
-    private final String location;
-    private final Boolean isFlipped;
-    private final String requiredResource;
-    private final Integer quantityRequiredResource;
-    private final Integer cost;
-    private final Integer techLevelRequired;
-    private final Boolean isRequiredResearch;
-    private final String era;
+    private String id;
+    private String type;
+    private Integer level;
+    private String location;
+    private Boolean isFlipped;
+    private String requiredResource;
+    private Integer quantityRequiredResource;
+    private Integer cost;
+    private Integer techLevelRequired;
+    private Boolean isRequiredResearch;
+    private String era;
+
+    public UpgradedIndustry() {
+        super(EventsEnum.UPGRADED_INDUSTRY.name());
+    }
 
     public UpgradedIndustry(String id, String type, Integer level, String location, Boolean isFlipped, String requiredResource, Integer quantityRequiredResource, Integer cost, Integer techLevelRequired, Boolean isRequiredResearch, String era) {
         super(EventsEnum.UPGRADED_INDUSTRY.name());
@@ -72,5 +76,49 @@ public class UpgradedIndustry extends DomainEvent {
 
     public String getEra() {
         return era;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setFlipped(Boolean flipped) {
+        isFlipped = flipped;
+    }
+
+    public void setRequiredResource(String requiredResource) {
+        this.requiredResource = requiredResource;
+    }
+
+    public void setQuantityRequiredResource(Integer quantityRequiredResource) {
+        this.quantityRequiredResource = quantityRequiredResource;
+    }
+
+    public void setCost(Integer cost) {
+        this.cost = cost;
+    }
+
+    public void setTechLevelRequired(Integer techLevelRequired) {
+        this.techLevelRequired = techLevelRequired;
+    }
+
+    public void setRequiredResearch(Boolean requiredResearch) {
+        isRequiredResearch = requiredResearch;
+    }
+
+    public void setEra(String era) {
+        this.era = era;
     }
 }

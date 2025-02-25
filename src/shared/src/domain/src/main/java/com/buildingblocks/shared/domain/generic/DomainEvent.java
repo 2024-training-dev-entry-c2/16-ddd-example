@@ -4,9 +4,9 @@ import java.time.Instant;
 import java.util.UUID;
 
 public abstract class DomainEvent {
-    private final Instant when;
-    private final String uuid;
-    private final String name;
+    private Instant when;
+    private String uuid;
+    private String name;
     private String aggregateRoodId;
     private String aggregateName;
     private Long version;
@@ -52,5 +52,17 @@ public abstract class DomainEvent {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public void setWhen(Instant when) {
+        this.when = when;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

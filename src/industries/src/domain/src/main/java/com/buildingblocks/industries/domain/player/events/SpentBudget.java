@@ -3,10 +3,14 @@ package com.buildingblocks.industries.domain.player.events;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 public class SpentBudget extends DomainEvent {
-    private final String id;
-    private final Integer amount;
-    private final Integer newBudget;
-    private final String reason;
+    private String id;
+    private Integer amount;
+    private Integer newBudget;
+    private String reason;
+
+    public SpentBudget() {
+        super(EventsEnum.SPENT_BUDGET.name());
+    }
 
     public SpentBudget(String id, Integer amount, Integer newBudget, String reason) {
         super(EventsEnum.SPENT_BUDGET.name());
@@ -30,5 +34,21 @@ public class SpentBudget extends DomainEvent {
 
     public String getReason() {
         return reason;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public void setNewBudget(Integer newBudget) {
+        this.newBudget = newBudget;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 }

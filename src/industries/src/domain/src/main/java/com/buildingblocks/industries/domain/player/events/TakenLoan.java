@@ -3,10 +3,14 @@ package com.buildingblocks.industries.domain.player.events;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 public class TakenLoan extends DomainEvent {
-    private final String id;
-    private final Integer amount;
-    private final Integer reductionbudget;
-    private final Integer updatedBudget;
+    private String id;
+    private Integer amount;
+    private Integer reductionbudget;
+    private Integer updatedBudget;
+
+    public TakenLoan() {
+        super(EventsEnum.TAKEN_LOAN.name());
+    }
 
     public TakenLoan(String id, Integer amount, Integer reductionbudget, Integer updatedBudget) {
         super(EventsEnum.TAKEN_LOAN.name());
@@ -30,5 +34,21 @@ public class TakenLoan extends DomainEvent {
 
     public Integer getUpdatedBudget() {
         return updatedBudget;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public void setReductionbudget(Integer reductionbudget) {
+        this.reductionbudget = reductionbudget;
+    }
+
+    public void setUpdatedBudget(Integer updatedBudget) {
+        this.updatedBudget = updatedBudget;
     }
 }

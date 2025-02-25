@@ -1,7 +1,7 @@
 package com.buildingblocks.industries.infra.mainservice.config;
 
-import com.buildingblocks.infra.mongo.adapters.MongoAdapter;
-import com.buildingblocks.infra.mongo.repositories.IEventsRepository;
+import com.buildingblocks.industries.infra.mongo.adapters.MongoAdapter;
+import com.buildingblocks.industries.infra.mongo.repositories.IEventsRepository;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

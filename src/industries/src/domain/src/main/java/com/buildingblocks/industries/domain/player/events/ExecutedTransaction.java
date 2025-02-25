@@ -3,10 +3,14 @@ package com.buildingblocks.industries.domain.player.events;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 public class ExecutedTransaction extends DomainEvent {
-    private final String Id;
-    private final String resourceType;
-    private final Integer amount;
-    private final Integer updatedBudget;
+    private String Id;
+    private String resourceType;
+    private Integer amount;
+    private Integer updatedBudget;
+
+    public ExecutedTransaction() {
+        super(EventsEnum.EXECUTED_TRANSACTION.name());
+    }
 
     public ExecutedTransaction(String id, String resourceType, Integer amount, Integer updatedBudget) {
         super(EventsEnum.EXECUTED_TRANSACTION.name());
@@ -30,5 +34,21 @@ public class ExecutedTransaction extends DomainEvent {
 
     public Integer getUpdatedBudget() {
         return updatedBudget;
+    }
+
+    public void setId(String id) {
+        Id = id;
+    }
+
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public void setUpdatedBudget(Integer updatedBudget) {
+        this.updatedBudget = updatedBudget;
     }
 }

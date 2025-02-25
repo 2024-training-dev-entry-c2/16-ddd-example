@@ -3,9 +3,13 @@ package com.buildingblocks.industries.domain.player.events;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 public class EarnedMoney extends DomainEvent {
-    private final String id;
-    private final Integer amount;
-    private final Integer newBudget;
+    private String id;
+    private Integer amount;
+    private Integer newBudget;
+
+    public EarnedMoney() {
+        super(EventsEnum.EARNED_MONEY.name());
+    }
 
     public EarnedMoney(String id, Integer amount, Integer newBudget) {
         super(EventsEnum.EARNED_MONEY.name());
@@ -24,5 +28,17 @@ public class EarnedMoney extends DomainEvent {
 
     public Integer getNewBudget() {
         return newBudget;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public void setNewBudget(Integer newBudget) {
+        this.newBudget = newBudget;
     }
 }

@@ -1,4 +1,4 @@
-package com.buildingblocks.infra.mongo.entities;
+package com.buildingblocks.industries.infra.mongo.entities;
 
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -7,11 +7,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Event {
     private DomainEvent domainEvent;
 
-    public Event(DomainEvent domainEvent) {
-        this.domainEvent = domainEvent;
+    public Event() {
     }
 
-    public Event() {
+    public Event(DomainEvent domainEvent) {
+        this.domainEvent = domainEvent;
     }
 
     public DomainEvent getDomainEvent() {

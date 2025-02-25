@@ -3,11 +3,15 @@ package com.buildingblocks.industries.domain.resourceMarket.events;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 
 public class ExecutedTrade extends DomainEvent {
-    private final String id;
-    private final String tradeType;
-    private final String resourceType;
-    private final Integer totalResourcesPrice;
-    private final Integer resourceQuantity;
+    private String id;
+    private String tradeType;
+    private String resourceType;
+    private Integer totalResourcesPrice;
+    private Integer resourceQuantity;
+
+    public ExecutedTrade() {
+        super(EventsEnum.EXECUTED_TRADE.name());
+    }
 
     public ExecutedTrade(String id, String tradeType, String resourceType, Integer totalResourcesPrice, Integer resourceQuantity) {
         super(EventsEnum.EXECUTED_TRADE.name());
@@ -36,5 +40,25 @@ public class ExecutedTrade extends DomainEvent {
 
     public Integer getResourceQuantity() {
         return resourceQuantity;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTradeType(String tradeType) {
+        this.tradeType = tradeType;
+    }
+
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
+    }
+
+    public void setTotalResourcesPrice(Integer totalResourcesPrice) {
+        this.totalResourcesPrice = totalResourcesPrice;
+    }
+
+    public void setResourceQuantity(Integer resourceQuantity) {
+        this.resourceQuantity = resourceQuantity;
     }
 }

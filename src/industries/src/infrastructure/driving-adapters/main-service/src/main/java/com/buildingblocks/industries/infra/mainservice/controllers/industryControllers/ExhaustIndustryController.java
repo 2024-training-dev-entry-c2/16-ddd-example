@@ -1,4 +1,4 @@
-package com.buildingblocks.industries.infra.mainservice.controllers;
+package com.buildingblocks.industries.infra.mainservice.controllers.industryControllers;
 
 import com.buildingblocks.industries.application.industry.exhaustindustry.ExhaustIndustryRequest;
 import com.buildingblocks.industries.application.industry.exhaustindustry.ExhaustIndustryUseCase;

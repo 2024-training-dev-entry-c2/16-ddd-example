@@ -1,4 +1,4 @@
-package com.buildingblocks.industries.infra.mainservice.controllers;
+package com.buildingblocks.industries.infra.mainservice.controllers.industryControllers;
 
 import com.buildingblocks.industries.application.industry.consumeresource.ConsumeResourceRequest;
 import com.buildingblocks.industries.application.industry.consumeresource.ConsumeResourceUseCase;

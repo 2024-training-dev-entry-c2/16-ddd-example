@@ -37,26 +37,19 @@ public class DeckOfCardsHandler extends DomainActionsContainer {
     public Consumer<? extends DomainEvent> addCard(DeckOfCards deck) {
         return (CardAdded event) -> {
             System.out.println("agregando carta.......");
-            if(event.getCardId()==null || event.getCardId().isEmpty()){
-                deck.getSkillCards().add(new SkillCard(
-                        SkillCardName.of(event.getCardName()),
-                        InitiativeCard.of(event.getInitiative()),
-                        EffectType.of(event.getEffectType(), event.getDuration(), event.getIntensity()),
-                        Objetives.of(event.getObjectives(), false),
-                        Scope.of(event.getScope())
-                ));
-            }
-            else {
-                deck.getSkillCards().add(new SkillCard(
-                        SkillCardId.of(event.getCardId()),
-                        SkillCardName.of(event.getCardName()),
-                        InitiativeCard.of(event.getInitiative()),
-                        EffectType.of(event.getEffectType(), event.getDuration(), event.getIntensity()),
-                        Objetives.of(event.getObjectives(), false),
-                        Scope.of(event.getScope())
-                ));
 
-            }
+            deck.getSkillCards().removeIf(card ->
+                    card.getIdentity().getValue() != null && card.getIdentity().equals(event.getCardId())
+            );
+
+            deck.getSkillCards().add(new SkillCard(
+                    event.getCardId() == null || event.getCardId().isEmpty() ? null : SkillCardId.of(event.getCardId()),
+                    SkillCardName.of(event.getCardName()),
+                    InitiativeCard.of(event.getInitiative()),
+                    EffectType.of(event.getEffectType(), event.getDuration(), event.getIntensity()),
+                    Objetives.of(event.getObjectives(), false),
+                    Scope.of(event.getScope())
+            ));
 
             System.out.println(deck.getSkillCards().get(0).getIdentity().getValue());
         };

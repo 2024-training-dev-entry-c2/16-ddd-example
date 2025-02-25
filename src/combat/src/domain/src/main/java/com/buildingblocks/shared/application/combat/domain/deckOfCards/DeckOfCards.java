@@ -15,13 +15,12 @@ import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 public class DeckOfCards extends AggregateRoot<DeckOfCardsId> {
     private List<SkillCard> skillCards;
     private List<SkillCard> discardedCards;
     private List<SkillCard> lostCards;
-
     //region Constructors
 
     public DeckOfCards() {
@@ -62,6 +61,9 @@ public class DeckOfCards extends AggregateRoot<DeckOfCardsId> {
         return lostCards;
     }
 
+    public void setLostCards(List<SkillCard> lostCards) {
+        this.lostCards = lostCards;
+    }
 
     //endregion
     //region Domain Events
@@ -124,10 +126,7 @@ public class DeckOfCards extends AggregateRoot<DeckOfCardsId> {
     }
     public  static DeckOfCards from(final String identity, final List<DomainEvent> events){
         DeckOfCards deck = new DeckOfCards(DeckOfCardsId.of(identity));
-        List<DomainEvent> uniqueEvents = events.stream()
-                .distinct() // Elimina duplicados
-                .collect(Collectors.toList());
-        uniqueEvents.forEach(deck::apply);
+        events.forEach(deck::apply);
         return deck;
     }
     //endregion

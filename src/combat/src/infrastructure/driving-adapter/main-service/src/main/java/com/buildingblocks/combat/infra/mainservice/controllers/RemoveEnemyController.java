@@ -3,7 +3,7 @@ package com.buildingblocks.combat.infra.mainservice.controllers;
 import com.buildingblocks.shared.application.combat.removeEnemy.RemoveEnemyRequest;
 import com.buildingblocks.shared.application.combat.removeEnemy.RemoveEnemyUseCase;
 import com.buildingblocks.shared.application.shared.combat.CombatResponse;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +16,7 @@ public class RemoveEnemyController {
     public RemoveEnemyController(RemoveEnemyUseCase removeEnemyUseCase) {
         this.removeEnemyUseCase = removeEnemyUseCase;
     }
-    @PostMapping
+    @DeleteMapping
     public Mono<CombatResponse> removeEnemy(@RequestBody RemoveEnemyRequest request){
         return removeEnemyUseCase.execute(request);
     }

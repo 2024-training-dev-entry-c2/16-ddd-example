@@ -9,10 +9,12 @@ import com.buildingblocks.shared.application.combat.domain.deckOfCards.values.Ob
 import com.buildingblocks.shared.application.combat.domain.deckOfCards.values.Scope;
 import com.buildingblocks.shared.application.combat.domain.deckOfCards.values.SkillCardId;
 import com.buildingblocks.shared.application.combat.domain.deckOfCards.values.SkillCardName;
+import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.deckOfCards.DeckOfCardsResponse;
 import reactor.core.publisher.Mono;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,6 +33,7 @@ public class AddCardUseCase implements ICommandUseCase<AddCardRequest, Mono<Deck
                 .findEventsByAggregateId(request.getAggregateId())
                 .collectList()
                 .map(events->{
+                    events.sort(Comparator.comparing(DomainEvent::getWhen));
                     DeckOfCards deck =  DeckOfCards.from(request.getAggregateId(),events);
                     SkillCard card = new SkillCard(
                             SkillCardId.of(request.getCardId()),

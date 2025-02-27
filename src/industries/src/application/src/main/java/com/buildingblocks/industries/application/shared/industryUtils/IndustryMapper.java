@@ -32,15 +32,17 @@ public class IndustryMapper {
                 ).collect(Collectors.toList()),
                 industry.getCost().getValue(),
                 industry.getEra().getValue(),
-                industry.getIncome().getValue(),
+                industry.getIncome() != null ? industry.getIncome().getValue() : 0,
                 industry.getIsConnectedToNetwork().getValue(),
-                industry.getIsFlipped().getValue(),
-                industry.getIsRequiredResearch().getValue(),
+                industry.getIsFlipped() != null ? industry.getIsFlipped().getValue() : false,
+                industry.getIsRequiredResearch() != null ? industry.getIsRequiredResearch().getValue() : false,
                 industry.getLevel().getValue(),
                 industry.getLocation().getValue(),
-                industry.getQuantityRequiredResource().getValue(),
+                industry.getQuantityRequiredResource() != null ? industry.getQuantityRequiredResource().getValue() : 0,
                 industry.getRequiredResource().getValue(),
-                industry.getStoredResources().getValue(),
+                industry.getStoredResources() != null
+                        ? Optional.ofNullable(industry.getStoredResources().getValue()).orElse(List.of())
+                        : List.of(),
                 industry.getType().getValue(),
                 industry.getTechLevelRequired().getValue()
         );

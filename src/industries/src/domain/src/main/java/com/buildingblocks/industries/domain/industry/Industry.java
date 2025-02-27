@@ -36,12 +36,15 @@ public class Industry extends AggregateRoot<IndustryId> {
         this.isRequiredResearch = IsRequiredResearch.of(false);
         this.quantityRequiredResource = QuantityRequiredResource.of(0);
         this.storedResources = StoredResources.of(List.of("default"));
+        this.isFlipped = IsFlipped.of(false);
         apply(new BuiltIndustry(type, level, location, cost, requiredResource, techLevelRequired, isConnectedToNetwork, era, isFlipped));
     }
 
     private Industry(IndustryId identity) {
         super(identity);
         subscribe(new IndustryHandler(this));
+        this.storedResources = StoredResources.of(List.of("Coal", "Coal", "Iron"));
+        this.isFlipped = IsFlipped.of(false);
     }
     // endregion
 

@@ -4,16 +4,17 @@ import com.buildingblocks.shared.application.Request;
 
 public class ActivateMarketLinkRequest extends Request {
     private String id;
-    private Boolean isConnectedToNetwork;
+
+    private Boolean connectedToNetwork;
 
     public ActivateMarketLinkRequest() {
         super(null);
     }
 
-    public ActivateMarketLinkRequest(String aggregateId, String id, Boolean isConnectedToNetwork) {
+    public ActivateMarketLinkRequest(String aggregateId, String id, Boolean connectedToNetwork) {
         super(aggregateId);
         this.id = id;
-        this.isConnectedToNetwork = isConnectedToNetwork;
+        this.connectedToNetwork = connectedToNetwork;
     }
 
     public String getId() {
@@ -21,7 +22,7 @@ public class ActivateMarketLinkRequest extends Request {
     }
 
     public Boolean getConnectedToNetwork() {
-        return isConnectedToNetwork;
+        return connectedToNetwork;
     }
 
     public void setId(String id) {
@@ -29,6 +30,6 @@ public class ActivateMarketLinkRequest extends Request {
     }
 
     public void setConnectedToNetwork(Boolean connectedToNetwork) {
-        isConnectedToNetwork = connectedToNetwork;
+        this.connectedToNetwork = connectedToNetwork;
     }
 }

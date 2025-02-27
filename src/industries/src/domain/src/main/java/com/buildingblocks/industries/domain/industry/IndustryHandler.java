@@ -5,6 +5,7 @@ import com.buildingblocks.industries.domain.industry.values.*;
 import com.buildingblocks.shared.domain.generic.DomainActionsContainer;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -45,20 +46,26 @@ public class IndustryHandler extends DomainActionsContainer {
             String requiredResource = event.getRequiredResource();
             int requiredQuantity = event.getQuantityRequiredResource();
 
-            List<String> storedResources = industry.getStoredResources().getValue();
+            List<String> storedResources = new ArrayList<>(industry.getStoredResources().getValue());
             long availableQuantity = storedResources.stream().filter(r -> r.equals(requiredResource)).count();
 
-            if (availableQuantity >= requiredQuantity) {
-                for (int i = 0; i < requiredQuantity; i++) storedResources.remove(requiredResource);
-                industry.setStoredResources(StoredResources.of(storedResources));
-            } else throw new IllegalStateException("Not enough resources to consume");
+            if (availableQuantity < requiredQuantity)
+                throw new IllegalStateException("Not enough resources to consume");
+
+            List<String> updatedResources = new ArrayList<>();
+            int removed = 0;
+
+            for (String resource : storedResources) {
+                if (resource.equals(requiredResource) && removed < requiredQuantity) removed++;
+                else updatedResources.add(resource);
+            }
+            industry.setStoredResources(StoredResources.of(updatedResources));
         };
     }
-
-
+    
     public Consumer<? extends DomainEvent> isExhausted(Industry industry) {
         return (ExhaustedIndustry event) -> {
-            industry.setIsFlipped(IsFlipped.of(event.getFlipped()));
+            industry.setIsFlipped(IsFlipped.of(true));
         };
     }
 
@@ -82,12 +89,12 @@ public class IndustryHandler extends DomainActionsContainer {
             industry.setType(Type.of(event.getType()));
             industry.setLevel(Level.of(event.getLevel()));
             industry.setLocation(Location.of(event.getLocation()));
-            industry.setIsFlipped(IsFlipped.of(event.getFlipped()));
+            industry.setIsFlipped(IsFlipped.of(true));
             industry.setRequiredResource(RequiredResource.of(event.getRequiredResource()));
             industry.setQuantityRequiredResource(QuantityRequiredResource.of(event.getQuantityRequiredResource()));
             industry.setCost(Cost.of(event.getCost()));
             industry.setTechLevelRequired(TechLevelRequired.of(event.getTechLevelRequired()));
-            industry.setIsRequiredResearch(IsRequiredResearch.of(event.getIsRequiredResearch()));
+            industry.setIsRequiredResearch(IsRequiredResearch.of(false));
             industry.setEra(Era.of(event.getEra()));
         };
     }

@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/src/industries/src/application" />
             <option value="$PROJECT_DIR$/src/industries/src/domain" />
             <option value="$PROJECT_DIR$/src/industries/src/infrastructure/driven-adapters/mongo" />
+            <option value="$PROJECT_DIR$/src/industries/src/infrastructure/driving-adapters/main-service" />
             <option value="$PROJECT_DIR$/src/shared/src/application" />
             <option value="$PROJECT_DIR$/src/shared/src/domain" />
           </set>

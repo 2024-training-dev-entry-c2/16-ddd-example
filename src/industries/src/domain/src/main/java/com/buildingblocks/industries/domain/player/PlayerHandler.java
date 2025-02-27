@@ -15,11 +15,19 @@ import java.util.function.Consumer;
 public class PlayerHandler extends DomainActionsContainer {
 
     public PlayerHandler(Player player) {
+        add(addPlayer(player));
         add(adjustIncome(player));
         add(earnMoney(player));
         add(executeTransaction(player));
         add(spendBudget(player));
         add(takeLoan(player));
+    }
+
+    public Consumer<? extends DomainEvent> addPlayer(Player player) {
+        return (AddedPlayer event) -> {
+            player.setBudget(Budget.of(event.getBudget()));
+            player.setIncome(Income.of(event.getIncome()));
+        };
     }
 
     public Consumer<? extends DomainEvent> adjustIncome(Player player) {

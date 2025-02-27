@@ -62,7 +62,7 @@ public class IndustryHandler extends DomainActionsContainer {
             industry.setStoredResources(StoredResources.of(updatedResources));
         };
     }
-    
+
     public Consumer<? extends DomainEvent> isExhausted(Industry industry) {
         return (ExhaustedIndustry event) -> {
             industry.setIsFlipped(IsFlipped.of(true));

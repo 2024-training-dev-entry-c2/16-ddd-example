@@ -1,5 +1,6 @@
 package com.buildingblocks.industries.domain.player;
 
+import com.buildingblocks.industries.domain.industry.IndustryHandler;
 import com.buildingblocks.industries.domain.player.entities.Loan;
 import com.buildingblocks.industries.domain.player.entities.Transaction;
 import com.buildingblocks.industries.domain.player.events.*;
@@ -18,13 +19,17 @@ public class Player extends AggregateRoot<PlayerId> {
     private Income income;
 
     // region Constructors
-    public Player() {
+    public Player(Integer budget, Integer income) {
         super(new PlayerId());
         subscribe(new PlayerHandler(this));
+        this.budget = Budget.of(0);
+        this.income = Income.of(0);
+        apply(new AddedPlayer(budget, income));
     }
 
     private Player(PlayerId identity) {
         super(identity);
+        subscribe(new PlayerHandler(this));
     }
     // endregion
 

@@ -5,5 +5,6 @@ public enum EventsEnum {
     EXECUTED_TRANSACTION,
     SPENT_BUDGET,
     TAKEN_LOAN,
-    EARNED_MONEY
+    EARNED_MONEY,
+    ADDED_PLAYER
 }

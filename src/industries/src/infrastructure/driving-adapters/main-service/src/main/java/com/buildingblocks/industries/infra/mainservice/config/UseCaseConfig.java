@@ -7,6 +7,7 @@ import com.buildingblocks.industries.application.industry.exhaustindustry.Exhaus
 import com.buildingblocks.industries.application.industry.flipindustry.FlipIndustryUseCase;
 import com.buildingblocks.industries.application.industry.overbuildindustry.OverBuildIndustryUseCase;
 import com.buildingblocks.industries.application.industry.upgradeindustry.UpgradeIndustryUseCase;
+import com.buildingblocks.industries.application.player.addplayer.AddPlayerUseCase;
 import com.buildingblocks.industries.application.player.adjustincome.AdjustIncomeUseCase;
 import com.buildingblocks.industries.application.player.earnmoney.EarnMoneyUseCase;
 import com.buildingblocks.industries.application.player.makepurchase.MakePurchaseUseCase;
@@ -59,6 +60,11 @@ public class UseCaseConfig {
     // endregion
 
     // region Player
+    @Bean
+    public AddPlayerUseCase addPlayerUseCase(MongoAdapter adapter) {
+        return new AddPlayerUseCase(adapter);
+    }
+
     @Bean
     public AdjustIncomeUseCase adjustIncomeUseCase(MongoAdapter adapter) {
         return new AdjustIncomeUseCase(adapter);

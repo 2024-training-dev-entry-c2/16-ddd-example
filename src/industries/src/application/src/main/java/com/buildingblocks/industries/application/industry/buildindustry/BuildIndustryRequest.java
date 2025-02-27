@@ -13,10 +13,6 @@ public class BuildIndustryRequest extends Request {
     private String era;
     private Boolean isFlipped;
 
-//    public BuildIndustryRequest() {
-//        super(null);
-//    }
-
     public BuildIndustryRequest(String type, Integer level, String location, Integer cost, String requiredResource, Integer techLevelRequired, Boolean isConnectedToNetwork, String era, Boolean isFlipped) {
         super(null);
         this.type = type;

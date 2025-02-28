@@ -27,7 +27,6 @@ public class DomainActionsHandler {
     public void apply(final DomainEvent event) {
         events.add(event);
         actions.forEach(action -> handle(event, action));
-
     }
 
     private void handle(final DomainEvent event, final Consumer<? super DomainEvent> consumer) {

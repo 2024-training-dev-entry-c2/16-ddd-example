@@ -4,6 +4,7 @@ import com.buildingblocks.shared.application.combat.domain.character.values.Char
 import com.buildingblocks.shared.application.combat.domain.combat.entities.CharacterCombat;
 import com.buildingblocks.shared.application.combat.domain.combat.entities.EnemyCombat;
 import com.buildingblocks.shared.application.combat.domain.combat.entities.GameTurn;
+import com.buildingblocks.shared.application.combat.domain.combat.entities.Participants;
 import com.buildingblocks.shared.application.combat.domain.combat.events.CharacterAdded;
 import com.buildingblocks.shared.application.combat.domain.combat.events.CharacterRemoved;
 import com.buildingblocks.shared.application.combat.domain.combat.events.CombatFinished;
@@ -12,6 +13,7 @@ import com.buildingblocks.shared.application.combat.domain.combat.events.EnemyAd
 import com.buildingblocks.shared.application.combat.domain.combat.events.EnemyRemoved;
 import com.buildingblocks.shared.application.combat.domain.combat.events.TurnEnded;
 import com.buildingblocks.shared.application.combat.domain.combat.events.TurnStarted;
+import com.buildingblocks.shared.application.combat.domain.combat.values.ActionTaken;
 import com.buildingblocks.shared.application.combat.domain.combat.values.CharacterCombatID;
 import com.buildingblocks.shared.application.combat.domain.combat.values.CombatStatus;
 import com.buildingblocks.shared.application.combat.domain.combat.values.CurrentTurn;
@@ -105,18 +107,7 @@ public class CombatHandler extends DomainActionsContainer {
             // Agregar el enemigo a la lista
         };
     }
-    public Consumer<? extends DomainEvent> addEnemyWithId(Combat combat) {
-        return (EnemyAdded event) -> {
-            EnemyCombat enemy = new EnemyCombat(
-                    EnemiesId.of(event.getId()),
-                    Name.of(event.getName()),
-                    Health.of(event.getHeal()),
-                    Initiative.of(event.getInitiative()),
-                    new ArrayList<>()
-            );
-            combat.getEnemies().add(enemy);
-        };
-    }
+
 
 
     public Consumer<? extends DomainEvent> removeEnemy(Combat combat) {
@@ -133,7 +124,6 @@ public class CombatHandler extends DomainActionsContainer {
 
     public Consumer<? extends DomainEvent> startCombat(Combat combat) {
         return (CombatInitiated event) -> {
-
             combat.setState(CombatStatus.of("InProgress"));
             combat.setScenarioId(ScenarioId.of(event.getScenarioId()));
             combat.setCurrentTurnIndex(CurrentTurn.of(0));
@@ -144,12 +134,11 @@ public class CombatHandler extends DomainActionsContainer {
         return (CombatFinished event) -> {
             boolean charactersWon = combat.getEnemies().stream().allMatch(EnemyCombat::isDefeated);
             boolean charactersLost = combat.getCharacterTeam().stream().allMatch(CharacterCombat::isDefeated);
-
+            combat.getTurns().forEach(GameTurn::finalizeTurn);
             if (charactersWon) {
                 combat.setState(CombatStatus.of("Game Win"));
             } else if (charactersLost) {
                 combat.setState(CombatStatus.of("Game Lost"));
-
             }
         };
     }
@@ -158,7 +147,8 @@ public class CombatHandler extends DomainActionsContainer {
         return (TurnStarted event) -> {
             System.out.println("TurnStarted event received");
 
-            List<Object> orderedCombatants = new ArrayList<>();
+
+            List<Participants> orderedCombatants = new ArrayList<>();
             orderedCombatants.addAll(combat.getEnemies());
             orderedCombatants.addAll(combat.getCharacterTeam());
 
@@ -168,15 +158,19 @@ public class CombatHandler extends DomainActionsContainer {
                 return Integer.compare(initiativeB, initiativeA);           });
 
             GameTurn newTurn = new GameTurn(OrderInitiative.of(orderedCombatants), StatusTurn.of("Started"));
-
+            newTurn.startTurn();
             combat.getTurns().add(newTurn);
+            combat.setCurrentTurnIndex(CurrentTurn.of(combat.getCurrentTurnIndex().getTurnNumber() + 1));
+            System.out.println(combat.getTurns().size());
             System.out.println("New turn added: " + newTurn);
         };
     }
 
     public Consumer<? extends DomainEvent> endTurn(Combat combat) {
         return (TurnEnded event) -> {
+
             int newTurn = combat.getCurrentTurnIndex().getTurnNumber() + 1;
+            combat.getTurns().get(combat.getTurns().size() - 1).finalizeTurn();
             combat.setCurrentTurnIndex(CurrentTurn.of(newTurn));
 
         };

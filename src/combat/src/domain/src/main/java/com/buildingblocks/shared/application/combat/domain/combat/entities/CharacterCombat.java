@@ -11,7 +11,7 @@ import com.buildingblocks.shared.application.shared.domain.generic.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CharacterCombat extends Entity<CharacterCombatID> {
+public class CharacterCombat extends Entity<CharacterCombatID> implements Participants {
     private Name name;
     private Health health;
     private Initiative initiative;
@@ -34,6 +34,10 @@ public class CharacterCombat extends Entity<CharacterCombatID> {
         this.initiative = initiative;
         this.conditions = conditions;
         this.isDefeated = IsDefeated.of(false);
+    }
+    @Override
+    public String getNameValue() {
+        return name.getValue();
     }
 
     public Name getName() {

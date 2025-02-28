@@ -106,18 +106,18 @@ public class CombatResponse {
     }
 
     public static class TurnDetails {
-        private final int turnNumber;
+        private final String turnNumber;
         private final String order;
         private final String action;
 
-        public TurnDetails(int turnNumber, String startTime, String endTime) {
+        public TurnDetails(String turnNumber, String startTime, String endTime) {
             this.turnNumber = turnNumber;
             this.order = startTime;
             this.action = endTime;
         }
 
         // Getters
-        public int getTurnNumber() {
+        public String getTurnNumber() {
             return turnNumber;
         }
 

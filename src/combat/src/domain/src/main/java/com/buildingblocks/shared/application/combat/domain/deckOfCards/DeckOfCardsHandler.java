@@ -57,7 +57,6 @@ public class DeckOfCardsHandler extends DomainActionsContainer {
 
     public Consumer<? extends DomainEvent> removeCard(DeckOfCards deck) {
         return (CardRemoved event) -> {
-
             int card = deck.findCardById(event.getCardId());
             deck.getSkillCards().remove(card);
         };
@@ -72,7 +71,7 @@ public class DeckOfCardsHandler extends DomainActionsContainer {
 
     public Consumer<? extends DomainEvent> restCard(DeckOfCards deck) {
         return (RestedCard event) -> {
-            if (event.isLongRest()) {
+            if (Boolean.TRUE.equals(event.isLongRest())) {
                 deck.getSkillCards().addAll(deck.getDiscardedCards());
                 deck.getDiscardedCards().clear();
             } else {
@@ -99,24 +98,23 @@ public class DeckOfCardsHandler extends DomainActionsContainer {
         return (CardDiscarded event) -> {
             int card = deck.findCardById(event.getCardId());
             deck.getDiscardedCards().add(deck.getSkillCards().get(card));
+            deck.getSkillCards().remove(card);
         };
     }
 
     public Consumer<? extends DomainEvent> lostCard(DeckOfCards deck) {
         return (LostCard event) -> {
             int card = deck.findCardById(event.getCardId());
-            System.out.println(card);
             deck.getLostCards().add(deck.getSkillCards().get(card));
+            deck.getSkillCards().remove(card);
         };
     }
 
     public Consumer<? extends DomainEvent> recoverCard(DeckOfCards deck) {
         return (RecoveredCard event) -> {
-            int card = deck.findCardById(event.getCardId());
-            if (deck.getDiscardedCards().get(card)!=null) {
-                deck.getSkillCards().add(deck.getDiscardedCards().get(card));
-                deck.getDiscardedCards().remove(card);
-
+            if (deck.getLostCards() !=null) {
+                deck.getSkillCards().addAll(deck.getLostCards());
+                deck.getLostCards().clear();
             }
         };
     }

@@ -3,9 +3,7 @@ package com.buildingblocks.shared.application.shared.domain.generic;
 import java.util.List;
 
 public abstract class AggregateRoot<I extends Identity> extends Entity<I> {
-
     private final DomainActionsHandler actionsHandler = new DomainActionsHandler();
-
 
     protected AggregateRoot(final I identity) {
         super(identity);

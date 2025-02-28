@@ -26,9 +26,11 @@ public class DeckOfCards extends AggregateRoot<DeckOfCardsId> {
     public DeckOfCards() {
         super(new DeckOfCardsId());
         subscribe(new DeckOfCardsHandler(this));
+
         skillCards = new ArrayList<>();
         discardedCards = new ArrayList<>();
         lostCards = new ArrayList<>();
+        clearState();
     }
     private DeckOfCards(DeckOfCardsId id) {
         super(id);
@@ -68,6 +70,8 @@ public class DeckOfCards extends AggregateRoot<DeckOfCardsId> {
     //endregion
     //region Domain Events
     public void addCard(SkillCard card) {
+        boolean cardExists = skillCards.stream()
+                .anyMatch(c -> c.getIdentity().getValue().equals(card.getIdentity().getValue()));
         apply(new CardAdded(
                 card.getIdentity().getValue(),
                 card.getSkillCardName().getValue(),

@@ -11,6 +11,13 @@ public  abstract class DomainEvent {
     private String aggregateName;
     private  Long version;
 
+    public DomainEvent() {
+        this.when = Instant.now();
+        this.uuid = UUID.randomUUID().toString();
+        this.type = getClass().getSimpleName();
+        this.version= 1L;
+    }
+
     protected DomainEvent(String type) {
         this.when = Instant.now();
         this.uuid = UUID.randomUUID().toString();

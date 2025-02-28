@@ -2,10 +2,12 @@ package com.buildingblocks.shared.application.deckOfCards.restCards;
 
 import com.buildingblocks.shared.application.ICommandUseCase;
 import com.buildingblocks.shared.application.combat.domain.deckOfCards.DeckOfCards;
+import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.deckOfCards.DeckOfCardsResponse;
 import reactor.core.publisher.Mono;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +25,7 @@ public class RestCardUseCase implements ICommandUseCase<RestCardRequest, Mono<De
         return repository.findEventsByAggregateId(request.getAggregateId())
                 .collectList()
                 .map(events -> {
+                    events.sort(Comparator.comparing(DomainEvent::getWhen));
                     DeckOfCards deck = DeckOfCards.from(request.getAggregateId(), events);
                     deck.restCards(request.getLongRest());
                     deck.getUncommittedEvents().forEach(repository::save);
@@ -31,7 +34,6 @@ public class RestCardUseCase implements ICommandUseCase<RestCardRequest, Mono<De
                     eventDetails.put("action", "rest");
                     eventDetails.put("isLongRest", request.getLongRest());
                     return mapToResponse(deck, eventDetails);
-
                 });
     }
 }

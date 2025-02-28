@@ -32,25 +32,33 @@ public class AddCardUseCase implements ICommandUseCase<AddCardRequest, Mono<Deck
         return repository
                 .findEventsByAggregateId(request.getAggregateId())
                 .collectList()
-                .map(events->{
+                .map(events -> {
                     events.sort(Comparator.comparing(DomainEvent::getWhen));
-                    DeckOfCards deck =  DeckOfCards.from(request.getAggregateId(),events);
-                    SkillCard card = new SkillCard(
-                            SkillCardId.of(request.getCardId()),
-                            SkillCardName.of(request.getSkillCardName()),
-                            InitiativeCard.of(request.getInitiative()),
-                            EffectType.of(request.getNameEffect(), request.getDuration(), request.getImpact()),
-                            Objetives.of(request.getObjetives(), false),
-                            Scope.of(request.getScope())
-                    );
-                    deck.addCard(card);
-                    deck.getUncommittedEvents().forEach(repository::save);
-                    deck.markEventAsCommited();
+                    DeckOfCards deck = DeckOfCards.from(request.getAggregateId(), events);
+
+                    // Verifica si la carta ya existe
+                    boolean cardExists = deck.getSkillCards().stream()
+                            .anyMatch(card -> card.getIdentity().getValue().equals(request.getCardId()));
+
+                    if (!cardExists) {
+                        SkillCard card = new SkillCard(
+                                SkillCardId.of(request.getCardId()),
+                                SkillCardName.of(request.getSkillCardName()),
+                                InitiativeCard.of(request.getInitiative()),
+                                EffectType.of(request.getNameEffect(), request.getDuration(), request.getImpact()),
+                                Objetives.of(request.getObjetives(), false),
+                                Scope.of(request.getScope())
+                        );
+                        deck.addCard(card);
+                        deck.getUncommittedEvents().forEach(repository::save);
+                        deck.markEventAsCommited();
+                    }
+
                     Map<String, Object> eventDetails = new HashMap<>();
-                    eventDetails.put("cardId", card.getIdentity().getValue());
-                    eventDetails.put("cardName", card.getSkillCardName().getValue());
-                    eventDetails.put("initiative", card.getIniciative().getValue());
-                    return mapToResponse(deck,eventDetails);
+                    eventDetails.put("cardId", request.getCardId());
+                    eventDetails.put("cardName", request.getSkillCardName());
+                    eventDetails.put("initiative", request.getInitiative());
+                    return mapToResponse(deck, eventDetails);
                 });
     }
 }

@@ -1,6 +1,7 @@
 package com.buildingblocks.shared.application.shared.combat;
 
 import com.buildingblocks.shared.application.combat.domain.combat.Combat;
+import com.buildingblocks.shared.application.combat.domain.combat.entities.Participants;
 
 import java.util.stream.Collectors;
 
@@ -27,9 +28,9 @@ public class CombatMapper {
                         .collect(Collectors.toList()),
                 combat.getTurns().stream()
                         .map(turn -> new CombatResponse.TurnDetails(
-                                combat.getCurrentTurnIndex().getTurnNumber(),
-                                turn.getOrder().getParticipants().stream().map(Object::toString).collect(Collectors.joining(",")),
-                                turn.getAction().getActions().stream().map(Object::toString).collect(Collectors.joining(","))
+                                turn.getIdentity().getValue(),
+                                turn.getOrder().getParticipants().stream().map(Participants::getNameValue).collect(Collectors.joining(",")),
+                                turn.getStatus().getValue()
                         ))
                         .collect(Collectors.toList())
 

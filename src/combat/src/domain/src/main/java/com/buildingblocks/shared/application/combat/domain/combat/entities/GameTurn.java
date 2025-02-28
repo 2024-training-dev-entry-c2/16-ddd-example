@@ -37,6 +37,14 @@ public class GameTurn extends Entity<GameTurnId> {
     public void setAction(ActionTaken action) {
         this.action = action;
     }
+
+    public StatusTurn getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusTurn status) {
+        this.status = status;
+    }
     //metodos de la entidad
 
     public void addAction(String newAction) {
@@ -44,17 +52,13 @@ public class GameTurn extends Entity<GameTurnId> {
     }
 
     public void startTurn() {
-        if (!this.status.equals("Pending")) {
-            throw new IllegalStateException("Turn cannot be started. Current status: " + this.status);
-        }
+
         this.status = StatusTurn.of("InProgress");
     }
 
     public void finalizeTurn() {
-        if (!this.status.equals("InProgress")) {
-            throw new IllegalStateException("Turn cannot be finalized. Current status: " + this.status);
-        }
         this.action.clearActions();
         this.status = StatusTurn.of("Completed");
     }
+
 }

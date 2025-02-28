@@ -2,10 +2,12 @@ package com.buildingblocks.shared.application.deckOfCards.removeCard;
 
 import com.buildingblocks.shared.application.ICommandUseCase;
 import com.buildingblocks.shared.application.combat.domain.deckOfCards.DeckOfCards;
+import com.buildingblocks.shared.application.shared.domain.generic.DomainEvent;
 import com.buildingblocks.shared.application.shared.ports.IEventsRepositoryPort;
 import com.buildingblocks.shared.application.shared.deckOfCards.DeckOfCardsResponse;
 import reactor.core.publisher.Mono;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +26,9 @@ public class RemoveCardUseCase implements ICommandUseCase<RemoveCardRequest, Mon
         return repository.findEventsByAggregateId(request.getAggregateId())
                 .collectList()
                 .map(events -> {
-                            DeckOfCards deck = DeckOfCards.from(request.getAggregateId(), events);
+                    events.sort(Comparator.comparing(DomainEvent::getWhen));
+
+                    DeckOfCards deck = DeckOfCards.from(request.getAggregateId(), events);
                             deck.removeCard(request.getId());
                             deck.getUncommittedEvents().forEach(repository::save);
                             deck.markEventAsCommited();

@@ -1,13 +1,8 @@
 package com.buildingblocks.industries.domain.resourceMarket;
 
 import com.buildingblocks.industries.domain.resourceMarket.entities.TradeExchange;
-import com.buildingblocks.industries.domain.resourceMarket.events.DepletedMarketSupply;
-import com.buildingblocks.industries.domain.resourceMarket.events.ExecutedTrade;
-import com.buildingblocks.industries.domain.resourceMarket.events.RefilledMarketSupply;
-import com.buildingblocks.industries.domain.resourceMarket.events.UpdatedResourcePrice;
-import com.buildingblocks.industries.domain.resourceMarket.values.AvailableResources;
-import com.buildingblocks.industries.domain.resourceMarket.values.ResourceMarketId;
-import com.buildingblocks.industries.domain.resourceMarket.values.ResourcePrice;
+import com.buildingblocks.industries.domain.resourceMarket.events.*;
+import com.buildingblocks.industries.domain.resourceMarket.values.*;
 import com.buildingblocks.shared.domain.generic.AggregateRoot;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
 
@@ -18,15 +13,19 @@ public class ResourceMarket extends AggregateRoot<ResourceMarketId> {
     private List<TradeExchange> tradeExchange;
     private AvailableResources availableResources;
     private ResourcePrice resourcePrice;
+    private ResourceQuantity resourceQuantity;
+    private ResourceType resourceType;
 
     // region Constructors
-    public ResourceMarket() {
+    public ResourceMarket(List<String> availableResources, Integer resourcePrice, Integer resourceQuantity, String resourceType) {
         super(new ResourceMarketId());
         subscribe(new ResourceMarketHandler(this));
+        apply(new AddedMarket(availableResources, resourcePrice, resourceQuantity, resourceType));
     }
 
     private ResourceMarket(ResourceMarketId identity) {
         super(identity);
+        subscribe(new ResourceMarketHandler(this));
     }
     // endregion
 
@@ -54,6 +53,23 @@ public class ResourceMarket extends AggregateRoot<ResourceMarketId> {
     public void setResourcePrice(ResourcePrice resourcePrice) {
         this.resourcePrice = resourcePrice;
     }
+
+    public ResourceQuantity getResourceQuantity() {
+        return resourceQuantity;
+    }
+
+    public void setResourceQuantity(ResourceQuantity resourceQuantity) {
+        this.resourceQuantity = resourceQuantity;
+    }
+
+    public ResourceType getResourceType() {
+        return resourceType;
+    }
+
+    public void setResourceType(ResourceType resourceType) {
+        this.resourceType = resourceType;
+    }
+
     // endregion
 
     // region Domain Actions

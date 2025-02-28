@@ -12,6 +12,7 @@ import com.buildingblocks.industries.application.player.adjustincome.AdjustIncom
 import com.buildingblocks.industries.application.player.earnmoney.EarnMoneyUseCase;
 import com.buildingblocks.industries.application.player.makepurchase.MakePurchaseUseCase;
 import com.buildingblocks.industries.application.player.takeloan.TakeLoanUseCase;
+import com.buildingblocks.industries.application.resourceMarket.addmarket.AddMarketUseCase;
 import com.buildingblocks.industries.application.resourceMarket.depletemarket.DepleteMarketUseCase;
 import com.buildingblocks.industries.application.resourceMarket.executetrade.ExecuteTradeUseCase;
 import com.buildingblocks.industries.application.resourceMarket.refillmarket.RefillMarketUseCase;
@@ -87,6 +88,11 @@ public class UseCaseConfig {
     // endregion
 
     // region ResourceMarket
+    @Bean
+    public AddMarketUseCase addMarketUseCase(MongoAdapter adapter) {
+        return new AddMarketUseCase(adapter);
+    }
+
     @Bean
     public DepleteMarketUseCase depleteMarketUseCase(MongoAdapter adapter) {
         return new DepleteMarketUseCase(adapter);

@@ -1,6 +1,5 @@
 package com.buildingblocks.industries.domain.resourceMarket.values;
 
-import com.buildingblocks.industries.domain.industry.values.Level;
 import com.buildingblocks.shared.domain.generic.IValueObject;
 import com.buildingblocks.shared.domain.utils.ValueValidator;
 

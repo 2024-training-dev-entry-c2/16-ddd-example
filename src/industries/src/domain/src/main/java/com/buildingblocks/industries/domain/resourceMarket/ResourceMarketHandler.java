@@ -1,9 +1,6 @@
 package com.buildingblocks.industries.domain.resourceMarket;
 
-import com.buildingblocks.industries.domain.resourceMarket.events.DepletedMarketSupply;
-import com.buildingblocks.industries.domain.resourceMarket.events.ExecutedTrade;
-import com.buildingblocks.industries.domain.resourceMarket.events.RefilledMarketSupply;
-import com.buildingblocks.industries.domain.resourceMarket.events.UpdatedResourcePrice;
+import com.buildingblocks.industries.domain.resourceMarket.events.*;
 import com.buildingblocks.industries.domain.resourceMarket.values.*;
 import com.buildingblocks.shared.domain.generic.DomainActionsContainer;
 import com.buildingblocks.shared.domain.generic.DomainEvent;
@@ -15,10 +12,20 @@ import java.util.function.Consumer;
 public class ResourceMarketHandler extends DomainActionsContainer {
 
     public ResourceMarketHandler(ResourceMarket resourceMarket) {
+        add(addMarket(resourceMarket));
         add(depleteMarketSupply(resourceMarket));
         add(executeTrade(resourceMarket));
         add(refillMarketSupply(resourceMarket));
         add(updateResourcePrice(resourceMarket));
+    }
+
+    public Consumer<? extends DomainEvent> addMarket(ResourceMarket resourceMarket) {
+        return (AddedMarket event) -> {
+            resourceMarket.setAvailableResources(AvailableResources.of(event.getAvailableResources()));
+            resourceMarket.setResourcePrice(ResourcePrice.of(event.getResourcePrice()));
+            resourceMarket.setResourceQuantity(ResourceQuantity.of(event.getResourceQuantity()));
+            resourceMarket.setResourceType(ResourceType.of(event.getResourceType()));
+        };
     }
 
     public Consumer<? extends DomainEvent> depleteMarketSupply(ResourceMarket resourceMarket) {
